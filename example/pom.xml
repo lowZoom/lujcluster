@@ -15,5 +15,10 @@
   <version>1.0-SNAPSHOT</version>
 
   <dependencies>
+    <dependency>
+      <groupId>luj.cluster</groupId>
+      <artifactId>lujcluster</artifactId>
+      <version>0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 </project>
