@@ -15,6 +15,13 @@
   <version>0.1-SNAPSHOT</version>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-actor_2.12</artifactId>
+      <version>2.5.21</version>
+    </dependency>
+
     <dependency>
       <groupId>luj.test</groupId>
       <artifactId>lujtest</artifactId>
