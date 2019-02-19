@@ -15,6 +15,12 @@
   <version>0.1-SNAPSHOT</version>
 
   <dependencies>
+    <dependency>
+      <groupId>luj.ava</groupId>
+      <artifactId>lujava</artifactId>
+      <version>0.1-SNAPSHOT</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
     <dependency>
       <groupId>com.typesafe.akka</groupId>
