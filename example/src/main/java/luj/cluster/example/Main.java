@@ -1,7 +1,7 @@
 package luj.cluster.example;
 
-import luj.cluster.api.LujCluster;
 import luj.cluster.example.core.ExampleInjectConf;
+import luj.game.api.Jamer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -20,7 +20,7 @@ final class Main {
 
   private void run() {
     System.out.println(1);
-    LujCluster.start(_appContext);
+    Jamer.start(_appContext);
     System.out.println(2);
   }
 
