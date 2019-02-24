@@ -1,9 +1,8 @@
 package luj.cluster.internal.session;
 
 import luj.cluster.api.ClusterSession;
-import luj.cluster.internal.node.ClusterNodeStarter;
+import luj.cluster.internal.node.start.ClusterNodeStarter;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 final class ClusterSessionFactoryImpl implements ClusterSessionFactory {
 
@@ -13,22 +12,9 @@ final class ClusterSessionFactoryImpl implements ClusterSessionFactory {
 
   @Override
   public ClusterSession create() {
-    InjectResult injectResult = collectSpringBeans();
-
-    ClusterNodeStarter.Factory.create(injectResult.getStartListeners()).start();
+    ClusterNodeStarter.Factory.create(_appContext).start();
 
     return null;
-  }
-
-  private InjectResult collectSpringBeans() {
-    try (AnnotationConfigApplicationContext resultCtx = new AnnotationConfigApplicationContext()) {
-      resultCtx.setParent(_appContext);
-
-      resultCtx.register(InjectConf.class);
-      resultCtx.refresh();
-
-      return resultCtx.getBean(InjectResult.class);
-    }
   }
 
   private final ApplicationContext _appContext;

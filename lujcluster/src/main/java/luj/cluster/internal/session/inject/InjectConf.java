@@ -1,4 +1,4 @@
-package luj.cluster.internal.session;
+package luj.cluster.internal.session.inject;
 
 import luj.ava.spring.Internal;
 import org.springframework.context.annotation.ComponentScan;

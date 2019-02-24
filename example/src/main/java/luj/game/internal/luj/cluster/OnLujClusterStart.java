@@ -5,7 +5,9 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import luj.ava.spring.Internal;
 import luj.cluster.api.start.NodeStartListener;
+import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
+import luj.game.internal.luj.cluster.message.handler.collect.MessageHandlerCollector;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Internal
@@ -15,10 +17,12 @@ final class OnLujClusterStart implements NodeStartListener {
   public void onStart(Context ctx) {
     //TODO: 调用各个零件库初始化
 
-    //TODO: 调用启动监听
+    //TODO: 初始化cluster消息处理注册
+    ctx.registerMessageHandler(MessageHandlerCollector.Factory.create(_protoHandlerList).collect());
 
-    for (GameStartListener listener : nonNull(_startListeners)) {
-      listener.onStart(null);
+    StartContextImpl startCtx = new StartContextImpl(ctx);
+    for (GameStartListener listener : nonNull(_startListenerList)) {
+      listener.onStart(startCtx);
     }
   }
 
@@ -27,5 +31,9 @@ final class OnLujClusterStart implements NodeStartListener {
   }
 
   @Autowired(required = false)
-  private List<GameStartListener> _startListeners;
+  private List<GameStartListener> _startListenerList;
+
+
+  @Autowired(required = false)
+  private List<GameProtoHandler<?>> _protoHandlerList;
 }
