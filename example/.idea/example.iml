@@ -10,7 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="lujcluster" />
-    <orderEntry type="library" name="Maven: luj.ava:lujava:0.1-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="lujava" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:25.1-jre" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:2.0.0" level="project" />

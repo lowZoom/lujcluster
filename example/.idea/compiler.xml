@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="example" />
+        <module name="lujava" />
         <module name="lujcluster" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="example" target="1.8" />
+      <module name="lujava" target="1.8" />
       <module name="lujcluster" target="1.8" />
     </bytecodeTargetLevel>
   </component>
