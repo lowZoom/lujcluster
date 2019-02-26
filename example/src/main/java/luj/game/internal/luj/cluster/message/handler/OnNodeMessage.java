@@ -11,9 +11,9 @@ final class OnNodeMessage implements NodeMessageListener {
   public void onMessage(Context ctx) {
     Message message = ctx.getMessage();
 
-    GameProtoHandler<Object> handler = (GameProtoHandler<Object>) message.getHandler();
-    HandleContextImpl context = new HandleContextImpl(message.getPayload());
+    GameProtoHandler<Object> handler = message.getHandler();
+    HandleContextImpl handleCtx = new HandleContextImpl(message.getPayload(), ctx);
 
-    handler.onHandle(context);
+    handler.onHandle(handleCtx);
   }
 }

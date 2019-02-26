@@ -1,12 +1,14 @@
 package luj.game.internal.luj.cluster.message.handler;
 
+import luj.cluster.api.message.NodeMessageListener;
 import luj.game.api.proto.GameProtoHandler;
 import org.omg.CORBA.NO_IMPLEMENT;
 
 final class HandleContextImpl implements GameProtoHandler.Context<Object> {
 
-   HandleContextImpl(Object proto) {
+  HandleContextImpl(Object proto, NodeMessageListener.Context listenCtx) {
     _proto = proto;
+    _listenCtx = listenCtx;
   }
 
   @Override
@@ -16,7 +18,7 @@ final class HandleContextImpl implements GameProtoHandler.Context<Object> {
 
   @Override
   public void sendProto(Object proto) {
-    throw new NO_IMPLEMENT("sendProto尚未实现");
+    _listenCtx.sendMessage(proto.getClass().getName(), proto);
   }
 
   @Override
@@ -25,4 +27,6 @@ final class HandleContextImpl implements GameProtoHandler.Context<Object> {
   }
 
   private final Object _proto;
+
+  private final NodeMessageListener.Context _listenCtx;
 }

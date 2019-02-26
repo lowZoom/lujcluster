@@ -9,6 +9,8 @@ public interface NodeMessageListener {
     Message getMessage();
 
     LoggingAdapter getLogger();
+
+    void sendMessage(String msgKey, Object msg);
   }
 
   interface Message {

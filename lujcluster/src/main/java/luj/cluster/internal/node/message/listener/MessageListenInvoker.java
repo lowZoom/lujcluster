@@ -1,13 +1,14 @@
 package luj.cluster.internal.node.message.listener;
 
-import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.internal.node.message.receive.actor.NodeReceiveActor;
 
 public interface MessageListenInvoker {
 
   interface Factory {
 
-    static MessageListenInvoker create(NodeMessageListener messageListener, Object message, Object handler) {
-      return new MessageListenInvokerImpl(messageListener, message, handler);
+    static MessageListenInvoker create(NodeReceiveActor recvActor, Object message, Object handler) {
+      return new MessageListenInvokerImpl(recvActor.getMessageListener(),
+          message, handler, recvActor.getNodeSendRef());
     }
   }
 

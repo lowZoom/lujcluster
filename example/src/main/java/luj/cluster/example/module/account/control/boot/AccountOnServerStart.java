@@ -1,4 +1,4 @@
-package luj.cluster.example.module.account.control;
+package luj.cluster.example.module.account.control.boot;
 
 import luj.cluster.example.module.account.proto.AccountLoginReq;
 import luj.game.api.start.GameStartListener;

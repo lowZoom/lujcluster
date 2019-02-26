@@ -32,16 +32,16 @@ public final class NodeReceiveActor extends AbstractActor {
         .build();
   }
 
-  Map<String, Object> getHandlerMap() {
-    return _handlerMap;
-  }
-
-  NodeMessageListener getMessageListener() {
+  public NodeMessageListener getMessageListener() {
     return _messageListener;
   }
 
-  ActorRef getNodeSendRef() {
+  public ActorRef getNodeSendRef() {
     return _nodeSendRef;
+  }
+
+  Map<String, Object> getHandlerMap() {
+    return _handlerMap;
   }
 
   private final Map<String, Object> _handlerMap;
