@@ -1,6 +1,6 @@
 package luj.cluster.example.module.account.proto;
 
-import luj.cluster.example.module.login.proto.LoginMsg;
+import luj.cluster.example.module.player.proto.LoginMsg;
 import luj.game.api.proto.GameProtoHandler;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 final class AccountLoginHandler implements GameProtoHandler<AccountLoginReq> {
 
   /**
-   * @see luj.cluster.example.module.login.proto.LoginHandler#onHandle
+   * @see luj.cluster.example.module.player.proto.LoginHandler#onHandle
    */
   @Override
   public void onHandle(Context<AccountLoginReq> ctx) {

@@ -1,6 +1,6 @@
-package luj.cluster.example.module.login.proto;
+package luj.cluster.example.module.player.proto;
 
-import luj.cluster.example.module.login.event.LoginEvent;
+import luj.cluster.example.module.player.event.LoginEvent;
 import luj.game.api.proto.GameProtoHandler;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,8 @@ final class LoginHandler implements GameProtoHandler<LoginMsg> {
     LoginMsg proto = ctx.getCurrentProto();
 
     System.out.println("玩家完成账号登录，开始进行角色登录：" + proto.getCharUid());
+
+    //TODO: 读取玩家基本数据
 
     ctx.fireEvent(new LoginEvent(proto.getCharUid()));
   }

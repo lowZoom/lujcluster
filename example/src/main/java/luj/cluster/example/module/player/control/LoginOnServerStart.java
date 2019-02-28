@@ -1,4 +1,4 @@
-package luj.cluster.example.module.login.control;
+package luj.cluster.example.module.player.control;
 
 import luj.game.api.start.GameStartListener;
 import org.springframework.stereotype.Component;
