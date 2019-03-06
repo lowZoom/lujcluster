@@ -14,13 +14,13 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
 
   @Override
   public void start() {
-    ActorSystem sys = ActorSystem.create("LujCluster",
-        ConfigFactory.parseString("akka{loglevel=DEBUG\nstdout-loglevel=DEBUG}"));
+    ActorSystem sys = ActorSystem.create("LujCluster", ConfigFactory.parseResources("akka.conf"));
+//    ConfigFactory.parseString("akka{loglevel=DEBUG\nstdout-loglevel=DEBUG}"));
 
-    ClusterBeanCollector.Result collectResult =
+    ClusterBeanCollector.Result beanCollect =
         ClusterBeanCollector.Factory.create(_appContext).collect();
 
-    sys.actorOf(NodeStartActor.props(collectResult));
+    sys.actorOf(NodeStartActor.props(beanCollect));
   }
 
   private final ApplicationContext _appContext;

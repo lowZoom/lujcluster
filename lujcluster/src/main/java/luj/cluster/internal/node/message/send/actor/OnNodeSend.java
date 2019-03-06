@@ -5,6 +5,8 @@ import akka.japi.pf.FI;
 import java.util.Map;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 final class OnNodeSend implements FI.UnitApply<NodeSendStartMsg> {
 
@@ -19,12 +21,14 @@ final class OnNodeSend implements FI.UnitApply<NodeSendStartMsg> {
 
     ActorRef receiveRef = receiveMap.get(msgKey);
     if (receiveRef == null) {
-      System.out.println("无人处理的消息：" + msgKey);
+      LOG.warn("未处理节点消息：{}", msgKey);
       return;
     }
 
     receiveRef.tell(new NodeSendRemoteMsg(msgKey, i.getMessage()), ActorRef.noSender());
   }
+
+  private static final Logger LOG = LoggerFactory.getLogger(OnNodeSend.class);
 
   private final NodeSendActor _actor;
 }

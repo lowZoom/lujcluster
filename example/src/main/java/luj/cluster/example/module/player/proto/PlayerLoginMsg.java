@@ -1,8 +1,8 @@
-package luj.cluster.example.module.player.event;
+package luj.cluster.example.module.player.proto;
 
-public class LoginEvent {
+public class PlayerLoginMsg {
 
-  public LoginEvent(String charUid) {
+  public PlayerLoginMsg(String charUid) {
     _charUid = charUid;
   }
 

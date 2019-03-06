@@ -11,5 +11,10 @@ public interface GameProtoHandler<P> {
     void fireEvent(Object event);
   }
 
+  interface Player {
+
+    void executeDataCommand();
+  }
+
   void onHandle(Context<P> ctx);
 }
