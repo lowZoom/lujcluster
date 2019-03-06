@@ -12,7 +12,7 @@ final class AccountLoginHandler implements GameProtoHandler<AccountLoginReq> {
    */
   @Override
   public void onHandle(Context<AccountLoginReq> ctx) {
-    AccountLoginReq req = ctx.getCurrentProto();
+    AccountLoginReq req = ctx.proto();
     System.out.println("在登录服进行账号登录: " + req.getAccount());
 
     //TODO: 读取数据库时，数据库中有使用者信息，相当于业务锁，一个节点借数据时等待的锁还可以包括远程锁

@@ -3,7 +3,7 @@ package luj.game.api.data;
 import java.util.function.Function;
 import luj.data.type.JRef;
 
-public interface GameDataLoad<R> {
+public interface PlayerDataLoad<R> {
 
   interface Context<R> {
 

@@ -11,7 +11,7 @@ final class HandleContextImpl implements GameProtoHandler.Context<Object> {
   }
 
   @Override
-  public Object getCurrentProto() {
+  public Object proto() {
     return _proto;
   }
 

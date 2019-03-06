@@ -1,15 +1,17 @@
 package luj.game.api.data;
 
-public interface PlayerDataCommand {
+public interface PlayerDataCommand<D> {
 
-  interface Context {
+  interface Context<D> {
 
-    Player getPlayer();
+    D data();
+
+    Player player();
   }
 
   interface Player {
 
   }
 
-  void execute(Context ctx);
+  void execute(Context<D> ctx);
 }
