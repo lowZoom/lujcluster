@@ -11,7 +11,7 @@ import luj.game.internal.luj.cluster.message.handler.collect.MessageHandlerColle
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Internal
-final class OnLuclusterStart implements NodeStartListener {
+final class OnLujclusterStart implements NodeStartListener {
 
   @Override
   public void onStart(Context ctx) throws Exception {
