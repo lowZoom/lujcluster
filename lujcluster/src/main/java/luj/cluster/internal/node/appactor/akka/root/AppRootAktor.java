@@ -5,6 +5,7 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
+import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
 import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
 
 public final class AppRootAktor extends AbstractActor {
@@ -21,6 +22,7 @@ public final class AppRootAktor extends AbstractActor {
   public Receive createReceive() {
     return receiveBuilder()
         .match(CreateAppActorMsg.class, new OnCreateAppActor(this))
+        .match(AppRouteMsg.class, new OnAppRoute(this))
         .build();
   }
 

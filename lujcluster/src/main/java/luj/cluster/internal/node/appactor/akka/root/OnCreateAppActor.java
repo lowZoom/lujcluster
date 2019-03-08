@@ -13,7 +13,7 @@ final class OnCreateAppActor implements FI.UnitApply<CreateAppActorMsg> {
   }
 
   @Override
-  public void apply(CreateAppActorMsg i) throws Exception {
+  public void apply(CreateAppActorMsg i) {
     Class<?> appType = i.getActorType();
 
     ActorRef appRef = _rootAktor.context().actorOf(AppAktor.props(null));
