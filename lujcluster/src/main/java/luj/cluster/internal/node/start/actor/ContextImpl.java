@@ -16,6 +16,9 @@ final class ContextImpl implements NodeStartListener.Context {
     _logger = logger;
   }
 
+  /**
+   * @see luj.cluster.internal.node.message.receive.actor.OnRegisterReceive#apply
+   */
   @Override
   public void registerMessageHandler(Map<String, ?> handlerMap) {
     _receiveRef.tell(new RegisterReceiveMsg(handlerMap), ActorRef.noSender());

@@ -7,5 +7,5 @@ public interface GameStartListener {
     void sendServerMessage(Object msg);
   }
 
-  void onStart(Context ctx);
+  void onStart(Context ctx) throws Exception;
 }

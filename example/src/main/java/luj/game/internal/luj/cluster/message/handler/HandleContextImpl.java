@@ -2,6 +2,7 @@ package luj.game.internal.luj.cluster.message.handler;
 
 import luj.cluster.api.message.NodeMessageListener;
 import luj.game.api.proto.GameProtoHandler;
+import luj.game.internal.luj.cluster.data.DataActorState;
 
 final class HandleContextImpl implements GameProtoHandler.Context<Object> {
 
@@ -13,6 +14,11 @@ final class HandleContextImpl implements GameProtoHandler.Context<Object> {
   @Override
   public Object proto() {
     return _proto;
+  }
+
+  @Override
+  public GameProtoHandler.Player player() {
+    return new HandlePlayerImpl(_listenCtx.getApplicationActor(DataActorState.class), null);
   }
 
   @Override

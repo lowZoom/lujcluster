@@ -9,10 +9,12 @@ public interface NodeStartListener {
 
     void registerMessageHandler(Map<String, ?> handlerMap);
 
+//    void createActor();
+
     void sendMessage(String msgKey, Object msg);
 
     LoggingAdapter getLogger();
   }
 
-  void onStart(Context ctx);
+  void onStart(Context ctx) throws Exception;
 }

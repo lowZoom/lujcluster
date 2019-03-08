@@ -8,16 +8,27 @@ import org.omg.CORBA.NO_IMPLEMENT;
 
 final class ListenContextImpl implements NodeMessageListener.Context, NodeMessageListener.Message {
 
-  ListenContextImpl(Object message, Object handler, ActorRef sendRef) {
+  ListenContextImpl(Object message, Object handler, ActorRef sendRef, ActorRef appRootRef) {
     _message = message;
     _handler = handler;
 
     _sendRef = sendRef;
+    _appRootRef = appRootRef;
   }
 
   @Override
   public NodeMessageListener.Message getMessage() {
     return this;
+  }
+
+  @Override
+  public <T> T getApplicationBean() {
+    throw new NO_IMPLEMENT("getApplicationBean尚未实现");
+  }
+
+  @Override
+  public NodeMessageListener.Actor getApplicationActor(Class<?> actorType) {
+    return new ListenActorImpl(actorType, _appRootRef);
   }
 
   @Override
@@ -50,4 +61,5 @@ final class ListenContextImpl implements NodeMessageListener.Context, NodeMessag
   private final Object _handler;
 
   private final ActorRef _sendRef;
+  private final ActorRef _appRootRef;
 }

@@ -20,7 +20,7 @@ public final class NodeStartActor extends AbstractActor {
   }
 
   @Override
-  public void preStart() {
+  public void preStart() throws Exception {
     new PreStart(this).run();
   }
 

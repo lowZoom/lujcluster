@@ -2,22 +2,26 @@ package luj.cluster.internal.node.message.listener;
 
 import akka.actor.ActorRef;
 import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 
 final class MessageListenInvokerImpl implements MessageListenInvoker {
 
-  MessageListenInvokerImpl(NodeMessageListener messageListener,
-      Object message, Object handler, ActorRef sendRef) {
+  MessageListenInvokerImpl(NodeMessageListener messageListener, Object message,
+      Object handler, NodeReceiveAktor receiveAktor) {
     _messageListener = messageListener;
 
     _message = message;
     _handler = handler;
 
-    _sendRef = sendRef;
+    _receiveAktor = receiveAktor;
   }
 
   @Override
   public void invoke() {
-    ListenContextImpl ctx = new ListenContextImpl(_message, _handler, _sendRef);
+    ActorRef sendRef = _receiveAktor.getNodeSendRef();
+    ActorRef appRef = _receiveAktor.getAppRootRef();
+
+    ListenContextImpl ctx = new ListenContextImpl(_message, _handler, sendRef, appRef);
     _messageListener.onMessage(ctx);
   }
 
@@ -26,5 +30,5 @@ final class MessageListenInvokerImpl implements MessageListenInvoker {
   private final Object _message;
   private final Object _handler;
 
-  private final ActorRef _sendRef;
+  private final NodeReceiveAktor _receiveAktor;
 }

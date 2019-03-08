@@ -12,6 +12,11 @@ final class OnNodeMessage implements NodeMessageListener {
     Message message = ctx.getMessage();
 
     GameProtoHandler<Object> handler = message.getHandler();
+
+    //TODO: 要能拿到dataActor
+
+//    JamverInLujcluster appBean = ctx.getApplicationBean();
+
     HandleContextImpl handleCtx = new HandleContextImpl(message.getPayload(), ctx);
 
     handler.onHandle(handleCtx);

@@ -7,7 +7,7 @@ import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMs
 
 final class OnNodeSendRemote implements FI.UnitApply<NodeSendRemoteMsg> {
 
-  OnNodeSendRemote(NodeReceiveActor actor) {
+  OnNodeSendRemote(NodeReceiveAktor actor) {
     _actor = actor;
   }
 
@@ -23,5 +23,5 @@ final class OnNodeSendRemote implements FI.UnitApply<NodeSendRemoteMsg> {
     MessageListenInvoker.Factory.create(_actor, i.getMessage(), handler).invoke();
   }
 
-  private final NodeReceiveActor _actor;
+  private final NodeReceiveAktor _actor;
 }

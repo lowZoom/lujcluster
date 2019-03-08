@@ -8,7 +8,7 @@ import luj.cluster.internal.node.message.send.message.RegisterHandleMsg;
 
 final class OnRegisterReceive implements FI.UnitApply<RegisterReceiveMsg> {
 
-  OnRegisterReceive(NodeReceiveActor actor) {
+  OnRegisterReceive(NodeReceiveAktor actor) {
     _actor = actor;
   }
 
@@ -31,5 +31,5 @@ final class OnRegisterReceive implements FI.UnitApply<RegisterReceiveMsg> {
     _actor.getNodeSendRef().tell(msg, selfRef);
   }
 
-  private final NodeReceiveActor _actor;
+  private final NodeReceiveAktor _actor;
 }

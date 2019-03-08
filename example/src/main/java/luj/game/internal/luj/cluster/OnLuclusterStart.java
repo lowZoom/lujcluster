@@ -11,10 +11,10 @@ import luj.game.internal.luj.cluster.message.handler.collect.MessageHandlerColle
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Internal
-final class OnLujClusterStart implements NodeStartListener {
+final class OnLuclusterStart implements NodeStartListener {
 
   @Override
-  public void onStart(Context ctx) {
+  public void onStart(Context ctx) throws Exception {
     //TODO: 调用各个零件库初始化
 
     //TODO: 初始化cluster消息处理注册

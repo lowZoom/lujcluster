@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 final class AccountOnServerStart implements GameStartListener {
 
   @Override
-  public void onStart(Context ctx) {
+  public void onStart(Context ctx) throws InterruptedException {
     System.out.println("登录服启动。。。");
 
+    Thread.sleep(500);
     AccountLoginReq req = new AccountLoginReq("测试账号1");
     ctx.sendServerMessage(req);
   }

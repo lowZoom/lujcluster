@@ -8,6 +8,10 @@ public interface NodeMessageListener {
 
     Message getMessage();
 
+    <T> T getApplicationBean();
+
+    Actor getApplicationActor(Class<?> actorType);
+
     LoggingAdapter getLogger();
 
     void sendMessage(String msgKey, Object msg);
@@ -20,6 +24,11 @@ public interface NodeMessageListener {
     Object getPayload();
 
     <T> T getHandler();
+  }
+
+  interface Actor {
+
+    void tell(Object msg);
   }
 
   void onMessage(Context ctx);

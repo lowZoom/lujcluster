@@ -20,7 +20,7 @@ public interface GameProtoHandler<P> {
 
   interface Player {
 
-    void executeDataCommand(Class<? extends PlayerDataCommand> cmdType);
+    void executeDataCommand(Class<? extends PlayerDataCommand<?>> cmdType);
   }
 
   void onHandle(Context<P> ctx);

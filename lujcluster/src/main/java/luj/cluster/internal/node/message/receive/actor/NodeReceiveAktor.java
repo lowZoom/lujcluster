@@ -9,19 +9,21 @@ import luj.cluster.api.message.NodeMessageListener;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
-public final class NodeReceiveActor extends AbstractActor {
+public class NodeReceiveAktor extends AbstractActor {
 
-  public static Props props(NodeMessageListener nodeMessageListener, ActorRef nodeSendRef) {
-    return Props.create(NodeReceiveActor.class, () ->
-        new NodeReceiveActor(new HashMap<>(), nodeMessageListener, nodeSendRef));
+  public static Props props(NodeMessageListener nodeMessageListener,
+      ActorRef nodeSendRef, ActorRef appRootRef) {
+    return Props.create(NodeReceiveAktor.class, () ->
+        new NodeReceiveAktor(new HashMap<>(), nodeMessageListener, nodeSendRef, appRootRef));
   }
 
-  private NodeReceiveActor(Map<String, Object> handlerMap,
-      NodeMessageListener messageListener, ActorRef nodeSendRef) {
+  NodeReceiveAktor(Map<String, Object> handlerMap,
+      NodeMessageListener messageListener, ActorRef nodeSendRef, ActorRef appRootRef) {
     _handlerMap = handlerMap;
     _messageListener = messageListener;
 
     _nodeSendRef = nodeSendRef;
+    _appRootRef = appRootRef;
   }
 
   @Override
@@ -40,6 +42,10 @@ public final class NodeReceiveActor extends AbstractActor {
     return _nodeSendRef;
   }
 
+  public ActorRef getAppRootRef() {
+    return _appRootRef;
+  }
+
   Map<String, Object> getHandlerMap() {
     return _handlerMap;
   }
@@ -51,4 +57,6 @@ public final class NodeReceiveActor extends AbstractActor {
    * @see luj.cluster.internal.node.message.send.actor.NodeSendActor
    */
   private final ActorRef _nodeSendRef;
+
+  private final ActorRef _appRootRef;
 }
