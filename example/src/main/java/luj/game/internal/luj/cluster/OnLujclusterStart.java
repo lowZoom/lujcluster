@@ -7,6 +7,7 @@ import luj.ava.spring.Internal;
 import luj.cluster.api.start.NodeStartListener;
 import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
+import luj.game.internal.luj.cluster.data.DataActorState;
 import luj.game.internal.luj.cluster.message.handler.collect.MessageHandlerCollector;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,8 @@ final class OnLujclusterStart implements NodeStartListener {
   @Override
   public void onStart(Context ctx) throws Exception {
     //TODO: 调用各个零件库初始化
+
+    ctx.createApplicationActor(new DataActorState(null, null));
 
     //TODO: 初始化cluster消息处理注册
     ctx.registerMessageHandler(MessageHandlerCollector.Factory.create(_protoHandlerList).collect());

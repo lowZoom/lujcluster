@@ -19,11 +19,10 @@ final class PreStart {
     System.out.println("] akka启动");
 
     ActorRef appRootRef = createAppRoot();
-
     ActorRef sendRef = createSendActor();
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
 
-    ContextImpl context = new ContextImpl(receiveRef, sendRef, null);
+    ContextImpl context = new ContextImpl(receiveRef, sendRef, appRootRef, null);
     for (NodeStartListener listener : _actor.getCollectResult().getStartListeners()) {
       listener.onStart(context);
     }

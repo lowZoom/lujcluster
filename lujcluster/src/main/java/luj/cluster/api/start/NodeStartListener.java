@@ -9,7 +9,7 @@ public interface NodeStartListener {
 
     void registerMessageHandler(Map<String, ?> handlerMap);
 
-//    void createActor();
+    void createApplicationActor(Object actorState);
 
     void sendMessage(String msgKey, Object msg);
 

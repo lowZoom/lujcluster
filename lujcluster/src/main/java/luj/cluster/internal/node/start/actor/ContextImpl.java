@@ -4,15 +4,17 @@ import akka.actor.ActorRef;
 import akka.event.LoggingAdapter;
 import java.util.Map;
 import luj.cluster.api.start.NodeStartListener;
+import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
 
 final class ContextImpl implements NodeStartListener.Context {
 
-  ContextImpl(ActorRef receiveRef, ActorRef sendRef, LoggingAdapter logger) {
+  ContextImpl(ActorRef receiveRef, ActorRef sendRef, ActorRef appRootRef, LoggingAdapter logger) {
     _receiveRef = receiveRef;
     _sendRef = sendRef;
 
+    _appRootRef = appRootRef;
     _logger = logger;
   }
 
@@ -22,6 +24,11 @@ final class ContextImpl implements NodeStartListener.Context {
   @Override
   public void registerMessageHandler(Map<String, ?> handlerMap) {
     _receiveRef.tell(new RegisterReceiveMsg(handlerMap), ActorRef.noSender());
+  }
+
+  @Override
+  public void createApplicationActor(Object actorState) {
+    _appRootRef.tell(new CreateAppActorMsg(actorState.getClass(), actorState), ActorRef.noSender());
   }
 
   @Override
@@ -36,6 +43,8 @@ final class ContextImpl implements NodeStartListener.Context {
 
   private final ActorRef _receiveRef;
   private final ActorRef _sendRef;
+
+  private final ActorRef _appRootRef;
 
   private final LoggingAdapter _logger;
 }

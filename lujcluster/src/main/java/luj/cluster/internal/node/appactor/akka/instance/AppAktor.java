@@ -16,7 +16,7 @@ public class AppAktor extends AbstractActor {
   @Override
   public Receive createReceive() {
     return receiveBuilder()
-
+        .matchAny(m -> System.out.println("?????? " + m))
         .build();
   }
 
