@@ -13,7 +13,7 @@ final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
   @Override
   public void apply(AppRouteMsg i) {
     Class<?> appType = i.getActorType();
-    ActorRef akkaRef = _rootAktor.getChildMap().get(appType);
+    ActorRef akkaRef = _rootAktor.getChildRefMap().get(appType);
 
     akkaRef.tell(i.getAppMsg(), ActorRef.noSender());
   }

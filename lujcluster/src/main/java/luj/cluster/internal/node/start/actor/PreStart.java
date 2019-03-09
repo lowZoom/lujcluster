@@ -4,6 +4,7 @@ import akka.actor.ActorRef;
 import luj.cluster.api.message.NodeMessageListener;
 import luj.cluster.api.start.NodeStartListener;
 import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
+import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 import luj.cluster.internal.node.message.send.actor.NodeSendActor;
 
@@ -29,7 +30,8 @@ final class PreStart {
   }
 
   private ActorRef createAppRoot() {
-    return _actor.context().actorOf(AppRootAktor.props());
+    ActorMetaMap actorMetaMap = ActorMetaMap.Factory.create(_actor.getCollectResult());
+    return _actor.context().actorOf(AppRootAktor.props(actorMetaMap));
   }
 
   private ActorRef createSendActor() {

@@ -4,9 +4,9 @@ import akka.actor.ActorRef;
 import luj.cluster.api.message.NodeMessageListener;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 
-final class MessageListenInvokerImpl implements MessageListenInvoker {
+final class NodeMessageListenInvokerImpl implements NodeMessageListenInvoker {
 
-  MessageListenInvokerImpl(NodeMessageListener messageListener, Object message,
+  NodeMessageListenInvokerImpl(NodeMessageListener messageListener, Object message,
       Object handler, NodeReceiveAktor receiveAktor) {
     _messageListener = messageListener;
 

@@ -4,7 +4,9 @@ import java.util.Map;
 import luj.game.api.data.PlayerDataLoad;
 import luj.game.internal.data.DataCmdEntry;
 import luj.game.internal.luj.cluster.data.loadreq.RequestExecPlayerCmdMsg;
+import org.springframework.stereotype.Component;
 
+@Component
 final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPlayerCmdMsg> {
 
   @Override

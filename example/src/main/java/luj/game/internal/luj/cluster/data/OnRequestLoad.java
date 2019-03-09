@@ -1,7 +1,9 @@
 package luj.game.internal.luj.cluster.data;
 
 import luj.game.internal.luj.cluster.data.loadreq.RequestLoadMsg;
+import org.springframework.stereotype.Component;
 
+@Component
 final class OnRequestLoad implements DataActorMsgHandler<RequestLoadMsg> {
 
   @Override

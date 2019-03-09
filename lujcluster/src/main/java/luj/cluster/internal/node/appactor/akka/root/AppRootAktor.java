@@ -7,15 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
 import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
+import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 
 public final class AppRootAktor extends AbstractActor {
 
-  public static Props props() {
-    return Props.create(AppRootAktor.class, () -> new AppRootAktor(new HashMap<>()));
+  public static Props props(ActorMetaMap actorMetaMap) {
+    return Props.create(AppRootAktor.class, () -> new AppRootAktor(actorMetaMap, new HashMap<>()));
   }
 
-  AppRootAktor(Map<Class<?>, ActorRef> childMap) {
-    _childMap = childMap;
+  AppRootAktor(ActorMetaMap actorMetaMap, Map<Class<?>, ActorRef> childRefMap) {
+    _actorMetaMap = actorMetaMap;
+    _childRefMap = childRefMap;
   }
 
   @Override
@@ -26,9 +28,15 @@ public final class AppRootAktor extends AbstractActor {
         .build();
   }
 
-  public Map<Class<?>, ActorRef> getChildMap() {
-    return _childMap;
+  public ActorMetaMap getActorMetaMap() {
+    return _actorMetaMap;
   }
 
-  private final Map<Class<?>, ActorRef> _childMap;
+  public Map<Class<?>, ActorRef> getChildRefMap() {
+    return _childRefMap;
+  }
+
+  private final ActorMetaMap _actorMetaMap;
+
+  private final Map<Class<?>, ActorRef> _childRefMap;
 }
