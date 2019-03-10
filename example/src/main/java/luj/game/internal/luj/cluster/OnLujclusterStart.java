@@ -18,6 +18,7 @@ final class OnLujclusterStart implements NodeStartListener {
   public void onStart(Context ctx) throws Exception {
     //TODO: 调用各个零件库初始化
 
+    //TODO: 收集数据loader
     ctx.createApplicationActor(new DataActorState(null, null));
 
     //TODO: 初始化cluster消息处理注册
@@ -39,4 +40,6 @@ final class OnLujclusterStart implements NodeStartListener {
 
   @Autowired(required = false)
   private List<GameProtoHandler<?>> _protoHandlerList;
+
+
 }
