@@ -19,7 +19,7 @@ final class OnLujclusterStart implements NodeStartListener {
     //TODO: 调用各个零件库初始化
 
     //TODO: 收集数据loader
-    ctx.createApplicationActor(new DataActorState(null, null));
+    ctx.createApplicationActor(new DataActorState(null, ));
 
     //TODO: 初始化cluster消息处理注册
     ctx.registerMessageHandler(MessageHandlerCollector.Factory.create(_protoHandlerList).collect());
