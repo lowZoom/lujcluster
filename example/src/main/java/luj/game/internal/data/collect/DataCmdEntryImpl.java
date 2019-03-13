@@ -1,6 +1,7 @@
-package luj.game.internal.data;
+package luj.game.internal.data.collect;
 
 import luj.game.api.data.PlayerDataLoad;
+import luj.game.internal.data.DataCmdEntry;
 
 final class DataCmdEntryImpl implements DataCmdEntry {
 

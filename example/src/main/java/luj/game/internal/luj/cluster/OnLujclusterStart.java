@@ -7,6 +7,8 @@ import luj.ava.spring.Internal;
 import luj.cluster.api.start.NodeStartListener;
 import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
+import luj.game.internal.data.DataCmdCollectBean;
+import luj.game.internal.data.collect.DataCmdMapCollector;
 import luj.game.internal.luj.cluster.data.DataActorState;
 import luj.game.internal.luj.cluster.message.handler.collect.MessageHandlerCollector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ final class OnLujclusterStart implements NodeStartListener {
     //TODO: 调用各个零件库初始化
 
     //TODO: 收集数据loader
-    ctx.createApplicationActor(new DataActorState(null, ));
+    ctx.createApplicationActor(createDataActor());
 
     //TODO: 初始化cluster消息处理注册
     ctx.registerMessageHandler(MessageHandlerCollector.Factory.create(_protoHandlerList).collect());
@@ -30,6 +32,10 @@ final class OnLujclusterStart implements NodeStartListener {
     }
   }
 
+  private DataActorState createDataActor() {
+    return new DataActorState(null, DataCmdMapCollector.Factory.create().collect());
+  }
+
   private <T> List<T> nonNull(List<T> list) {
     return MoreObjects.firstNonNull(list, ImmutableList.of());
   }
@@ -37,9 +43,9 @@ final class OnLujclusterStart implements NodeStartListener {
   @Autowired(required = false)
   private List<GameStartListener> _startListenerList;
 
-
   @Autowired(required = false)
   private List<GameProtoHandler<?>> _protoHandlerList;
 
-
+  @Autowired
+  private DataCmdCollectBean _dataCmdCollectBean;
 }
