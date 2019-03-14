@@ -9,7 +9,7 @@ import luj.game.api.data.PlayerDataLoad;
 import org.springframework.stereotype.Component;
 
 @Component
-final class SceneLoginCmd implements PlayerDataCommand<LoadResult> {
+public class SceneLoginCmd implements PlayerDataCommand<LoadResult> {
 
   interface LoadResult {
 

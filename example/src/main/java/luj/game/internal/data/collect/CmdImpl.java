@@ -1,9 +1,14 @@
 package luj.game.internal.data.collect;
 
-import luj.ava.reflect.generic.GenericType;
-import luj.game.internal.data.collect.DataCmdMapCollectorImpl.Cmd;
+import luj.ava.reflect.type.TypeX;
+import luj.game.api.data.PlayerDataCommand;
 
-final class CmdImpl implements Cmd {
+final class CmdImpl implements DataCmdMapCollectorImpl.Cmd {
+
+  CmdImpl(PlayerDataCommand<?> cmd, Class<?> cmdType) {
+    _cmd = cmd;
+    _cmdType = cmdType;
+  }
 
   @Override
   public Class<?> getCommandType() {
@@ -12,8 +17,13 @@ final class CmdImpl implements Cmd {
 
   @Override
   public Class<?> getLoadResultType() {
-    return GenericType.fromSubclass(_cmdType).getTypeArg(0);
+    return TypeX.of(_cmdType)
+        .getSupertype(PlayerDataCommand.class)
+        .getTypeParam(0)
+        .asClass();
   }
+
+  private final PlayerDataCommand<?> _cmd;
 
   private final Class<?> _cmdType;
 }

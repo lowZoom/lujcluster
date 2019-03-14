@@ -33,7 +33,8 @@ final class OnLujclusterStart implements NodeStartListener {
   }
 
   private DataActorState createDataActor() {
-    return new DataActorState(null, DataCmdMapCollector.Factory.create().collect());
+    return new DataActorState(null,
+        DataCmdMapCollector.Factory.create(_dataCmdCollectBean).collect());
   }
 
   private <T> List<T> nonNull(List<T> list) {
