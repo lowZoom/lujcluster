@@ -1,4 +1,4 @@
-package luj.game.internal.luj.cluster.data;
+package luj.game.internal.luj.lujcluster.actor.datacache;
 
 import luj.cluster.api.actor.ActorMessageHandler;
 

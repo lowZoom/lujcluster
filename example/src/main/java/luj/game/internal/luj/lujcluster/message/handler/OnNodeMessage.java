@@ -1,4 +1,4 @@
-package luj.game.internal.luj.cluster.message.handler;
+package luj.game.internal.luj.lujcluster.message.handler;
 
 import luj.ava.spring.Internal;
 import luj.cluster.api.message.NodeMessageListener;

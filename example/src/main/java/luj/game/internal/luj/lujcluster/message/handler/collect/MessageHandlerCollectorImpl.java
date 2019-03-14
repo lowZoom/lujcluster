@@ -1,4 +1,4 @@
-package luj.game.internal.luj.cluster.message.handler.collect;
+package luj.game.internal.luj.lujcluster.message.handler.collect;
 
 import java.util.List;
 import java.util.Map;

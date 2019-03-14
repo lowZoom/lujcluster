@@ -1,4 +1,4 @@
-package luj.game.internal.luj.cluster;
+package luj.game.internal.luj.lujcluster;
 
 import luj.cluster.api.start.NodeStartListener;
 import luj.game.api.start.GameStartListener;

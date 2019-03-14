@@ -1,4 +1,4 @@
-package luj.game.internal.luj.cluster;
+package luj.game.internal.luj.lujcluster;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
@@ -9,8 +9,8 @@ import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
 import luj.game.internal.data.DataCmdCollectBean;
 import luj.game.internal.data.collect.DataCmdMapCollector;
-import luj.game.internal.luj.cluster.data.DataActorState;
-import luj.game.internal.luj.cluster.message.handler.collect.MessageHandlerCollector;
+import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
+import luj.game.internal.luj.lujcluster.message.handler.collect.MessageHandlerCollector;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Internal

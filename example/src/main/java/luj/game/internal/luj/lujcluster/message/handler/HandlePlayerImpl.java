@@ -1,9 +1,9 @@
-package luj.game.internal.luj.cluster.message.handler;
+package luj.game.internal.luj.lujcluster.message.handler;
 
 import luj.cluster.api.message.NodeMessageListener;
 import luj.game.api.data.PlayerDataCommand;
 import luj.game.api.proto.GameProtoHandler;
-import luj.game.internal.luj.cluster.data.loadreq.RequestExecPlayerCmdMsg;
+import luj.game.internal.luj.lujcluster.actor.datacache.execmd.RequestExecPlayerCmdMsg;
 
 final class HandlePlayerImpl implements GameProtoHandler.Player {
 
