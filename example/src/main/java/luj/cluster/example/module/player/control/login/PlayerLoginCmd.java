@@ -19,8 +19,8 @@ public class PlayerLoginCmd implements PlayerDataCommand<PlayerDat> {
 //  }
 
   @Override
-  public void execute(Context<PlayerDat> ctx) {
-    PlayerDat playerDat = ctx.data();
+  public void execute(Context ctx) {
+    PlayerDat playerDat = ctx.data(this);
 
     if (playerDat == null) {
 

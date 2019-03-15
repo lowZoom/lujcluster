@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.datacache.execmd;
+package luj.game.internal.luj.lujcluster.actor.datacache.reqexec;
 
 import java.util.Map;
 import luj.cache.api.container.CacheContainer;
@@ -30,6 +30,6 @@ final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPla
     loadReq.load(null);
 
     CacheContainer dataCache = actor.getDataCache();
-    dataCache.addRequest(cacheReq);
+    dataCache.request(cacheReq);
   }
 }

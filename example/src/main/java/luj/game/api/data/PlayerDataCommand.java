@@ -2,9 +2,9 @@ package luj.game.api.data;
 
 public interface PlayerDataCommand<D> {
 
-  interface Context<D> {
+  interface Context {
 
-    D data();
+    <D> D data(PlayerDataCommand<D> cmd);
 
     Player player();
   }
@@ -13,5 +13,5 @@ public interface PlayerDataCommand<D> {
 
   }
 
-  void execute(Context<D> ctx);
+  void execute(Context ctx);
 }

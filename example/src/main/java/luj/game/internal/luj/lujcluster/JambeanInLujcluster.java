@@ -2,9 +2,9 @@ package luj.game.internal.luj.lujcluster;
 
 import luj.cache.api.CacheSession;
 
-public class JamverInLujcluster {
+public class JambeanInLujcluster {
 
-  public JamverInLujcluster(CacheSession lujcache) {
+  public JambeanInLujcluster(CacheSession lujcache) {
     _lujcache = lujcache;
   }
 

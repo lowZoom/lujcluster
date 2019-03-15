@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.datacache.execmd;
+package luj.game.internal.luj.lujcluster.actor.datacache.reqexec;
 
 public class RequestExecPlayerCmdMsg {
 

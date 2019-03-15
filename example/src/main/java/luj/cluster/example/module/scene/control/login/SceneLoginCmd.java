@@ -30,8 +30,8 @@ public class SceneLoginCmd implements PlayerDataCommand<LoadResult> {
   }
 
   @Override
-  public void execute(Context<LoadResult> ctx) {
-    LoadResult data = ctx.data();
+  public void execute(Context ctx) {
+    LoadResult data = ctx.data(this);
 
 
     SceneDat scene = data.scene();
