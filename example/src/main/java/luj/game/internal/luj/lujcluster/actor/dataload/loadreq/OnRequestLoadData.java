@@ -1,6 +1,8 @@
 package luj.game.internal.luj.lujcluster.actor.dataload.loadreq;
 
+import com.google.common.collect.ImmutableList;
 import luj.cluster.api.message.NodeMessageListener.Actor;
+import luj.game.internal.luj.lujcluster.actor.datacache.loadrsp.FinishLoadDataMsg;
 import luj.game.internal.luj.lujcluster.actor.dataload.DataLoadActor;
 import luj.game.internal.luj.lujcluster.actor.dataload.DataLoadActorReceive;
 
@@ -16,6 +18,6 @@ final class OnRequestLoadData implements DataLoadActorReceive<RequestLoadDataMsg
     DataLoadActor loadActor = ctx.getActor(this);
 
     Actor cacheActor = loadActor.getCacheActor();
-    cacheActor.tell(new RequestLoadDataMsg(msg.getDataType(), msg.getDataId()));
+    cacheActor.tell(new FinishLoadDataMsg(ImmutableList.of()));
   }
 }

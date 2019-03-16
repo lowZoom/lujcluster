@@ -1,21 +1,16 @@
 package luj.game.internal.luj.lujcluster.actor.dataload.loadreq;
 
+import luj.game.internal.luj.lujcache.LujcacheKey;
+
 public class RequestLoadDataMsg {
 
-  public RequestLoadDataMsg(Class<?> dataType, String dataId) {
-    _dataType = dataType;
-    _dataId = dataId;
+  public RequestLoadDataMsg(LujcacheKey dataKey) {
+    _dataKey = dataKey;
   }
 
-  public Class<?> getDataType() {
-    return _dataType;
+  public LujcacheKey getDataKey() {
+    return _dataKey;
   }
 
-  public String getDataId() {
-    return _dataId;
-  }
-
-  private final Class<?> _dataType;
-
-  private final String _dataId;
+  private final LujcacheKey _dataKey;
 }
