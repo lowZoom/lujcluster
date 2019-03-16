@@ -1,13 +1,13 @@
 package luj.game.internal.luj.lujcluster.actor.datacache.loadrsp;
 
 import java.util.List;
-import luj.game.internal.luj.lujcache.LujcacheKey;
+import luj.cache.api.container.CacheKey;
 
 public class FinishLoadDataMsg {
 
   interface FinishItem {
 
-    LujcacheKey getKey();
+    CacheKey getKey();
 
     boolean isPresent();
 

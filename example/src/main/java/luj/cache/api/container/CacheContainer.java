@@ -3,11 +3,9 @@ package luj.cache.api.container;
 import luj.cache.api.request.CacheRequest;
 import luj.cache.api.request.CacheRequeue;
 
-public interface CacheContainer<K> {
+public interface CacheContainer<T> {
 
-  CacheEntry getEntry(K key);
-
-  boolean contains(K key);
+  CacheEntry getEntry(CacheKey<T> key);
 
   void request(CacheRequest req);
 

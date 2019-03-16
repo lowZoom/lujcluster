@@ -1,51 +1,28 @@
 package luj.cache.internal.container.request;
 
-import java.util.ArrayList;
 import java.util.List;
-import luj.cache.api.container.CacheContainer;
 import luj.cache.internal.container.CacheContainerState;
-import luj.cache.internal.request.tree.RequestTree;
-import luj.cache.internal.request.tree.walk.RequestTreeWalker;
+import luj.cache.internal.container.request.miss.MissingEntryCollector;
 import org.omg.CORBA.NO_IMPLEMENT;
 
 final class CacheDataRequestorImpl implements CacheDataRequestor {
 
-  CacheDataRequestorImpl(CacheContainerState containerState, RequestTree requestTree) {
+  CacheDataRequestorImpl(CacheContainerState containerState) {
     _containerState = containerState;
-    _requestTree = requestTree;
   }
 
   @Override
   public void request() {
-    List<Object> missList = collectMiss();
+    List<Object> missList = MissingEntryCollector.Factory.create().collect();
 
     if (!missList.isEmpty()) {
       for (Object key : missList) {
         triggerListener(key);
       }
-
       return;
     }
 
     _containerState.getRequestReadyListener().onReady(null);
-  }
-
-  private List<Object> collectMiss() {
-    List<Object> missList = new ArrayList<>();
-    RequestTreeWalker.Factory.create().walk(_requestTree, ctx -> onMissWalk(ctx, missList));
-    return missList;
-  }
-
-  private void onMissWalk(RequestTreeWalker.StepContext ctx, List<Object> missList) {
-    RequestTree.Node node = ctx.getNode();
-
-    Object cacheKey = node.getCacheKey();
-    CacheContainer cacheContainer = node.getCacheContainer();
-    if (cacheContainer.contains(cacheKey)) {
-      return;
-    }
-
-    missList.add(cacheKey);
   }
 
   private void triggerListener(Object key) {
@@ -53,6 +30,4 @@ final class CacheDataRequestorImpl implements CacheDataRequestor {
   }
 
   private final CacheContainerState _containerState;
-
-  private final RequestTree _requestTree;
 }

@@ -5,10 +5,12 @@ import static com.google.common.base.Preconditions.checkState;
 import luj.cache.api.container.CacheContainer;
 import luj.cache.api.container.CacheEntry;
 import luj.cache.api.container.CacheEntry.Presence;
-import luj.game.internal.luj.lujcache.LujcacheKey;
+import luj.cache.api.container.CacheKey;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorMsgHandler;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
+import org.springframework.stereotype.Component;
 
+@Component
 final class OnFinishLoadData implements DataActorMsgHandler<FinishLoadDataMsg> {
 
   @Override
@@ -19,7 +21,7 @@ final class OnFinishLoadData implements DataActorMsgHandler<FinishLoadDataMsg> {
     FinishLoadDataMsg msg = ctx.getMessage(this);
 
     for (FinishLoadDataMsg.FinishItem item : msg.getItemList()) {
-      LujcacheKey key = item.getKey();
+      CacheKey key = item.getKey();
 
       CacheEntry entry = cache.getEntry(key);
       checkState(entry.getPresence() == Presence.LOADING);

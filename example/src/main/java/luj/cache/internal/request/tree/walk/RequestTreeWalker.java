@@ -1,6 +1,6 @@
 package luj.cache.internal.request.tree.walk;
 
-import luj.cache.internal.request.tree.RequestTree;
+import luj.cache.internal.request.tree.RequestTreeState;
 import org.omg.CORBA.NO_IMPLEMENT;
 
 public interface RequestTreeWalker {
@@ -15,13 +15,13 @@ public interface RequestTreeWalker {
   @FunctionalInterface
   interface StepListener {
 
-    void onStep(StepContext ctx);
+    void onStep(Node node);
   }
 
-  interface StepContext {
+  interface Node {
 
-    RequestTree.Node getNode();
+    Object getCacheKey();
   }
 
-  void walk(RequestTree tree, StepListener listener);
+  void walk(RequestTreeState tree, StepListener listener);
 }
