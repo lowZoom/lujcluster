@@ -8,9 +8,9 @@ import luj.cache.api.request.CacheRequeue;
 import luj.cache.internal.container.request.CacheDataRequestor;
 import org.omg.CORBA.NO_IMPLEMENT;
 
-final class CacheContainerImpl<K> implements CacheContainer<K> {
+public final class CacheContainerImpl<K> implements CacheContainer<K> {
 
-  CacheContainerImpl(CacheContainerState containerState) {
+  public CacheContainerImpl(CacheContainerState containerState) {
     _containerState = containerState;
   }
 

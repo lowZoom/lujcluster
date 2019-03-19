@@ -15,7 +15,6 @@ final class PlayerLoginHandler implements GameProtoHandler<PlayerLoginMsg> {
 
     //TODO: 读取玩家基本数据
 //    ctx.player().executeDataCommand(PlayerLoginCmd.class);
-
     ctx.player().executeDataCommand(SceneLoginCmd.class);
 
 //    ctx.fireEvent(new PlayerLoginEvent(proto.getCharUid()));

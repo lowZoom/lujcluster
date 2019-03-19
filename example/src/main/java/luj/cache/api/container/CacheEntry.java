@@ -11,10 +11,13 @@ public interface CacheEntry {
     ABSENT,
   }
 
-
-  void setPresence(Presence value);
+  void setPresence(Presence presence);
 
   Presence getPresence();
+
+  void setLock(boolean lock);
+
+  boolean isLock();
 
   void setData(Object data);
 

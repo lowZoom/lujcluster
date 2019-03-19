@@ -3,6 +3,8 @@ package luj.game.internal.luj.lujcluster.actor.datacache.reqexec;
 import java.util.Map;
 import luj.cache.api.container.CacheContainer;
 import luj.cache.api.request.CacheRequest;
+import luj.cache.internal.request.CacheRequestImpl;
+import luj.cluster.example.module.scene.data.SceneObjectDat;
 import luj.game.api.data.PlayerDataLoad;
 import luj.game.internal.data.DataCmdEntry;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorMsgHandler;
@@ -27,7 +29,11 @@ final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPla
 
     PlayerDataLoad<?> loadReq = cmdEntry.getRequestor();
     CacheRequest cacheReq = null;
-    loadReq.load(null);
+//    loadReq.load(null);
+
+    //FIXME: TEMP
+    cacheReq = new CacheRequestImpl();
+    cacheReq.add(SceneObjectDat.class, "123");
 
     CacheContainer dataCache = actor.getDataCache();
     dataCache.request(cacheReq);

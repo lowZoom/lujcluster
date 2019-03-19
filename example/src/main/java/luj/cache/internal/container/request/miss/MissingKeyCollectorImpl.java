@@ -3,9 +3,9 @@ package luj.cache.internal.container.request.miss;
 import java.util.ArrayList;
 import java.util.List;
 
-final class MissingEntryCollectorImpl implements MissingEntryCollector {
+final class MissingKeyCollectorImpl implements MissingKeyCollector {
 
-  MissingEntryCollectorImpl(RequestNode requestRoot) {
+  MissingKeyCollectorImpl(RequestNode requestRoot) {
     _requestRoot = requestRoot;
   }
 

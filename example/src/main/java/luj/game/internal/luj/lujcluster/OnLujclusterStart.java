@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import luj.ava.spring.Internal;
+import luj.cache.api.container.CacheContainer;
 import luj.cluster.api.start.NodeStartListener;
 import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
@@ -33,7 +34,8 @@ final class OnLujclusterStart implements NodeStartListener {
   }
 
   private DataActorState createDataActor() {
-    return new DataActorState(null,
+    CacheContainer cache = null;// LujCache.createCache();
+    return new DataActorState(cache,
         DataCmdMapCollector.Factory.create(_dataCmdCollectBean).collect());
   }
 

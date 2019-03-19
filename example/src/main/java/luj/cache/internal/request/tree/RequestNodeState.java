@@ -5,7 +5,7 @@ import luj.cache.api.container.CacheContainer;
 
 public class RequestNodeState {
 
-  RequestNodeState(Class<?> dataType, Function<Object, Object> idGetter,
+  public RequestNodeState(Class<?> dataType, Function<Object, Object> idGetter,
       CacheContainer cacheContainer) {
     _dataType = dataType;
     _idGetter = idGetter;
