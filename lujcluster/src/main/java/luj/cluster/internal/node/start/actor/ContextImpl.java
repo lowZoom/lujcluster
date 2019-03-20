@@ -10,11 +10,14 @@ import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
 
 final class ContextImpl implements NodeStartListener.Context {
 
-  ContextImpl(ActorRef receiveRef, ActorRef sendRef, ActorRef appRootRef, LoggingAdapter logger) {
+  ContextImpl(ActorRef receiveRef, ActorRef sendRef,
+      ActorRef appRootRef, NodeStartActor startActor, LoggingAdapter logger) {
     _receiveRef = receiveRef;
     _sendRef = sendRef;
 
     _appRootRef = appRootRef;
+
+    _startActor = startActor;
     _logger = logger;
   }
 
@@ -36,6 +39,12 @@ final class ContextImpl implements NodeStartListener.Context {
     _sendRef.tell(new NodeSendStartMsg(msgKey, msg), ActorRef.noSender());
   }
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public <T> T getStartParam() {
+    return (T) _startActor.getStartParam();
+  }
+
   @Override
   public LoggingAdapter getLogger() {
     return _logger;
@@ -46,5 +55,6 @@ final class ContextImpl implements NodeStartListener.Context {
 
   private final ActorRef _appRootRef;
 
+  private final NodeStartActor _startActor;
   private final LoggingAdapter _logger;
 }

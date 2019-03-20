@@ -23,7 +23,7 @@ final class PreStart {
     ActorRef sendRef = createSendActor();
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
 
-    ContextImpl context = new ContextImpl(receiveRef, sendRef, appRootRef, null);
+    ContextImpl context = new ContextImpl(receiveRef, sendRef, appRootRef, _actor, null);
     for (NodeStartListener listener : _actor.getCollectResult().getStartListeners()) {
       listener.onStart(context);
     }

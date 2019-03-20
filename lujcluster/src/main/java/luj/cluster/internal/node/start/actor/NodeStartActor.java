@@ -6,12 +6,13 @@ import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 public final class NodeStartActor extends AbstractActor {
 
-  public static Props props(ClusterBeanCollector.Result collectResult) {
-    return Props.create(NodeStartActor.class, () -> new NodeStartActor(collectResult));
+  public static Props props(ClusterBeanCollector.Result collectResult, Object startParam) {
+    return Props.create(NodeStartActor.class, () -> new NodeStartActor(collectResult, startParam));
   }
 
-  private NodeStartActor(ClusterBeanCollector.Result collectResult) {
+  NodeStartActor(ClusterBeanCollector.Result collectResult, Object startParam) {
     _collectResult = collectResult;
+    _startParam = startParam;
   }
 
   @Override
@@ -28,5 +29,11 @@ public final class NodeStartActor extends AbstractActor {
     return _collectResult;
   }
 
+  Object getStartParam() {
+    return _startParam;
+  }
+
   private final ClusterBeanCollector.Result _collectResult;
+
+  private final Object _startParam;
 }

@@ -6,8 +6,8 @@ public interface ClusterNodeStarter {
 
   interface Factory {
 
-    static ClusterNodeStarter create(ApplicationContext appContext) {
-      return new ClusterNodeStarterImpl(appContext);
+    static ClusterNodeStarter create(ApplicationContext appContext, Object startParam) {
+      return new ClusterNodeStarterImpl(appContext, startParam);
     }
   }
 

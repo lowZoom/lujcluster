@@ -13,6 +13,8 @@ public interface NodeStartListener {
 
     void sendMessage(String msgKey, Object msg);
 
+    <T> T getStartParam();
+
     LoggingAdapter getLogger();
   }
 

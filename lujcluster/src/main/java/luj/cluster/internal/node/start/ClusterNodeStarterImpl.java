@@ -8,8 +8,9 @@ import org.springframework.context.ApplicationContext;
 
 final class ClusterNodeStarterImpl implements ClusterNodeStarter {
 
-  ClusterNodeStarterImpl(ApplicationContext appContext) {
+  ClusterNodeStarterImpl(ApplicationContext appContext, Object startParam) {
     _appContext = appContext;
+    _startParam = startParam;
   }
 
   @Override
@@ -20,8 +21,10 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
     ClusterBeanCollector.Result beanCollect =
         ClusterBeanCollector.Factory.create(_appContext).collect();
 
-    sys.actorOf(NodeStartActor.props(beanCollect));
+    sys.actorOf(NodeStartActor.props(beanCollect, _startParam));
   }
 
   private final ApplicationContext _appContext;
+
+  private final Object _startParam;
 }
