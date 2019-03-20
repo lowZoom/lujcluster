@@ -1,8 +1,12 @@
 package luj.cache.api.request;
 
+import luj.cache.internal.request.tree.RequestNodeState;
+
 public interface CacheRequest {
 
-  void add(Class<?> dataType, Object dataId);
+  void addNode(Class<?> dataType, Object dataId);
+
+  RequestNodeState getRootNode();
 
   <T> T getParam();
 }

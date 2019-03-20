@@ -21,8 +21,6 @@ final class GameServerStarterImpl implements GameServerStarter {
       jamCtx.register(InjectConf.class);
       jamCtx.refresh();
 
-      //TODO: 创建缓存实例，传入启动参数
-
       LujCluster.start(jamCtx)
           .startNode(createStartParam(jamCtx));
     }

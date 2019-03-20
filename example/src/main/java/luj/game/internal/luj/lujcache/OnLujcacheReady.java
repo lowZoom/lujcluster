@@ -1,12 +1,13 @@
 package luj.game.internal.luj.lujcache;
 
+import luj.ava.spring.Internal;
 import luj.cache.api.listener.CacheReadyListener;
 import luj.cache.api.request.CacheRequest;
 import luj.cluster.api.message.NodeMessageListener.Actor;
 import luj.game.api.data.PlayerDataCommand;
 import luj.game.internal.luj.lujcluster.actor.cmd.exec.ExecutePlayerCmdMsg;
 
-
+@Internal
 final class OnLujcacheReady implements CacheReadyListener {
 
   @Override

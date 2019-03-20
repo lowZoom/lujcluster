@@ -1,8 +1,10 @@
 package luj.game.internal.luj.lujcache;
 
+import luj.ava.spring.Internal;
 import luj.cache.api.listener.CacheMissListener;
 import luj.game.internal.luj.lujcluster.actor.dataload.loadreq.RequestLoadDataMsg;
 
+@Internal
 final class OnLujcacheMiss implements CacheMissListener<LujcacheKey> {
 
   @Override

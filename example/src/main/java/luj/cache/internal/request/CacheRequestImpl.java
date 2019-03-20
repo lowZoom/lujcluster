@@ -6,8 +6,13 @@ import luj.cache.internal.request.tree.RequestNodeState;
 public class CacheRequestImpl implements CacheRequest {
 
   @Override
-  public void add(Class<?> dataType, Object dataId) {
-    _reqNode = new RequestNodeState(dataType, o->dataId, null);
+  public void addNode(Class<?> dataType, Object dataId) {
+    _reqNode = new RequestNodeState(dataType, o -> dataId);
+  }
+
+  @Override
+  public RequestNodeState getRootNode() {
+    return _reqNode;
   }
 
   @Override

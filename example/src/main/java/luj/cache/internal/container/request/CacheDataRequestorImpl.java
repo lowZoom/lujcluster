@@ -4,20 +4,27 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.util.List;
 import luj.cache.api.container.CacheEntry;
+import luj.cache.internal.container.CacheContainerImpl;
 import luj.cache.internal.container.CacheContainerState;
 import luj.cache.internal.container.request.hit.HitEntryCollector;
 import luj.cache.internal.container.request.miss.MissingKeyCollector;
-import org.omg.CORBA.NO_IMPLEMENT;
+import luj.cache.internal.request.tree.RequestNodeState;
 
 final class CacheDataRequestorImpl implements CacheDataRequestor {
 
-  CacheDataRequestorImpl(CacheContainerState containerState) {
+  CacheDataRequestorImpl(CacheContainerState containerState,
+      CacheContainerImpl containerImpl, RequestNodeState requestRootNode) {
     _containerState = containerState;
+    _containerImpl = containerImpl;
+
+    _requestRootNode = requestRootNode;
   }
 
   @Override
   public void request() {
-    List<Object> missList = MissingKeyCollector.Factory.create().collect();
+    List<Object> missList = MissingKeyCollector.Factory
+        .create(_containerImpl, _requestRootNode).collect();
+
     if (!missList.isEmpty()) {
       for (Object key : missList) {
         triggerListener(key);
@@ -39,8 +46,12 @@ final class CacheDataRequestorImpl implements CacheDataRequestor {
   }
 
   private void triggerListener(Object key) {
-    throw new NO_IMPLEMENT("triggerListener尚未实现");
+
+    _containerState.getBeanCollect().getRequestEntryMissListener().onMiss(null);
   }
 
   private final CacheContainerState _containerState;
+  private final CacheContainerImpl _containerImpl;
+
+  private final RequestNodeState _requestRootNode;
 }

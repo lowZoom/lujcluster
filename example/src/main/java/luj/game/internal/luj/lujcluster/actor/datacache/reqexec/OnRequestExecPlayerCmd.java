@@ -33,7 +33,7 @@ final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPla
 
     //FIXME: TEMP
     cacheReq = new CacheRequestImpl();
-    cacheReq.add(SceneObjectDat.class, "123");
+    cacheReq.addNode(SceneObjectDat.class, "123");
 
     CacheContainer dataCache = actor.getDataCache();
     dataCache.request(cacheReq);

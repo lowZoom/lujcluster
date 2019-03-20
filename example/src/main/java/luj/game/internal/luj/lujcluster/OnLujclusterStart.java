@@ -4,7 +4,6 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import luj.ava.spring.Internal;
-import luj.cache.api.container.CacheContainer;
 import luj.cluster.api.start.NodeStartListener;
 import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
@@ -20,9 +19,10 @@ final class OnLujclusterStart implements NodeStartListener {
   @Override
   public void onStart(Context ctx) throws Exception {
     //TODO: 调用各个零件库初始化
+    JambeanInLujcluster param = ctx.getStartParam();
 
     //TODO: 收集数据loader
-    ctx.createApplicationActor(createDataActor());
+    ctx.createApplicationActor(createDataActor(param));
 
     //TODO: 初始化cluster消息处理注册
     ctx.registerMessageHandler(MessageHandlerCollector.Factory.create(_protoHandlerList).collect());
@@ -33,9 +33,8 @@ final class OnLujclusterStart implements NodeStartListener {
     }
   }
 
-  private DataActorState createDataActor() {
-    CacheContainer cache = null;// LujCache.createCache();
-    return new DataActorState(cache,
+  private DataActorState createDataActor(JambeanInLujcluster param) {
+    return new DataActorState(param.getCache(),
         DataCmdMapCollector.Factory.create(_dataCmdCollectBean).collect());
   }
 

@@ -1,14 +1,16 @@
 package luj.cache.internal.container.request;
 
-import luj.cache.internal.request.tree.RequestTreeState;
-import org.omg.CORBA.NO_IMPLEMENT;
+import luj.cache.internal.container.CacheContainerImpl;
+import luj.cache.internal.container.CacheContainerState;
+import luj.cache.internal.request.tree.RequestNodeState;
 
 public interface CacheDataRequestor {
 
   interface Factory {
 
-    static CacheDataRequestor create(RequestTreeState tree) {
-      throw new NO_IMPLEMENT("create尚未实现");
+    static CacheDataRequestor create(CacheContainerState containerState,
+        CacheContainerImpl containerImpl, RequestNodeState reqRootNode) {
+      return new CacheDataRequestorImpl(containerState, containerImpl, reqRootNode);
     }
   }
 
