@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 public enum LujCluster {
   ;
 
-  public static ClusterSession start(ApplicationContext appContext){
+  public static ClusterSession start(ApplicationContext appContext) {
     return ClusterSessionFactory.get(appContext).create();
   }
 }

@@ -2,10 +2,10 @@ package luj.cluster.internal.node.appactor.akka.instance;
 
 import akka.actor.AbstractActor;
 import akka.actor.Props;
-import luj.cluster.internal.node.appactor.akka.instance.handle.AppMessageHandleInvoker;
+import luj.cluster.internal.node.appactor.akka.instance.handle.message.AppMessageHandleInvoker;
 import luj.cluster.internal.node.appactor.meta.ActorMeta;
 
-public class AppAktor extends AbstractActor {
+public final class AppAktor extends AbstractActor {
 
   public static Props props(Object state, ActorMeta meta) {
     return Props.create(AppAktor.class, () -> new AppAktor(state, meta));
@@ -14,6 +14,11 @@ public class AppAktor extends AbstractActor {
   AppAktor(Object state, ActorMeta meta) {
     _state = state;
     _meta = meta;
+  }
+
+  @Override
+  public void preStart() throws Exception {
+    _meta.getPrestartHandler().onHandle();
   }
 
   @Override

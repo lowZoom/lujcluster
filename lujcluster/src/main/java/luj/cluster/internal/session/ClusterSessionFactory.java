@@ -9,7 +9,5 @@ public interface ClusterSessionFactory {
     return new ClusterSessionFactoryImpl(appContext);
   }
 
-
-
   ClusterSession create();
 }

@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.appactor.akka.instance.handle;
+package luj.cluster.internal.node.appactor.akka.instance.handle.message;
 
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 
