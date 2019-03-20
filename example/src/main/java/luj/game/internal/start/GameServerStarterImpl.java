@@ -1,7 +1,7 @@
 package luj.game.internal.start;
 
+import luj.cache.api.CacheSession;
 import luj.cache.api.LujCache;
-import luj.cache.api.container.CacheContainer;
 import luj.cluster.api.LujCluster;
 import luj.game.internal.luj.lujcluster.JambeanInLujcluster;
 import org.springframework.context.ApplicationContext;
@@ -27,8 +27,8 @@ final class GameServerStarterImpl implements GameServerStarter {
   }
 
   private JambeanInLujcluster createStartParam(ApplicationContext jamCtx) {
-    CacheContainer<String> cache = LujCache.createCache(jamCtx);
-    return new JambeanInLujcluster(cache);
+    CacheSession lujcache = LujCache.start(jamCtx);
+    return new JambeanInLujcluster(lujcache);
   }
 
   private final ApplicationContext _appContext;

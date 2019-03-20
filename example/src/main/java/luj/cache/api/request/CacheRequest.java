@@ -7,6 +7,4 @@ public interface CacheRequest {
   void addNode(Class<?> dataType, Object dataId);
 
   RequestNodeState getRootNode();
-
-  <T> T getParam();
 }

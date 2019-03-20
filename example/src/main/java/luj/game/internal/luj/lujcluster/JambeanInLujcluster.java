@@ -1,16 +1,16 @@
 package luj.game.internal.luj.lujcluster;
 
-import luj.cache.api.container.CacheContainer;
+import luj.cache.api.CacheSession;
 
 public class JambeanInLujcluster {
 
-  public JambeanInLujcluster(CacheContainer<String> cache) {
-    _cache = cache;
+  public JambeanInLujcluster(CacheSession lujcache) {
+    _lujcache = lujcache;
   }
 
-  public CacheContainer<String> getCache() {
-    return _cache;
+  public CacheSession getLujcache() {
+    return _lujcache;
   }
 
-  private final CacheContainer<String> _cache;
+  private final CacheSession _lujcache;
 }

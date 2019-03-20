@@ -1,7 +1,8 @@
-package luj.cache.internal.container.request.miss;
+package luj.cache.internal.container.request.miss.collect;
 
 import java.util.ArrayList;
 import java.util.List;
+import luj.cache.api.container.CacheKey;
 
 final class MissingKeyCollectorImpl implements MissingKeyCollector {
 
@@ -10,13 +11,13 @@ final class MissingKeyCollectorImpl implements MissingKeyCollector {
   }
 
   @Override
-  public List<Object> collect() {
-    List<Object> missList = new ArrayList<>();
+  public List<CacheKey> collect() {
+    List<CacheKey> missList = new ArrayList<>();
     walkRequest(_requestRoot, missList);
     return missList;
   }
 
-  private void walkRequest(RequestNode node, List<Object> missList) {
+  private void walkRequest(RequestNode node, List<CacheKey> missList) {
     Entry entry = node.getCacheEntry();
     if (entry.isMissing()) {
       missList.add(entry.getKey());
@@ -38,7 +39,7 @@ final class MissingKeyCollectorImpl implements MissingKeyCollector {
 
     boolean isMissing();
 
-    Object getKey();
+    CacheKey getKey();
   }
 
   private final RequestNode _requestRoot;

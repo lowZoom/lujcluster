@@ -22,7 +22,7 @@ final class OnLujclusterStart implements NodeStartListener {
     JambeanInLujcluster param = ctx.getStartParam();
 
     //TODO: 收集数据loader
-    ctx.createApplicationActor(createDataActor(param));
+    ctx.createApplicationActor(dataCache(param));
 
     //TODO: 初始化cluster消息处理注册
     ctx.registerMessageHandler(MessageHandlerCollector.Factory.create(_protoHandlerList).collect());
@@ -33,8 +33,8 @@ final class OnLujclusterStart implements NodeStartListener {
     }
   }
 
-  private DataActorState createDataActor(JambeanInLujcluster param) {
-    return new DataActorState(param.getCache(),
+  private DataActorState dataCache(JambeanInLujcluster param) {
+    return new DataActorState(param.getLujcache().createCache(null),
         DataCmdMapCollector.Factory.create(_dataCmdCollectBean).collect());
   }
 

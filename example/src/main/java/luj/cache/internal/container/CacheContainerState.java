@@ -7,21 +7,28 @@ import luj.cache.internal.session.inject.CacheBeanCollector;
 
 public class CacheContainerState {
 
-  public CacheContainerState(CacheBeanCollector.Result beanCollect,
-      Map<CacheKey<?>, CacheEntry> cacheImpl) {
-    _beanCollect = beanCollect;
+  public CacheContainerState(Map<CacheKey<?>, CacheEntry> cacheImpl,
+      CacheBeanCollector.Result beanCollect, Object cacheParam) {
     _cacheImpl = cacheImpl;
-  }
 
-  public CacheBeanCollector.Result getBeanCollect() {
-    return _beanCollect;
+    _beanCollect = beanCollect;
+    _cacheParam = cacheParam;
   }
 
   public Map<CacheKey<?>, CacheEntry> getCacheImpl() {
     return _cacheImpl;
   }
 
-  private final CacheBeanCollector.Result _beanCollect;
+  public CacheBeanCollector.Result getBeanCollect() {
+    return _beanCollect;
+  }
+
+  public Object getCacheParam() {
+    return _cacheParam;
+  }
 
   private final Map<CacheKey<?>, CacheEntry> _cacheImpl;
+
+  private final CacheBeanCollector.Result _beanCollect;
+  private final Object _cacheParam;
 }

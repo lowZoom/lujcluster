@@ -1,4 +1,4 @@
-package luj.cache.internal.container.request.miss;
+package luj.cache.internal.container.request.miss.collect;
 
 import luj.cache.api.container.CacheContainer;
 import luj.cache.api.container.CacheKey;
@@ -16,7 +16,7 @@ final class EntryImpl implements MissingKeyCollectorImpl.Entry {
   }
 
   @Override
-  public Object getKey() {
+  public CacheKey getKey() {
     return _cacheKey;
   }
 

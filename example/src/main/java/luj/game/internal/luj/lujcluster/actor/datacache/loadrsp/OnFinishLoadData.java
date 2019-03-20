@@ -2,6 +2,7 @@ package luj.game.internal.luj.lujcluster.actor.datacache.loadrsp;
 
 import static com.google.common.base.Preconditions.checkState;
 
+import luj.ava.spring.Internal;
 import luj.cache.api.container.CacheContainer;
 import luj.cache.api.container.CacheEntry;
 import luj.cache.api.container.CacheEntry.Presence;
@@ -10,7 +11,7 @@ import luj.game.internal.luj.lujcluster.actor.datacache.DataActorMsgHandler;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
 import org.springframework.stereotype.Component;
 
-@Component
+@Internal
 final class OnFinishLoadData implements DataActorMsgHandler<FinishLoadDataMsg> {
 
   @Override

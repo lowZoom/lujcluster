@@ -1,22 +1,19 @@
 package luj.game.internal.luj.lujcache;
 
 import luj.ava.spring.Internal;
+import luj.cache.api.container.CacheKey;
 import luj.cache.api.listener.CacheMissListener;
 import luj.game.internal.luj.lujcluster.actor.dataload.loadreq.RequestLoadDataMsg;
 
 @Internal
-final class OnLujcacheMiss implements CacheMissListener<LujcacheKey> {
+final class OnLujcacheMiss implements CacheMissListener {
 
   @Override
   public void onMiss(Context ctx) {
-    //TODO: 怎么拿到 loadactor 用于后面发送消息
-
-    JambeanInLujcache appBean = ctx.getApplicationBean();
+    JamreqInLujcache param = ctx.getRequestParam();
 
     //TODO: 发送 读取数据 消息
-
-    LujcacheKey cacheKey = ctx.getKey(this);
-    appBean.getLoadActor().tell(new RequestLoadDataMsg(cacheKey));
-
+    CacheKey cacheKey = ctx.getMissingKey();
+    param.getLoadActor().tell(new RequestLoadDataMsg(cacheKey));
   }
 }

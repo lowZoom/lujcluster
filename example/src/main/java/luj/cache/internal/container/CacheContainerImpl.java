@@ -14,7 +14,7 @@ public final class CacheContainerImpl<K> implements CacheContainer<K> {
   }
 
   @Override
-  public void request(CacheRequest req) {
+  public void request(CacheRequest req, Object param) {
     CacheDataRequestor.Factory.create(_containerState, this, req.getRootNode()).request();
   }
 

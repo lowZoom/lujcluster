@@ -9,8 +9,8 @@ public interface CacheDataRequestor {
   interface Factory {
 
     static CacheDataRequestor create(CacheContainerState containerState,
-        CacheContainerImpl containerImpl, RequestNodeState reqRootNode) {
-      return new CacheDataRequestorImpl(containerState, containerImpl, reqRootNode);
+        CacheContainerImpl containerImpl, RequestNodeState reqRootNode, Object reqParam) {
+      return new CacheDataRequestorImpl(containerState, containerImpl, reqRootNode, reqParam);
     }
   }
 

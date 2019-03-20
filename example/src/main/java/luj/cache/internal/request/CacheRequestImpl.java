@@ -3,6 +3,7 @@ package luj.cache.internal.request;
 import luj.cache.api.request.CacheRequest;
 import luj.cache.internal.request.tree.RequestNodeState;
 
+@Deprecated
 public class CacheRequestImpl implements CacheRequest {
 
   @Override
@@ -13,11 +14,6 @@ public class CacheRequestImpl implements CacheRequest {
   @Override
   public RequestNodeState getRootNode() {
     return _reqNode;
-  }
-
-  @Override
-  public <T> T getParam() {
-    return null;
   }
 
   private RequestNodeState _reqNode;

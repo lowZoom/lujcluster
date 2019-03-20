@@ -1,16 +1,16 @@
 package luj.game.internal.luj.lujcluster.actor.dataload.loadreq;
 
-import luj.game.internal.luj.lujcache.LujcacheKey;
+import luj.cache.api.container.CacheKey;
 
 public class RequestLoadDataMsg {
 
-  public RequestLoadDataMsg(LujcacheKey dataKey) {
+  public RequestLoadDataMsg(CacheKey<?> dataKey) {
     _dataKey = dataKey;
   }
 
-  public LujcacheKey getDataKey() {
+  public CacheKey<?> getDataKey() {
     return _dataKey;
   }
 
-  private final LujcacheKey _dataKey;
+  private final CacheKey<?> _dataKey;
 }

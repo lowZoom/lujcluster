@@ -8,6 +8,8 @@ public interface CacheReadyListener {
 
     CacheRequest getRequest();
 
+    <T> T getRequestParam();
+
     ResultBuilder getResultBuilder();
   }
 
