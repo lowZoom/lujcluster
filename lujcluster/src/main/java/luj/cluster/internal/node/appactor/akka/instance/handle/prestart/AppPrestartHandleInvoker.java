@@ -2,12 +2,12 @@ package luj.cluster.internal.node.appactor.akka.instance.handle.prestart;
 
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 
-public interface AppPreSstartHandleInvoker {
+public interface AppPrestartHandleInvoker {
 
   interface Factory {
 
-    static AppPreSstartHandleInvoker create(AppAktor aktor) {
-      return new AppPreSstartHandleInvokerImpl(aktor);
+    static AppPrestartHandleInvoker create(AppAktor aktor) {
+      return new AppPrestartHandleInvokerImpl(aktor);
     }
   }
 

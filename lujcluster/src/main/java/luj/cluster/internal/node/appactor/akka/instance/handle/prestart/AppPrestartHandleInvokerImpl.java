@@ -1,17 +1,17 @@
 package luj.cluster.internal.node.appactor.akka.instance.handle.prestart;
 
-import luj.cluster.api.actor.ActorPreSstartHandler;
+import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 
-final class AppPreSstartHandleInvokerImpl implements AppPreSstartHandleInvoker {
+final class AppPrestartHandleInvokerImpl implements AppPrestartHandleInvoker {
 
-  AppPreSstartHandleInvokerImpl(AppAktor appAktor) {
+  AppPrestartHandleInvokerImpl(AppAktor appAktor) {
     _appAktor = appAktor;
   }
 
   @Override
   public void invoke() {
-    ActorPreSstartHandler<?> handler = _appAktor.getMeta().getPreStartHandler();
+    ActorPreStartHandler<?> handler = _appAktor.getMeta().getPreStartHandler();
     if (handler == null) {
       return;
     }

@@ -2,7 +2,7 @@ package luj.cluster.internal.session.inject;
 
 import java.util.List;
 import luj.cluster.api.actor.ActorMessageHandler;
-import luj.cluster.api.actor.ActorPreSstartHandler;
+import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.api.message.NodeMessageListener;
 import luj.cluster.api.start.NodeStartListener;
 import org.springframework.context.ApplicationContext;
@@ -22,7 +22,7 @@ public interface ClusterBeanCollector {
 
     NodeMessageListener getMessageListener();
 
-    List<ActorPreSstartHandler<?>> getActorPreStartHandlers();
+    List<ActorPreStartHandler<?>> getActorPreStartHandlers();
 
     List<ActorMessageHandler<?, ?>> getActorMessageHandlers();
   }

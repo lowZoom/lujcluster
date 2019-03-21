@@ -1,11 +1,11 @@
 package luj.cluster.internal.node.appactor.meta;
 
-import luj.cluster.api.actor.ActorPreSstartHandler;
+import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMap;
 
 public interface ActorMeta {
 
-  ActorPreSstartHandler<?> getPreStartHandler();
+  ActorPreStartHandler<?> getPreStartHandler();
 
   ActorMessageHandleMap getMessageHandleMap();
 }

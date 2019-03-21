@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import luj.ava.spring.Internal;
 import luj.cluster.api.actor.ActorMessageHandler;
-import luj.cluster.api.actor.ActorPreSstartHandler;
+import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.api.message.NodeMessageListener;
 import luj.cluster.api.start.NodeStartListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
   }
 
   @Override
-  public List<ActorPreSstartHandler<?>> getActorPreStartHandlers() {
+  public List<ActorPreStartHandler<?>> getActorPreStartHandlers() {
     return _actorPreStartHandlers;
   }
 
@@ -44,7 +44,7 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
   private NodeMessageListener _messageListener;
 
   @Autowired(required = false)
-  private List<ActorPreSstartHandler<?>> _actorPreStartHandlers;
+  private List<ActorPreStartHandler<?>> _actorPreStartHandlers;
 
   @Autowired(required = false)
   private List<ActorMessageHandler<?, ?>> _actorMessageHandlers;
