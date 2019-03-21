@@ -1,12 +1,9 @@
 package luj.cluster.internal.node.appactor.akka.root;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import akka.actor.ActorRef;
 import akka.japi.pf.FI;
-import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
+import luj.cluster.internal.node.appactor.akka.instance.create.AppAktorCreator;
 import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
-import luj.cluster.internal.node.appactor.meta.ActorMeta;
 
 final class OnCreateAppActor implements FI.UnitApply<CreateAppActorMsg> {
 
@@ -18,10 +15,8 @@ final class OnCreateAppActor implements FI.UnitApply<CreateAppActorMsg> {
   public void apply(CreateAppActorMsg i) {
     Class<?> appType = i.getActorType();
 
-    ActorMeta meta = _rootAktor.getActorMetaMap().getMeta(appType);
-    checkNotNull(meta, appType);
-
-    ActorRef appRef = _rootAktor.context().actorOf(AppAktor.props(i.getActorState(), meta));
+    ActorRef appRef = AppAktorCreator.Factory.create(_rootAktor.getActorMetaMap(),
+        appType, i.getActorState(), _rootAktor.context()).create();
 
     _rootAktor.getChildRefMap().put(appType, appRef);
   }

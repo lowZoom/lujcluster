@@ -4,35 +4,45 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import luj.ava.reflect.generic.GenericType;
+import luj.ava.reflect.type.TypeX;
 import luj.cluster.api.actor.ActorMessageHandler;
+import luj.cluster.api.actor.ActorPreSstartHandler;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 enum ActorMetaMapFactoryImpl {
   SINGLETON;
 
   ActorMetaMap create(ClusterBeanCollector.Result beanCollect) {
+    Map<Class<?>, ActorPreSstartHandler<?>> prestartMap = beanCollect
+        .getActorPreStartHandlers().stream()
+        .collect(Collectors.toMap(this::getActorType, Function.identity()));
+
     return new ActorMetaMapImpl(beanCollect.getActorMessageHandlers().stream()
-        .collect(Collectors.groupingBy(this::getActorType))
+        .collect(Collectors.groupingBy(h -> getMsgHandleParam(h, 0)))
         .entrySet().stream()
-        .collect(Collectors.toMap(Map.Entry::getKey, e -> createMeta(e.getValue()))));
+        .collect(Collectors.toMap(Map.Entry::getKey, e ->
+            createMeta(prestartMap.get(e.getKey()), e.getValue()))));
   }
 
-  private Class<?> getActorType(ActorMessageHandler<?, ?> handler) {
-    return GenericType.of(handler.getClass()
-        .getInterfaces()[0]
-        .getGenericInterfaces()[0])
-        .getTypeArg(0);
+  private Class<?> getActorType(ActorPreSstartHandler<?> handler) {
+    return TypeX.ofInstance(handler)
+        .getSupertype(ActorPreSstartHandler.class)
+        .getTypeParam(0)
+        .asClass();
   }
 
-  private ActorMeta createMeta(List<ActorMessageHandler<?, ?>> handlerList) {
-    MessageHandleMapImpl handleMap = new MessageHandleMapImpl(handlerList.stream()
-        .collect(Collectors.toMap(this::getMessageType, Function.identity())));
+  private ActorMeta createMeta(ActorPreSstartHandler<?> prestartHandler,
+      List<ActorMessageHandler<?, ?>> msgHandlerList) {
+    MessageHandleMapImpl handleMap = new MessageHandleMapImpl(msgHandlerList.stream()
+        .collect(Collectors.toMap(h -> getMsgHandleParam(h, 1), Function.identity())));
 
-    return new ActorMetaImpl(handleMap);
+    return new ActorMetaImpl(prestartHandler, handleMap);
   }
 
-  private Class<?> getMessageType(ActorMessageHandler<?, ?> handler) {
-    return GenericType.of(handler.getClass().getGenericInterfaces()[0]).getTypeArg(0);
+  private Class<?> getMsgHandleParam(ActorMessageHandler<?, ?> handler, int index) {
+    return TypeX.ofInstance(handler)
+        .getSupertype(ActorMessageHandler.class)
+        .getTypeParam(index)
+        .asClass();
   }
 }

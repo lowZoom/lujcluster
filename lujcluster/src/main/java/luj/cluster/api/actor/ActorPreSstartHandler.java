@@ -1,10 +1,12 @@
 package luj.cluster.api.actor;
 
-public interface ActorPrestartHandler<A> {
+public interface ActorPreSstartHandler<A> {
 
   interface Context {
 
-    <A> A getActor(ActorPrestartHandler<A> handler);
+    <A> A getActorState(ActorPreSstartHandler<A> handler);
+
+    Actor getActor();
 
     Actor createActor(Object actorState);
   }
