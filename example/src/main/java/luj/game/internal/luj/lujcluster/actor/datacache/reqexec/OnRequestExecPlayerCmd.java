@@ -11,7 +11,6 @@ import luj.game.internal.data.DataCmdEntry;
 import luj.game.internal.luj.lujcache.JamreqInLujcache;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorMsgHandler;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
-import org.springframework.stereotype.Component;
 
 @Internal
 final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPlayerCmdMsg> {
@@ -37,6 +36,6 @@ final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPla
     cacheReq.addNode(SceneObjectDat.class, "123");
 
     CacheContainer dataCache = actor.getDataCache();
-    dataCache.request(cacheReq, new JamreqInLujcache(, cmdEntry.getCommand()));
+    dataCache.request(cacheReq, new JamreqInLujcache(actor.getLoadRef(), cmdEntry.getCommand()));
   }
 }

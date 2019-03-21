@@ -1,16 +1,16 @@
 package luj.game.internal.luj.lujcache;
 
-import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.api.actor.ActorPreSstartHandler.Actor;
 import luj.game.api.data.PlayerDataCommand;
 
 public class JamreqInLujcache {
 
-  public JamreqInLujcache(NodeMessageListener.Actor loadActor, PlayerDataCommand<?> dataCmd) {
+  public JamreqInLujcache(Actor loadActor, PlayerDataCommand<?> dataCmd) {
     _loadActor = loadActor;
     _dataCmd = dataCmd;
   }
 
-  public NodeMessageListener.Actor getLoadActor() {
+  public Actor getLoadActor() {
     return _loadActor;
   }
 
@@ -18,7 +18,7 @@ public class JamreqInLujcache {
     return _dataCmd;
   }
 
-  private final NodeMessageListener.Actor _loadActor;
+  private final Actor _loadActor;
 
   private final PlayerDataCommand<?> _dataCmd;
 }

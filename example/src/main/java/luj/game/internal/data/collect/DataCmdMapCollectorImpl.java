@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import luj.game.api.data.PlayerDataCommand;
 import luj.game.api.data.PlayerDataLoad;
 import luj.game.internal.data.DataCmdEntry;
 
@@ -25,7 +26,7 @@ final class DataCmdMapCollectorImpl implements DataCmdMapCollector {
 
   private DataCmdEntry createCmdEntry(Cmd cmd, Map<Class<?>, Load> loadMap) {
     Load load = loadMap.get(cmd.getLoadResultType());
-    return new DataCmdEntryImpl(load.asReq());
+    return new DataCmdEntryImpl(load.asReq(), cmd.asCommand());
   }
 
   interface Cmd {
@@ -33,6 +34,8 @@ final class DataCmdMapCollectorImpl implements DataCmdMapCollector {
     Class<?> getCommandType();
 
     Class<?> getLoadResultType();
+
+    PlayerDataCommand asCommand();
   }
 
   interface Load {

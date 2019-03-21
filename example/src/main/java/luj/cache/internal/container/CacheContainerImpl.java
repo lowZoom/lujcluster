@@ -6,6 +6,7 @@ import luj.cache.api.container.CacheKey;
 import luj.cache.api.request.CacheRequest;
 import luj.cache.api.request.CacheRequeue;
 import luj.cache.internal.container.request.CacheDataRequestor;
+import org.omg.CORBA.NO_IMPLEMENT;
 
 public final class CacheContainerImpl<K> implements CacheContainer<K> {
 
@@ -15,7 +16,7 @@ public final class CacheContainerImpl<K> implements CacheContainer<K> {
 
   @Override
   public void request(CacheRequest req, Object param) {
-    CacheDataRequestor.Factory.create(_containerState, this, req.getRootNode()).request();
+    CacheDataRequestor.Factory.create(_containerState, this, req.getRootNode(), param).request();
   }
 
   @Override
@@ -25,7 +26,7 @@ public final class CacheContainerImpl<K> implements CacheContainer<K> {
 
   @Override
   public CacheRequeue getRequestQueue() {
-    return null;
+    throw new NO_IMPLEMENT("getRequestQueue尚未实现");
   }
 
   private final CacheContainerState _containerState;
