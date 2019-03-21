@@ -1,16 +1,16 @@
 package luj.game.internal.luj.lujcluster.actor.dataload;
 
-import luj.cluster.api.actor.ActorPreSstartHandler;
+import luj.cluster.api.actor.ActorPreStartHandler;
 
 public class DataLoadActor {
 
-  public DataLoadActor(ActorPreSstartHandler.Actor cacheRef) {
+  public DataLoadActor(ActorPreStartHandler.Actor cacheRef) {
     _cacheRef = cacheRef;
   }
 
-  public ActorPreSstartHandler.Actor getCacheRef() {
+  public ActorPreStartHandler.Actor getCacheRef() {
     return _cacheRef;
   }
 
-  private final ActorPreSstartHandler.Actor _cacheRef;
+  private final ActorPreStartHandler.Actor _cacheRef;
 }

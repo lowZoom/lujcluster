@@ -2,7 +2,7 @@ package luj.game.internal.luj.lujcluster.actor.datacache;
 
 import java.util.Map;
 import luj.cache.api.container.CacheContainer;
-import luj.cluster.api.actor.ActorPreSstartHandler;
+import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.game.internal.data.DataCmdEntry;
 
 public class DataActorState {
@@ -12,11 +12,11 @@ public class DataActorState {
     _commandMap = commandMap;
   }
 
-  public ActorPreSstartHandler.Actor getLoadRef() {
+  public ActorPreStartHandler.Actor getLoadRef() {
     return _loadRef;
   }
 
-  public void setLoadRef(ActorPreSstartHandler.Actor loadRef) {
+  public void setLoadRef(ActorPreStartHandler.Actor loadRef) {
     _loadRef = loadRef;
   }
 
@@ -28,7 +28,7 @@ public class DataActorState {
     return _commandMap;
   }
 
-  private ActorPreSstartHandler.Actor _loadRef;
+  private ActorPreStartHandler.Actor _loadRef;
 
   private final CacheContainer _dataCache;
   private final Map<Class<?>, DataCmdEntry> _commandMap;

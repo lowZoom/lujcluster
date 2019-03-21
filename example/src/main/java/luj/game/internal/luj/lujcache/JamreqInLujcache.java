@@ -1,6 +1,6 @@
 package luj.game.internal.luj.lujcache;
 
-import luj.cluster.api.actor.ActorPreSstartHandler.Actor;
+import luj.cluster.api.actor.ActorPreStartHandler.Actor;
 import luj.game.api.data.PlayerDataCommand;
 
 public class JamreqInLujcache {
