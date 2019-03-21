@@ -31,7 +31,7 @@ final class PreStart {
 
   private ActorRef createAppRoot() {
     ActorMetaMap actorMetaMap = ActorMetaMap.Factory.create(_actor.getCollectResult());
-    return _actor.context().actorOf(AppRootAktor.props(actorMetaMap));
+    return _actor.context().actorOf(AppRootAktor.props(actorMetaMap), "approot");
   }
 
   private ActorRef createSendActor() {
