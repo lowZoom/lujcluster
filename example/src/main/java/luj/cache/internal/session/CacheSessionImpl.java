@@ -1,5 +1,6 @@
 package luj.cache.internal.session;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import luj.cache.api.CacheSession;
 import luj.cache.api.container.CacheContainer;
@@ -17,7 +18,7 @@ final class CacheSessionImpl implements CacheSession {
   @Override
   public <T> CacheContainer<T> createCache(Object cacheParam) {
     CacheBeanCollector.Result collect = CacheBeanCollector.Factory.create(_appContext).collect();
-    return new CacheContainerImpl<>(new CacheContainerState(new HashMap<>(), collect, cacheParam));
+    return new CacheContainerImpl<>(new CacheContainerState(new HashMap<>(), collect, cacheParam, new ArrayList<>()));
   }
 
   private final ApplicationContext _appContext;

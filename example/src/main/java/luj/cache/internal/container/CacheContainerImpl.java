@@ -5,10 +5,10 @@ import luj.cache.api.container.CacheEntry;
 import luj.cache.api.container.CacheKey;
 import luj.cache.api.request.CacheRequest;
 import luj.cache.api.request.CacheRequeue;
-import luj.cache.internal.container.request.CacheDataRequestor;
-import org.omg.CORBA.NO_IMPLEMENT;
+import luj.cache.internal.container.request.CacheDataRequestOrWaiter;
+import luj.cache.internal.request.queue.wake.RequestQueueWaker;
 
-public final class CacheContainerImpl<K> implements CacheContainer<K> {
+public final class CacheContainerImpl<K> implements CacheContainer<K>, CacheRequeue {
 
   public CacheContainerImpl(CacheContainerState containerState) {
     _containerState = containerState;
@@ -16,7 +16,7 @@ public final class CacheContainerImpl<K> implements CacheContainer<K> {
 
   @Override
   public void request(CacheRequest req, Object param) {
-    CacheDataRequestor.Factory.create(_containerState, this, req.getRootNode(), param).request();
+    CacheDataRequestOrWaiter.Factory.create(_containerState, this, req.getRootNode(), param).requestOrWait();
   }
 
   @Override
@@ -26,7 +26,12 @@ public final class CacheContainerImpl<K> implements CacheContainer<K> {
 
   @Override
   public CacheRequeue getRequestQueue() {
-    throw new NO_IMPLEMENT("getRequestQueue尚未实现");
+    return this;
+  }
+
+  @Override
+  public void wake() {
+    RequestQueueWaker.Factory.create(_containerState, this).wake();
   }
 
   private final CacheContainerState _containerState;

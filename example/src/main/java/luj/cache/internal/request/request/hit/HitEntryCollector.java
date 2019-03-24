@@ -1,4 +1,4 @@
-package luj.cache.internal.container.request.hit;
+package luj.cache.internal.request.request.hit;
 
 import java.util.List;
 import luj.cache.api.container.CacheEntry;

@@ -1,4 +1,4 @@
-package luj.cache.internal.container.request;
+package luj.cache.internal.request.request;
 
 import luj.cache.internal.container.CacheContainerImpl;
 import luj.cache.internal.container.CacheContainerState;
@@ -14,5 +14,5 @@ public interface CacheDataRequestor {
     }
   }
 
-  void request();
+  boolean tryRequest();
 }
