@@ -1,6 +1,8 @@
 package luj.cluster.internal.node.appactor.akka.instance.handle.message;
 
 import luj.cluster.api.actor.ActorMessageHandler;
+import luj.cluster.api.logging.Log;
+import luj.cluster.internal.logging.LogFactory;
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMap;
 
@@ -17,7 +19,10 @@ final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
     ActorMessageHandleMap handleMap = _appAktor.getMeta().getMessageHandleMap();
     ActorMessageHandler<?, ?> handler = handleMap.getHandler(msgType);
 
-    HandleContextImpl ctx = new HandleContextImpl(_appAktor, _msg);
+    //FIXME: temp
+    Log log = LogFactory.get(_appAktor, handler);
+
+    HandleContextImpl ctx = new HandleContextImpl(_appAktor, log, _msg);
     handler.onHandle(ctx);
   }
 

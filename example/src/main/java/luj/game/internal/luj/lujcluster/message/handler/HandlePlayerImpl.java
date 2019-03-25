@@ -12,6 +12,9 @@ final class HandlePlayerImpl implements GameProtoHandler.Player {
     _playerId = playerId;
   }
 
+  /**
+   * @see luj.game.internal.luj.lujcluster.actor.datacache.reqexec.OnRequestExecPlayerCmd#onHandle
+   */
   @Override
   public void executeDataCommand(Class<? extends PlayerDataCommand<?>> cmdType) {
     //TODO: 执行在receiveActor里，需要tell给dataActor

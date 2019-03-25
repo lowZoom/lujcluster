@@ -5,6 +5,7 @@ import luj.ava.spring.Internal;
 import luj.cache.api.container.CacheContainer;
 import luj.cache.api.request.CacheRequest;
 import luj.cache.internal.request.CacheRequestImpl;
+import luj.cluster.api.logging.Log;
 import luj.cluster.example.module.scene.data.SceneObjectDat;
 import luj.game.api.data.PlayerDataLoad;
 import luj.game.internal.data.DataCmdEntry;
@@ -17,11 +18,14 @@ final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPla
 
   @Override
   public void onHandle(Context ctx) {
-    DataActorState actor = ctx.getActor(this);
+    Log log = ctx.getLogger();
     RequestExecPlayerCmdMsg msg = ctx.getMessage(this);
 
-    String playerId = msg.getPlayerId();
     Class<?> cmdType = msg.getCmdType();
+    log.debug("新的数据cmd：{}", cmdType.getSimpleName());
+
+    DataActorState actor = ctx.getActor(this);
+    String playerId = msg.getPlayerId();
 
     //TODO: 取出对应CMD的取数据逻辑并调用
     Map<Class<?>, DataCmdEntry> cmdMap = actor.getCommandMap();
@@ -31,11 +35,11 @@ final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPla
     CacheRequest cacheReq = null;
 //    loadReq.load(null);
 
-    //FIXME: TEMP
+    //FIXME: TEMPf
     cacheReq = new CacheRequestImpl();
     cacheReq.addNode(SceneObjectDat.class, "123");
 
     CacheContainer dataCache = actor.getDataCache();
-    dataCache.request(cacheReq, new JamreqInLujcache(actor.getLoadRef(), cmdEntry.getCommand()));
+    dataCache.request(cacheReq, new JamreqInLujcache(actor.getLoadRef(), cmdEntry.getCommand(), log));
   }
 }
