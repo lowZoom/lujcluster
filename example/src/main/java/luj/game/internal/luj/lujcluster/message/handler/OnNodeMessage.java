@@ -1,7 +1,7 @@
 package luj.game.internal.luj.lujcluster.message.handler;
 
 import luj.ava.spring.Internal;
-import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.api.node.NodeMessageListener;
 import luj.game.api.proto.GameProtoHandler;
 
 @Internal

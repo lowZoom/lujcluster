@@ -5,7 +5,7 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import java.util.HashMap;
 import java.util.Map;
-import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 

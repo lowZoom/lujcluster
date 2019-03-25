@@ -2,7 +2,7 @@ package luj.cluster.internal.node.message.listener;
 
 import akka.actor.ActorRef;
 import akka.event.LoggingAdapter;
-import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
 import org.omg.CORBA.NO_IMPLEMENT;
 

@@ -1,4 +1,4 @@
-package luj.cluster.api.start;
+package luj.cluster.api.node;
 
 import akka.event.LoggingAdapter;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package luj.game.internal.luj.lujcluster.message.handler;
 
-import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.api.node.NodeMessageListener;
 import luj.game.api.proto.GameProtoHandler;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
 

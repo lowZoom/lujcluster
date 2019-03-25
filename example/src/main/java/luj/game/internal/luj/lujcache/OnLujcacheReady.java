@@ -2,7 +2,7 @@ package luj.game.internal.luj.lujcache;
 
 import luj.ava.spring.Internal;
 import luj.cache.api.listener.CacheReadyListener;
-import luj.cluster.api.message.NodeMessageListener.Actor;
+import luj.cluster.api.node.NodeMessageListener.Actor;
 import luj.game.api.data.PlayerDataCommand;
 import luj.game.internal.luj.lujcluster.actor.cmd.exec.ExecutePlayerCmdMsg;
 

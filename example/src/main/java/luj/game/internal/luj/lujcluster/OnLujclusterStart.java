@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import luj.ava.spring.Internal;
-import luj.cluster.api.start.NodeStartListener;
+import luj.cluster.api.node.NodeStartListener;
 import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
 import luj.game.internal.data.DataCmdCollectBean;

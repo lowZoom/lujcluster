@@ -1,6 +1,6 @@
 package luj.game.internal.luj.lujcache;
 
-import luj.cluster.api.message.NodeMessageListener;
+import luj.cluster.api.node.NodeMessageListener;
 
 public class JambeanInLujcache {
 

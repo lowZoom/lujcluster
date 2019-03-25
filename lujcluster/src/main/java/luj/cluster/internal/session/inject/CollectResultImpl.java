@@ -6,8 +6,8 @@ import java.util.List;
 import luj.ava.spring.Internal;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
-import luj.cluster.api.message.NodeMessageListener;
-import luj.cluster.api.start.NodeStartListener;
+import luj.cluster.api.node.NodeMessageListener;
+import luj.cluster.api.node.NodeStartListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Internal

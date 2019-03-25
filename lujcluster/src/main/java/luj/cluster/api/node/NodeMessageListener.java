@@ -1,4 +1,4 @@
-package luj.cluster.api.message;
+package luj.cluster.api.node;
 
 import akka.event.LoggingAdapter;
 
