@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import luj.cache.api.container.CacheContainer;
 import luj.cache.api.container.CacheEntry;
+import luj.cache.internal.container.key.CacheKeyImpl;
 import luj.cache.internal.request.tree.RequestNodeState;
 
 final class RequestNodeImpl implements MissingKeyCollectorImpl.RequestNode {
@@ -24,7 +25,7 @@ final class RequestNodeImpl implements MissingKeyCollectorImpl.RequestNode {
     Function<Object, Object> idGetter = _nodeState.getIdGetter();
     Object id = idGetter.apply(null);//_parentNodeEntry.getData());
 
-    return new EntryImpl(_cacheContainer, null);
+    return new EntryImpl(_cacheContainer, new CacheKeyImpl(_nodeState.getDataType(), id));
   }
 
   @Override

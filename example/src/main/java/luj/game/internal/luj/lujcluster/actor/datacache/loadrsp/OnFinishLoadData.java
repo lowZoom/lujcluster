@@ -7,15 +7,17 @@ import luj.cache.api.container.CacheContainer;
 import luj.cache.api.container.CacheEntry;
 import luj.cache.api.container.CacheEntry.Presence;
 import luj.cache.api.container.CacheKey;
+import luj.cluster.api.logging.Log;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorMsgHandler;
 import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
-import org.springframework.stereotype.Component;
 
 @Internal
 final class OnFinishLoadData implements DataActorMsgHandler<FinishLoadDataMsg> {
 
   @Override
   public void onHandle(Context ctx) {
+    Log log = ctx.getLogger();
+
     DataActorState actor = ctx.getActor(this);
     CacheContainer cache = actor.getDataCache();
 
@@ -28,6 +30,7 @@ final class OnFinishLoadData implements DataActorMsgHandler<FinishLoadDataMsg> {
       checkState(entry.getPresence() == Presence.LOADING);
 
       updateEntry(entry, item);
+      log.debug("缓存项数据，key:{}，结果：{}", key, entry.getPresence());
     }
 
     cache.getRequestQueue().wake();

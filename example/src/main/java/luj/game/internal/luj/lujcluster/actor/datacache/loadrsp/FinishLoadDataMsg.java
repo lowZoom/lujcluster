@@ -5,7 +5,7 @@ import luj.cache.api.container.CacheKey;
 
 public class FinishLoadDataMsg {
 
-  interface FinishItem {
+  public interface FinishItem {
 
     CacheKey getKey();
 
