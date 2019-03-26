@@ -1,20 +1,20 @@
 package luj.game.internal.luj.lujcache;
 
-import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.api.logging.Log;
 import luj.game.api.data.PlayerDataCommand;
+import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
 
 public class JamreqInLujcache {
 
-  public JamreqInLujcache(ActorPreStartHandler.Actor loadActor, PlayerDataCommand<?> dataCmd,
+  public JamreqInLujcache(DataActorState cacheActor, PlayerDataCommand<?> dataCmd,
       Log logger) {
-    _loadActor = loadActor;
+    _cacheActor = cacheActor;
     _dataCmd = dataCmd;
     _logger = logger;
   }
 
-  public ActorPreStartHandler.Actor getLoadActor() {
-    return _loadActor;
+  public DataActorState getCacheActor() {
+    return _cacheActor;
   }
 
   public PlayerDataCommand<?> getDataCmd() {
@@ -25,7 +25,7 @@ public class JamreqInLujcache {
     return _logger;
   }
 
-  private final ActorPreStartHandler.Actor _loadActor;
+  private final DataActorState _cacheActor;
 
   private final PlayerDataCommand<?> _dataCmd;
 

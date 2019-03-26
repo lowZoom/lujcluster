@@ -1,8 +1,11 @@
 package luj.game.internal.luj.lujcluster.actor.cmd.exec;
 
+import luj.ava.spring.Internal;
+import luj.cluster.api.logging.Log;
 import luj.game.api.data.PlayerDataCommand;
 import luj.game.internal.luj.lujcluster.actor.cmd.DataCmdActorReceive;
 
+@Internal
 final class OnExecuteDataCmd implements DataCmdActorReceive<ExecutePlayerCmdMsg> {
 
   @Override
@@ -10,6 +13,9 @@ final class OnExecuteDataCmd implements DataCmdActorReceive<ExecutePlayerCmdMsg>
     ExecutePlayerCmdMsg msg = ctx.getMessage(this);
 
     PlayerDataCommand<?> cmd = msg.getCommand();
+
+    Log log = ctx.getLogger();
+    log.debug("执行数据cmd：{}", cmd.getClass().getSimpleName());
 
     Object loadResult = msg.getResultBuilder().build();
 

@@ -21,6 +21,14 @@ public class DataActorState {
     _loadRef = loadRef;
   }
 
+  public ActorPreStartHandler.Actor getExecRef() {
+    return _execRef;
+  }
+
+  public void setExecRef(ActorPreStartHandler.Actor execRef) {
+    _execRef = execRef;
+  }
+
   public CacheContainer getDataCache() {
     return _dataCache;
   }
@@ -30,6 +38,8 @@ public class DataActorState {
   }
 
   private ActorPreStartHandler.Actor _loadRef;
+
+  private ActorPreStartHandler.Actor _execRef;
 
   private final CacheContainer _dataCache;
   private final Map<Class<?>, DataCmdEntry> _commandMap;

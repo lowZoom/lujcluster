@@ -2,6 +2,7 @@ package luj.cache.internal.request.request;
 
 import static com.google.common.base.Preconditions.checkState;
 
+import java.util.Collection;
 import java.util.List;
 import luj.cache.api.container.CacheContainer;
 import luj.cache.api.container.CacheEntry;
@@ -33,7 +34,8 @@ final class CacheDataRequestorImpl implements CacheDataRequestor {
       return false;
     }
 
-    List<CacheEntry> hitList = HitEntryCollector.Factory.create().collect();
+    Collection<CacheEntry> hitList = HitEntryCollector.Factory
+        .create(_requestRootNode, _containerImpl).collect();
     //TODO: 看是否上锁
 
     //TODO:
@@ -45,9 +47,13 @@ final class CacheDataRequestorImpl implements CacheDataRequestor {
       entry.setLock(true);
     }
 
-    _containerState.getBeanCollect().getRequestReadyListener().onReady(null);
-
+    fireReady();
     return true;
+  }
+
+  private void fireReady() {
+    ReadyContextImpl ctx = new ReadyContextImpl(_reqParam);
+    _containerState.getBeanCollect().getRequestReadyListener().onReady(ctx);
   }
 
   private final CacheContainerState _containerState;

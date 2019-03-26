@@ -40,6 +40,6 @@ final class OnRequestExecPlayerCmd implements DataActorMsgHandler<RequestExecPla
     cacheReq.addNode(SceneObjectDat.class, "123");
 
     CacheContainer dataCache = actor.getDataCache();
-    dataCache.request(cacheReq, new JamreqInLujcache(actor.getLoadRef(), cmdEntry.getCommand(), log));
+    dataCache.request(cacheReq, new JamreqInLujcache(actor, cmdEntry.getCommand(), log));
   }
 }

@@ -6,6 +6,7 @@ import luj.cache.api.container.CacheEntry;
 import luj.cache.api.container.CacheEntry.Presence;
 import luj.cache.api.container.CacheKey;
 import luj.cache.api.listener.CacheMissListener;
+import luj.cluster.api.actor.ActorPreStartHandler.Actor;
 import luj.cluster.api.logging.Log;
 import luj.game.internal.luj.lujcluster.actor.dataload.loadreq.RequestLoadDataMsg;
 
@@ -25,6 +26,7 @@ final class OnLujcacheMiss implements CacheMissListener {
     CacheEntry newEntry = container.createEntry(key);
     newEntry.setPresence(Presence.LOADING);
 
-    param.getLoadActor().tell(new RequestLoadDataMsg(key));
+    Actor loadRef = param.getCacheActor().getLoadRef();
+    loadRef.tell(new RequestLoadDataMsg(key));
   }
 }
