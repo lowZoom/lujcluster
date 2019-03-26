@@ -1,6 +1,6 @@
 package luj.cache.internal.request.request.hit;
 
-import java.util.List;
+import java.util.Collection;
 import luj.cache.api.container.CacheEntry;
 import org.omg.CORBA.NO_IMPLEMENT;
 
@@ -13,5 +13,5 @@ public interface HitEntryCollector {
     }
   }
 
-  List<CacheEntry> collect();
+  Collection<CacheEntry> collect();
 }
