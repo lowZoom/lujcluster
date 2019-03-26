@@ -35,7 +35,8 @@ final class OnLujclusterStart implements NodeStartListener {
 
   private DataActorState dataCache(JambeanInLujcluster param) {
     return new DataActorState(param.getLujcache().createCache(null),
-        DataCmdMapCollector.Factory.create(_dataCmdCollectBean).collect());
+        DataCmdMapCollector.Factory.create(_dataCmdCollectBean).collect(),
+        param.getLujpersist());
   }
 
   private <T> List<T> nonNull(List<T> list) {

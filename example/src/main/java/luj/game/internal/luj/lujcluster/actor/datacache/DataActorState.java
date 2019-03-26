@@ -4,12 +4,15 @@ import java.util.Map;
 import luj.cache.api.container.CacheContainer;
 import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.game.internal.data.DataCmdEntry;
+import luj.persist.api.PersistSession;
 
 public class DataActorState {
 
-  public DataActorState(CacheContainer dataCache, Map<Class<?>, DataCmdEntry> commandMap) {
+  public DataActorState(CacheContainer dataCache,
+      Map<Class<?>, DataCmdEntry> commandMap, PersistSession lujpersist) {
     _dataCache = dataCache;
     _commandMap = commandMap;
+    _lujpersist = lujpersist;
   }
 
   public ActorPreStartHandler.Actor getLoadRef() {
@@ -28,8 +31,14 @@ public class DataActorState {
     return _commandMap;
   }
 
+  public PersistSession getLujpersist() {
+    return _lujpersist;
+  }
+
   private ActorPreStartHandler.Actor _loadRef;
 
   private final CacheContainer _dataCache;
   private final Map<Class<?>, DataCmdEntry> _commandMap;
+
+  private final PersistSession _lujpersist;
 }

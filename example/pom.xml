@@ -22,8 +22,8 @@
     </dependency>
 
     <dependency>
-      <groupId>luj.data</groupId>
-      <artifactId>lujdata</artifactId>
+      <groupId>luj.persist</groupId>
+      <artifactId>lujpersist</artifactId>
       <version>0.1-SNAPSHOT</version>
     </dependency>
 
