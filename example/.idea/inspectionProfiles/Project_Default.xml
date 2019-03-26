@@ -188,7 +188,7 @@
     <inspection_tool class="ConditionSignal" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ConditionalCanBeOptional" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ConditionalCanBePushedInsideExpression" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="ConditionalExpression" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="ConditionalExpression" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="ignoreSimpleAssignmentsAndReturns" value="true" />
     </inspection_tool>
     <inspection_tool class="ConditionalExpressionWithIdenticalBranches" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -431,7 +431,6 @@
     <inspection_tool class="MapReplaceableByEnumMap" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="MarkedForRemoval" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="MarkerInterface" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="MethodCallInLoopCondition" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="MethodCanBeVariableArityMethod" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="MethodCount" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="m_limit" value="20" />
