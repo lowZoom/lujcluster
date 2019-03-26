@@ -24,8 +24,8 @@ public class SceneLoginCmd implements PlayerDataCommand<LoadResult> {
 
     @Override
     public void load(Context<LoadResult> ctx) {
-      ctx.load(LoadResult::playerObj)
-          .join(SceneObjectDat::currentScene, LoadResult::scene);
+//      ctx.load(LoadResult::playerObj)
+//          .join(SceneObjectDat::currentScene, LoadResult::scene);
     }
   }
 

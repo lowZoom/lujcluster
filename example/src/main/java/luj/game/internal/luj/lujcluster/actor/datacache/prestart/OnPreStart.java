@@ -13,7 +13,7 @@ final class OnPreStart implements ActorPreStartHandler<DataActorState> {
     DataActorState cacheActor = ctx.getActorState(this);
     Actor cacheRef = ctx.getActor();
 
-    Actor loadRef = ctx.createActor(new DataLoadActor(cacheActor.getLujpersist(), cacheRef));
+    Actor loadRef = ctx.createActor(new DataLoadActor(cacheRef));
     cacheActor.setLoadRef(loadRef);
   }
 }

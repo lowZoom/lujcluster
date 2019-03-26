@@ -1,5 +1,6 @@
 package luj.cache.api.listener;
 
+import luj.cache.api.container.CacheContainer;
 import luj.cache.api.container.CacheKey;
 
 /**
@@ -12,6 +13,8 @@ public interface CacheMissListener {
     CacheKey<?> getMissingKey();
 
     <T> T getRequestParam();
+
+    CacheContainer getCacheContainer();
   }
 
   void onMiss(Context ctx);

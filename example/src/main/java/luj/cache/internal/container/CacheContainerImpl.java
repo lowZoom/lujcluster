@@ -25,6 +25,13 @@ public final class CacheContainerImpl<K> implements CacheContainer<K>, CacheRequ
   }
 
   @Override
+  public CacheEntry createEntry(CacheKey<K> key) {
+    CacheEntryImpl entry = new CacheEntryImpl();
+    _containerState.getCacheImpl().put(key, entry);
+    return entry;
+  }
+
+  @Override
   public CacheRequeue getRequestQueue() {
     return this;
   }

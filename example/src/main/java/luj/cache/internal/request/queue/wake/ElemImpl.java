@@ -20,7 +20,7 @@ final class ElemImpl implements RequestQueueWakerImpl.Elem {
 
   @Override
   public boolean isEnd() {
-    return _elem != null;
+    return _elem == null;
   }
 
   @Override

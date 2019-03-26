@@ -8,7 +8,6 @@ import luj.cluster.api.logging.Log;
 import luj.game.internal.luj.lujcluster.actor.datacache.loadrsp.FinishLoadDataMsg;
 import luj.game.internal.luj.lujcluster.actor.dataload.DataLoadActor;
 import luj.game.internal.luj.lujcluster.actor.dataload.DataLoadActorReceive;
-import luj.persist.api.PersistSession;
 
 @Internal
 final class OnRequestLoadData implements DataLoadActorReceive<RequestLoadDataMsg> {
@@ -26,12 +25,17 @@ final class OnRequestLoadData implements DataLoadActorReceive<RequestLoadDataMsg
     DataLoadActor loadActor = ctx.getActor(this);
 
     ActorPreStartHandler.Actor cacheActor = loadActor.getCacheRef();
-    cacheActor.tell(new FinishLoadDataMsg(ImmutableList
-        .of(loadTemp(dataKey, loadActor.getLujpersist()))));
+    cacheActor.tell(new FinishLoadDataMsg(ImmutableList.of(loadTemp(dataKey))));
   }
 
-  private FinishItemImpl loadTemp(CacheKey<?> dataKey, PersistSession lujpersist) {
-    Object data = lujpersist.createData(dataKey.getDataType());
-    return new FinishItemImpl(dataKey, data);
+  private FinishItemImpl loadTemp(CacheKey<?> dataKey) {
+    try {
+      Class<?> dataType = Class.forName(dataKey.getDataType().getName() + "Impl");
+      Object data = dataType.getConstructor().newInstance();
+      return new FinishItemImpl(dataKey, data);
+
+    } catch (Exception e) {
+      throw new UnsupportedOperationException(e);
+    }
   }
 }

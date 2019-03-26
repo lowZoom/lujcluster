@@ -7,6 +7,8 @@ public interface CacheContainer<T> {
 
   CacheEntry getEntry(CacheKey<T> key);
 
+  CacheEntry createEntry(CacheKey<T> key);
+
   void request(CacheRequest req, Object param);
 
   CacheRequeue getRequestQueue();

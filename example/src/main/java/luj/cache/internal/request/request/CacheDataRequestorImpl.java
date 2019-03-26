@@ -29,7 +29,7 @@ final class CacheDataRequestorImpl implements CacheDataRequestor {
         .create(_containerImpl, _requestRootNode).collect();
 
     if (!missList.isEmpty()) {
-      RequestMissFirer.Factory.create(_containerState, _reqParam, missList).fire();
+      RequestMissFirer.Factory.create(_containerState, _containerImpl, _reqParam, missList).fire();
       return false;
     }
 
