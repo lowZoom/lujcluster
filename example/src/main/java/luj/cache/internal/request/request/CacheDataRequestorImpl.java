@@ -52,7 +52,7 @@ final class CacheDataRequestorImpl implements CacheDataRequestor {
   }
 
   private void fireReady() {
-    ReadyContextImpl ctx = new ReadyContextImpl(_reqParam);
+    ReadyContextImpl ctx = new ReadyContextImpl(_reqParam, resultBuilder);
     _containerState.getBeanCollect().getRequestReadyListener().onReady(ctx);
   }
 
