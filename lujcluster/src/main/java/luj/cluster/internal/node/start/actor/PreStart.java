@@ -1,6 +1,8 @@
 package luj.cluster.internal.node.start.actor;
 
 import akka.actor.ActorRef;
+import akka.event.DiagnosticLoggingAdapter;
+import akka.event.Logging;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
@@ -15,9 +17,8 @@ final class PreStart {
   }
 
   void run() throws Exception {
-    System.out.print("[");
-    System.out.print(Thread.currentThread().getName());
-    System.out.println("] akka启动");
+    DiagnosticLoggingAdapter log = Logging.getLogger(_actor);
+    log.debug("节点开始启动...");
 
     ActorRef appRootRef = createAppRoot();
     ActorRef sendRef = createSendActor();

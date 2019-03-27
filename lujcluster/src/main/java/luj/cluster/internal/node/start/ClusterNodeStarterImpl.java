@@ -16,7 +16,6 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
   @Override
   public void start() {
     ActorSystem sys = ActorSystem.create("lujcluster", ConfigFactory.parseResources("akka.conf"));
-//    ConfigFactory.parseString("akka{loglevel=DEBUG\nstdout-loglevel=DEBUG}"));
 
     ClusterBeanCollector.Result beanCollect =
         ClusterBeanCollector.Factory.create(_appContext).collect();
