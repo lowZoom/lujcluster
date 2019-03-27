@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/example.iml" filepath="$PROJECT_DIR$/.idea/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/lujava.iml" filepath="$PROJECT_DIR$/.idea/lujava.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/lujcluster.iml" filepath="$PROJECT_DIR$/.idea/lujcluster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/lujparent.iml" filepath="$PROJECT_DIR$/.idea/lujparent.iml" />
     </modules>
   </component>
 </project>
