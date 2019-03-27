@@ -5,13 +5,13 @@ import luj.cache.internal.request.tree.RequestNodeState;
 
 final class ResultBuilderImpl implements ResultBuilder {
 
-   ResultBuilderImpl(RequestNodeState rootNode) {
+  ResultBuilderImpl(RequestNodeState rootNode) {
     _rootNode = rootNode;
   }
 
   @Override
   public Object build() {
-    return _rootNode.;
+    return _rootNode.ge;
   }
 
   private final RequestNodeState _rootNode;
