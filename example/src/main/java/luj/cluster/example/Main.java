@@ -19,9 +19,7 @@ final class Main {
   }
 
   private void run() {
-    System.out.println(1);
     Jamver.start(_appContext);
-    System.out.println(2);
   }
 
   private final ApplicationContext _appContext;
