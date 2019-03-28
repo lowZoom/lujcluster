@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.cmd.exec;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.cmd.exec;
 
 import java.util.List;
 import luj.cache.api.container.CacheEntry;

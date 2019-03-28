@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.datacache;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache;
 
 import java.util.Map;
 import luj.cache.api.container.CacheContainer;

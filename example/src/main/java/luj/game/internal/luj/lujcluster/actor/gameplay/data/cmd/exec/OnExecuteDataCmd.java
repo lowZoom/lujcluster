@@ -1,9 +1,9 @@
-package luj.game.internal.luj.lujcluster.actor.cmd.exec;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.cmd.exec;
 
 import luj.ava.spring.Internal;
 import luj.cluster.api.logging.Log;
 import luj.game.api.data.PlayerDataCommand;
-import luj.game.internal.luj.lujcluster.actor.cmd.DataCmdActorReceive;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.cmd.DataCmdActorReceive;
 
 @Internal
 final class OnExecuteDataCmd implements DataCmdActorReceive<ExecutePlayerCmdMsg> {

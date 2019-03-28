@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.cmd.exec;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.cmd.exec;
 
 import luj.game.api.data.PlayerDataCommand;
 import luj.game.api.data.PlayerDataCommand.Context;

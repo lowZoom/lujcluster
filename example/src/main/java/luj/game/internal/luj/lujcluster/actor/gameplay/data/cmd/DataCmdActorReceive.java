@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.cmd;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.cmd;
 
 import luj.cluster.api.actor.ActorMessageHandler;
 

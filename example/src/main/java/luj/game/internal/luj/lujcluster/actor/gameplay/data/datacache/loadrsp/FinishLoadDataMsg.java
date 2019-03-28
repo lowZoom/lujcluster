@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.datacache.loadrsp;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.loadrsp;
 
 import java.util.List;
 import luj.cache.api.container.CacheKey;

@@ -8,7 +8,7 @@ import luj.cache.api.container.CacheKey;
 import luj.cache.api.listener.CacheMissListener;
 import luj.cluster.api.actor.ActorPreStartHandler.Actor;
 import luj.cluster.api.logging.Log;
-import luj.game.internal.luj.lujcluster.actor.dataload.loadreq.RequestLoadDataMsg;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.dataload.loadreq.RequestLoadDataMsg;
 
 @Internal
 final class OnLujcacheMiss implements CacheMissListener {

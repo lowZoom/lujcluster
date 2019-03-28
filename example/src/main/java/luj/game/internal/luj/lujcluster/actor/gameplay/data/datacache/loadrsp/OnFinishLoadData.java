@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.datacache.loadrsp;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.loadrsp;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -8,8 +8,8 @@ import luj.cache.api.container.CacheEntry;
 import luj.cache.api.container.CacheEntry.Presence;
 import luj.cache.api.container.CacheKey;
 import luj.cluster.api.logging.Log;
-import luj.game.internal.luj.lujcluster.actor.datacache.DataActorMsgHandler;
-import luj.game.internal.luj.lujcluster.actor.datacache.DataActorState;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.DataActorMsgHandler;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.DataActorState;
 
 @Internal
 final class OnFinishLoadData implements DataActorMsgHandler<FinishLoadDataMsg> {

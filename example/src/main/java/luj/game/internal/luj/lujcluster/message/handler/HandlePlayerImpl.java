@@ -3,7 +3,7 @@ package luj.game.internal.luj.lujcluster.message.handler;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.game.api.data.PlayerDataCommand;
 import luj.game.api.proto.GameProtoHandler;
-import luj.game.internal.luj.lujcluster.actor.datacache.reqexec.RequestExecPlayerCmdMsg;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.reqexec.RequestExecPlayerCmdMsg;
 
 final class HandlePlayerImpl implements GameProtoHandler.Player {
 
@@ -13,7 +13,7 @@ final class HandlePlayerImpl implements GameProtoHandler.Player {
   }
 
   /**
-   * @see luj.game.internal.luj.lujcluster.actor.datacache.reqexec.OnRequestExecPlayerCmd#onHandle
+   * @see luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.reqexec.OnRequestExecPlayerCmd#onHandle
    */
   @Override
   public void executeDataCommand(Class<? extends PlayerDataCommand<?>> cmdType) {
