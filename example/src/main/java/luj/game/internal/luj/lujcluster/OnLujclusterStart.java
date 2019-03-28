@@ -21,11 +21,13 @@ final class OnLujclusterStart implements NodeStartListener {
     //TODO: 调用各个零件库初始化
     JambeanInLujcluster param = ctx.getStartParam();
 
-    //TODO: 收集数据loader
+    // 创建缓存actor
     ctx.createApplicationActor(dataCache(param));
 
-    //TODO: 初始化cluster消息处理注册
+    // 初始化cluster消息处理注册
     ctx.registerMessageHandler(MessageHandlerCollector.Factory.create(_protoHandlerList).collect());
+
+    //TODO: 找个地方写查找网关节点的逻辑
 
     StartContextImpl startCtx = new StartContextImpl(ctx);
     for (GameStartListener listener : nonNull(_startListenerList)) {

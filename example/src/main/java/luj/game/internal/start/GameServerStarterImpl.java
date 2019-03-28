@@ -13,6 +13,9 @@ final class GameServerStarterImpl implements GameServerStarter {
     _appContext = appContext;
   }
 
+  /**
+   * @see luj.game.internal.luj.lujcluster.OnLujclusterStart#onStart
+   */
   @Override
   public void start() {
     try (AnnotationConfigApplicationContext jamCtx = new AnnotationConfigApplicationContext()) {
@@ -20,6 +23,8 @@ final class GameServerStarterImpl implements GameServerStarter {
 
       jamCtx.register(InjectConf.class);
       jamCtx.refresh();
+
+      //TODO: 读取配置，确定服务器id
 
       LujCluster.start(jamCtx)
           .startNode(createStartParam(jamCtx));

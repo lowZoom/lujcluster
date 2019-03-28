@@ -5,7 +5,7 @@ public class SceneObjectDatImpl implements SceneObjectDat {
 
   @Override
   public String id() {
-    return "id";
+    return "idstr";
   }
 
   @Override
