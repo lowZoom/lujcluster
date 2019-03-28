@@ -8,14 +8,18 @@ import org.springframework.context.ApplicationContext;
 
 final class ClusterNodeStarterImpl implements ClusterNodeStarter {
 
-  ClusterNodeStarterImpl(ApplicationContext appContext, Object startParam) {
+  ClusterNodeStarterImpl(ApplicationContext appContext, String seedAddr,
+      Object startParam) {
     _appContext = appContext;
+    _seedAddr = seedAddr;
     _startParam = startParam;
   }
 
   @Override
   public void start() {
-    ActorSystem sys = ActorSystem.create("lujcluster", ConfigFactory.parseResources("akka.conf"));
+    ActorSystem sys = ActorSystem.create("lujcluster", ConfigFactory.empty()
+        .withFallback(ConfigFactory.parseString("akka.cluster.seed-nodes=[\"akka.tcp://lujcluster@"+_seedAddr+"\"]"))
+        .withFallback(ConfigFactory.parseResources("akka.conf")));
 
     ClusterBeanCollector.Result beanCollect =
         ClusterBeanCollector.Factory.create(_appContext).collect();
@@ -24,6 +28,7 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
   }
 
   private final ApplicationContext _appContext;
+  private final String _seedAddr;
 
   private final Object _startParam;
 }
