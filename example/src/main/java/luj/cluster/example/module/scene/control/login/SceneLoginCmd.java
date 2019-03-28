@@ -33,8 +33,8 @@ public class SceneLoginCmd implements PlayerDataCommand<LoadResult> {
   public void execute(Context ctx) {
     LoadResult data = ctx.data(this);
 
-
     SceneDat scene = data.scene();
 
+    System.out.println(data.playerObj().id());
   }
 }

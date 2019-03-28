@@ -20,6 +20,6 @@ final class OnLujcacheReady implements CacheReadyListener {
     ActorPreStartHandler.Actor execRef = param.getCacheActor().getExecRef();
 
     PlayerDataCommand<?> cmd = param.getDataCmd();
-    execRef.tell(new ExecutePlayerCmdMsg(cmd, ctx.getResultBuilder()));
+    execRef.tell(new ExecutePlayerCmdMsg(cmd, ctx.getRequestResult(), null));
   }
 }

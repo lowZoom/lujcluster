@@ -31,7 +31,7 @@ final class ElemImpl implements RequestQueueWakerImpl.Elem {
   @Override
   public boolean tryRequest() {
     return CacheDataRequestor.Factory.create(_containerState, _containerImpl,
-        _elem.getReqRootNode(), _elem.getReqParam()).tryRequest();
+        _elem.getRequest(), _elem.getReqParam()).tryRequest();
   }
 
   @Override

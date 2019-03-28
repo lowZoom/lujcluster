@@ -6,12 +6,7 @@ public interface CacheReadyListener {
 
     <T> T getRequestParam();
 
-    ResultBuilder getResultBuilder();
-  }
-
-  interface ResultBuilder {
-
-    Object build();
+    Object getRequestResult();
   }
 
   void onReady(Context ctx);

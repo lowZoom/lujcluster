@@ -2,6 +2,7 @@ package luj.cache.internal.container.key;
 
 import luj.cache.api.container.CacheKey;
 
+@Deprecated
 public class CacheKeyImpl<T> implements CacheKey<T> {
 
   public CacheKeyImpl(Class<?> dataType, Object dataId) {

@@ -6,6 +6,7 @@ import luj.cache.api.container.CacheKey;
 import luj.cache.api.request.CacheRequest;
 import luj.cache.api.request.CacheRequeue;
 import luj.cache.internal.container.request.CacheDataRequestOrWaiter;
+import luj.cache.internal.request.CacheRequestImpl;
 import luj.cache.internal.request.queue.wake.RequestQueueWaker;
 
 public final class CacheContainerImpl<K> implements CacheContainer<K>, CacheRequeue {
@@ -16,7 +17,7 @@ public final class CacheContainerImpl<K> implements CacheContainer<K>, CacheRequ
 
   @Override
   public void request(CacheRequest req, Object param) {
-    CacheDataRequestOrWaiter.Factory.create(_containerState, this, req.getRootNode(), param).requestOrWait();
+    CacheDataRequestOrWaiter.Factory.create(_containerState, this, req.getRootNode(),(CacheRequestImpl) req, param).requestOrWait();
   }
 
   @Override

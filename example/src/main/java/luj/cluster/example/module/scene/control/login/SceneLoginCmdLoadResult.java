@@ -3,6 +3,7 @@ package luj.cluster.example.module.scene.control.login;
 import luj.cluster.example.module.scene.data.SceneDat;
 import luj.cluster.example.module.scene.data.SceneObjectDat;
 
+@Deprecated
 public class SceneLoginCmdLoadResult implements SceneLoginCmd.LoadResult {
 
   @Override

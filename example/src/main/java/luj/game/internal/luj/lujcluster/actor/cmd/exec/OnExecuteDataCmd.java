@@ -12,14 +12,16 @@ final class OnExecuteDataCmd implements DataCmdActorReceive<ExecutePlayerCmdMsg>
   public void onHandle(Context ctx) {
     ExecutePlayerCmdMsg msg = ctx.getMessage(this);
 
-    PlayerDataCommand<?> cmd = msg.getCommand();
+    PlayerDataCommand<?> cmd = msg.getDataCommand();
 
     Log log = ctx.getLogger();
     log.debug("执行数据cmd：{}", cmd.getClass().getSimpleName());
 
-    Object loadResult = msg.getResultBuilder().build();
+    Object loadResult = msg.getDataResult();
 
     CommandContextImpl cmdCtx = new CommandContextImpl(loadResult);
     cmd.execute(cmdCtx);
+
+    //TODO: 归还解锁缓存
   }
 }
