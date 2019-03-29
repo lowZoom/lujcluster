@@ -11,7 +11,7 @@ import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
 final class ContextImpl implements NodeStartListener.Context {
 
   ContextImpl(ActorRef receiveRef, ActorRef sendRef,
-      ActorRef appRootRef, NodeStartActor startActor, LoggingAdapter logger) {
+      ActorRef appRootRef, NodeStartAktor startActor, LoggingAdapter logger) {
     _receiveRef = receiveRef;
     _sendRef = sendRef;
 
@@ -55,6 +55,6 @@ final class ContextImpl implements NodeStartListener.Context {
 
   private final ActorRef _appRootRef;
 
-  private final NodeStartActor _startActor;
+  private final NodeStartAktor _startActor;
   private final LoggingAdapter _logger;
 }
