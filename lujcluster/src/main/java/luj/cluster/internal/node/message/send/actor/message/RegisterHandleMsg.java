@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.message.send.message;
+package luj.cluster.internal.node.message.send.actor.message;
 
 import akka.actor.ActorRef;
 import java.util.Set;

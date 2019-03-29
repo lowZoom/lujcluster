@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.message.send.message;
+package luj.cluster.internal.node.message.send.actor.message;
 
 public final class NodeSendStartMsg {
 

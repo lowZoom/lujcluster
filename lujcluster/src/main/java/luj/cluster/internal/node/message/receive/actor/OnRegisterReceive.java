@@ -4,7 +4,7 @@ import akka.actor.ActorRef;
 import akka.japi.pf.FI;
 import java.util.Map;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
-import luj.cluster.internal.node.message.send.message.RegisterHandleMsg;
+import luj.cluster.internal.node.message.send.actor.message.RegisterHandleMsg;
 
 final class OnRegisterReceive implements FI.UnitApply<RegisterReceiveMsg> {
 

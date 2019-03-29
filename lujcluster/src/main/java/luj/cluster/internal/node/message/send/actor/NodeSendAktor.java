@@ -5,16 +5,16 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import java.util.HashMap;
 import java.util.Map;
-import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
-import luj.cluster.internal.node.message.send.message.RegisterHandleMsg;
+import luj.cluster.internal.node.message.send.actor.message.NodeSendStartMsg;
+import luj.cluster.internal.node.message.send.actor.message.RegisterHandleMsg;
 
-public final class NodeSendActor extends AbstractActor {
+public class NodeSendAktor extends AbstractActor {
 
   public static Props props() {
-    return Props.create(NodeSendActor.class, () -> new NodeSendActor(new HashMap<>()));
+    return Props.create(NodeSendAktor.class, () -> new NodeSendAktor(new HashMap<>()));
   }
 
-  private NodeSendActor(Map<String, ActorRef> receiveMap) {
+  public NodeSendAktor(Map<String, ActorRef> receiveMap) {
     _receiveMap = receiveMap;
   }
 

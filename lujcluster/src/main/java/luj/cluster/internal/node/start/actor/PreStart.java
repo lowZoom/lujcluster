@@ -11,7 +11,7 @@ import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 import luj.cluster.internal.node.member.NodeMemberAktor;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
-import luj.cluster.internal.node.message.send.actor.NodeSendActor;
+import luj.cluster.internal.node.message.send.actor.NodeSendAktor;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 final class PreStart {
@@ -45,7 +45,7 @@ final class PreStart {
   }
 
   private ActorRef createSendActor() {
-    return _aktorCtx.actorOf(NodeSendActor.props());
+    return _aktorCtx.actorOf(NodeSendAktor.props());
   }
 
   private ActorRef createReceiveActor(ActorRef sendRef, ActorRef appRootRef) {

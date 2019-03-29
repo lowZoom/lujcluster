@@ -3,11 +3,11 @@ package luj.cluster.internal.node.message.send.actor;
 import akka.actor.ActorRef;
 import akka.japi.pf.FI;
 import java.util.Map;
-import luj.cluster.internal.node.message.send.message.RegisterHandleMsg;
+import luj.cluster.internal.node.message.send.actor.message.RegisterHandleMsg;
 
 final class OnRegisterHandle implements FI.UnitApply<RegisterHandleMsg> {
 
-  OnRegisterHandle(NodeSendActor actor) {
+  OnRegisterHandle(NodeSendAktor actor) {
     _actor = actor;
   }
 
@@ -21,5 +21,5 @@ final class OnRegisterHandle implements FI.UnitApply<RegisterHandleMsg> {
     }
   }
 
-  private final NodeSendActor _actor;
+  private final NodeSendAktor _actor;
 }

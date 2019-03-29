@@ -6,7 +6,7 @@ import java.util.Map;
 import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
-import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
+import luj.cluster.internal.node.message.send.actor.message.NodeSendStartMsg;
 
 final class ContextImpl implements NodeStartListener.Context {
 
@@ -34,6 +34,9 @@ final class ContextImpl implements NodeStartListener.Context {
     _appRootRef.tell(new CreateAppActorMsg(actorState.getClass(), actorState), ActorRef.noSender());
   }
 
+  /**
+   * @see luj.cluster.internal.node.message.send.actor.OnNodeSend#apply
+   */
   @Override
   public void sendMessage(String msgKey, Object msg) {
     _sendRef.tell(new NodeSendStartMsg(msgKey, msg), ActorRef.noSender());

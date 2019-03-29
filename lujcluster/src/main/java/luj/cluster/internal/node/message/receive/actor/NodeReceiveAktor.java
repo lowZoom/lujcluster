@@ -8,6 +8,7 @@ import java.util.Map;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
+import luj.cluster.internal.node.message.send.actor.NodeSendAktor;
 
 public class NodeReceiveAktor extends AbstractActor {
 
@@ -54,7 +55,7 @@ public class NodeReceiveAktor extends AbstractActor {
   private final NodeMessageListener _messageListener;
 
   /**
-   * @see luj.cluster.internal.node.message.send.actor.NodeSendActor
+   * @see NodeSendAktor
    */
   private final ActorRef _nodeSendRef;
 

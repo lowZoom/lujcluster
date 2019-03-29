@@ -4,13 +4,13 @@ import akka.actor.ActorRef;
 import akka.japi.pf.FI;
 import java.util.Map;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
-import luj.cluster.internal.node.message.send.message.NodeSendStartMsg;
+import luj.cluster.internal.node.message.send.actor.message.NodeSendStartMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 final class OnNodeSend implements FI.UnitApply<NodeSendStartMsg> {
 
-  OnNodeSend(NodeSendActor actor) {
+  OnNodeSend(NodeSendAktor actor) {
     _actor = actor;
   }
 
@@ -30,5 +30,5 @@ final class OnNodeSend implements FI.UnitApply<NodeSendStartMsg> {
 
   private static final Logger LOG = LoggerFactory.getLogger(OnNodeSend.class);
 
-  private final NodeSendActor _actor;
+  private final NodeSendAktor _actor;
 }
