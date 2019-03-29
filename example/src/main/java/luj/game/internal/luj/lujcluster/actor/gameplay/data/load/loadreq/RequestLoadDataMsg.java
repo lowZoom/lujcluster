@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.gameplay.data.dataload.loadreq;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.load.loadreq;
 
 import luj.cache.api.container.CacheKey;
 

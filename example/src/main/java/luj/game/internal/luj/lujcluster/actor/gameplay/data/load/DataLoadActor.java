@@ -1,4 +1,4 @@
-package luj.game.internal.luj.lujcluster.actor.gameplay.data.dataload;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.load;
 
 import luj.cluster.api.actor.ActorPreStartHandler;
 

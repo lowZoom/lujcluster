@@ -2,7 +2,7 @@ package luj.game.internal.luj.lujcache;
 
 import luj.cluster.api.logging.Log;
 import luj.game.api.data.PlayerDataCommand;
-import luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.DataActorState;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.cache.DataActorState;
 
 public class JamreqInLujcache {
 

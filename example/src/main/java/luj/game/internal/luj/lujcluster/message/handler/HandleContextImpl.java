@@ -2,7 +2,7 @@ package luj.game.internal.luj.lujcluster.message.handler;
 
 import luj.cluster.api.node.NodeMessageListener;
 import luj.game.api.proto.GameProtoHandler;
-import luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.DataActorState;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.cache.DataActorState;
 
 final class HandleContextImpl implements GameProtoHandler.Context<Object> {
 

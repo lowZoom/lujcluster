@@ -9,7 +9,7 @@ import luj.game.api.proto.GameProtoHandler;
 import luj.game.api.start.GameStartListener;
 import luj.game.internal.data.DataCmdCollectBean;
 import luj.game.internal.data.collect.DataCmdMapCollector;
-import luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.DataActorState;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.cache.DataActorState;
 import luj.game.internal.luj.lujcluster.message.handler.collect.MessageHandlerCollector;
 import org.springframework.beans.factory.annotation.Autowired;
 

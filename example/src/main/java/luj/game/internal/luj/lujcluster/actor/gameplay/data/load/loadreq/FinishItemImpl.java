@@ -1,8 +1,8 @@
-package luj.game.internal.luj.lujcluster.actor.gameplay.data.dataload.loadreq;
+package luj.game.internal.luj.lujcluster.actor.gameplay.data.load.loadreq;
 
 
 import luj.cache.api.container.CacheKey;
-import luj.game.internal.luj.lujcluster.actor.gameplay.data.datacache.loadrsp.FinishLoadDataMsg;
+import luj.game.internal.luj.lujcluster.actor.gameplay.data.cache.loadrsp.FinishLoadDataMsg;
 
 final class FinishItemImpl implements FinishLoadDataMsg.FinishItem {
 
