@@ -11,8 +11,8 @@ final class ClusterSessionImpl implements ClusterSession {
   }
 
   @Override
-  public void startNode(Object startParam) {
-    ClusterNodeStarter.Factory.create(_appContext, startParam).start();
+  public void startNode(String seedAddr, Object startParam) {
+    ClusterNodeStarter.Factory.create(_appContext, seedAddr, startParam).start();
   }
 
   private final ApplicationContext _appContext;

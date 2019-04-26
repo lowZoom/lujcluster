@@ -6,8 +6,9 @@ public interface ClusterNodeStarter {
 
   interface Factory {
 
-    static ClusterNodeStarter create(ApplicationContext appContext, Object startParam) {
-      return new ClusterNodeStarterImpl(appContext, "192.168.0.128:2552", startParam);
+    static ClusterNodeStarter create(ApplicationContext appContext,
+        String seedAddr, Object startParam) {
+      return new ClusterNodeStarterImpl(appContext, seedAddr, startParam);
     }
   }
 

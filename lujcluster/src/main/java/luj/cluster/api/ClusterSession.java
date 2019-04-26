@@ -2,5 +2,5 @@ package luj.cluster.api;
 
 public interface ClusterSession {
 
-  void startNode(Object startParam);
+  void startNode(String seedAddr, Object startParam);
 }
