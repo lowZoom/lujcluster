@@ -25,7 +25,7 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
 
   @Override
   public List<ActorPreStartHandler<?>> getActorPreStartHandlers() {
-    return _actorPreStartHandlers;
+    return nonnull(_actorPreStartHandlers);
   }
 
   @Override
