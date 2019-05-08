@@ -8,7 +8,7 @@ public interface ClusterNodeStarter {
 
     static ClusterNodeStarter create(ApplicationContext appContext,
         String seedAddr, Object startParam) {
-      return new ClusterNodeStarterImpl(appContext, seedAddr, startParam);
+      return new ClusterNodeStarterImpl(appContext, seedAddr.split(":")[0], seedAddr, startParam);
     }
   }
 
