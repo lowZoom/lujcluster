@@ -4,6 +4,7 @@ import akka.actor.ActorRef;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 
+@Deprecated
 final class NodeMessageListenInvokerImpl implements NodeMessageListenInvoker {
 
   NodeMessageListenInvokerImpl(NodeMessageListener messageListener, Object message,
@@ -25,10 +26,10 @@ final class NodeMessageListenInvokerImpl implements NodeMessageListenInvoker {
     _messageListener.onMessage(ctx);
   }
 
-  private final NodeMessageListener _messageListener;
+  private final NodeReceiveAktor _receiveAktor;
 
   private final Object _message;
   private final Object _handler;
 
-  private final NodeReceiveAktor _receiveAktor;
+  private final NodeMessageListener _messageListener;
 }

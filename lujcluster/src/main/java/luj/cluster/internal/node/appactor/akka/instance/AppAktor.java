@@ -45,7 +45,7 @@ public final class AppAktor extends AbstractActor {
   }
 
   private void onMessage(Object msg) {
-    AppMessageHandleInvoker.Factory.create(this, msg).invoke();
+    AppMessageHandleInvoker.Factory.create(this, msg, getSender()).invoke();
   }
 
   private final Object _state;

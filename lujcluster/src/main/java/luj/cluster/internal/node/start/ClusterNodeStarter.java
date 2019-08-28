@@ -6,9 +6,9 @@ public interface ClusterNodeStarter {
 
   interface Factory {
 
-    static ClusterNodeStarter create(ApplicationContext appContext,
+    static ClusterNodeStarter create(ApplicationContext appContext, String host, int port,
         String seedAddr, Object startParam) {
-      return new ClusterNodeStarterImpl(appContext, seedAddr.split(":")[0], seedAddr, startParam);
+      return new ClusterNodeStarterImpl(appContext, host, port, seedAddr, startParam);
     }
   }
 

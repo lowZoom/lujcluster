@@ -8,7 +8,6 @@ import java.util.Map;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
-import luj.cluster.internal.node.message.send.actor.NodeSendAktor;
 
 public class NodeReceiveAktor extends AbstractActor {
 
@@ -51,13 +50,18 @@ public class NodeReceiveAktor extends AbstractActor {
     return _handlerMap;
   }
 
+  @Deprecated
   private final Map<String, Object> _handlerMap;
+
   private final NodeMessageListener _messageListener;
 
   /**
-   * @see NodeSendAktor
+   * @see luj.cluster.internal.node.message.send.actor.NodeSendAktor
    */
   private final ActorRef _nodeSendRef;
 
+  /**
+   * @see luj.cluster.internal.node.appactor.akka.root.AppRootAktor
+   */
   private final ActorRef _appRootRef;
 }

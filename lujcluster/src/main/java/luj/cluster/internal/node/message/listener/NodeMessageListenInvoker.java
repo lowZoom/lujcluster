@@ -6,8 +6,10 @@ public interface NodeMessageListenInvoker {
 
   interface Factory {
 
-    static NodeMessageListenInvoker create(NodeReceiveAktor recvActor, Object msg, Object handler) {
+    static NodeMessageListenInvoker create(NodeReceiveAktor recvActor,
+        String msgKey, Object msg, Object handler) {
       return new NodeMessageListenInvokerImpl(recvActor.getMessageListener(), msg, handler, recvActor);
+//      return new NodeMessageListenInvokerImplV2(msgKey, msg, recvActor., recvActor);
     }
   }
 

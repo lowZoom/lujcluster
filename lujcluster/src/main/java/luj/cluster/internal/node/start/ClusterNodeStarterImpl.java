@@ -9,10 +9,11 @@ import org.springframework.context.ApplicationContext;
 
 final class ClusterNodeStarterImpl implements ClusterNodeStarter {
 
-  ClusterNodeStarterImpl(ApplicationContext appContext, String selfAddr, String seedAddr,
-      Object startParam) {
+  ClusterNodeStarterImpl(ApplicationContext appContext, String selfHost, int selfPort,
+      String seedAddr, Object startParam) {
     _appContext = appContext;
-    _selfAddr = selfAddr;
+    _selfHost = selfHost;
+    _selfPort = selfPort;
     _seedAddr = seedAddr;
     _startParam = startParam;
   }
@@ -31,15 +32,17 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
 
   private String makeConfigStr() {
     return String.join("\n", ImmutableList.<String>builder()
-        .add("akka.remote.netty.tcp.hostname=\"" + _selfAddr + "\"")
+        .add("akka.remote.netty.tcp.hostname=\"" + _selfHost + "\"")
+        .add("akka.remote.netty.tcp.port=\"" + _selfPort + "\"")
         .add("akka.cluster.seed-nodes=[\"akka.tcp://lujcluster@" + _seedAddr + "\"]")
         .build());
   }
 
   private final ApplicationContext _appContext;
 
-  private final String _selfAddr;
-  private final String _seedAddr;
+  private final String _selfHost;
+  private final int _selfPort;
 
+  private final String _seedAddr;
   private final Object _startParam;
 }

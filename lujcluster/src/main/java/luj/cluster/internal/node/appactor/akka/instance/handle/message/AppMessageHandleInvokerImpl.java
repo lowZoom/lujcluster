@@ -8,9 +8,10 @@ import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMap;
 
 final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
 
-  AppMessageHandleInvokerImpl(AppAktor appAktor, Object msg) {
+  AppMessageHandleInvokerImpl(AppAktor appAktor, Object msg, ActorMessageHandler.Node remoteNode) {
     _appAktor = appAktor;
     _msg = msg;
+    _remoteNode = remoteNode;
   }
 
   @Override
@@ -22,11 +23,13 @@ final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
     //FIXME: temp
     Log log = LogFactory.get(_appAktor, handler);
 
-    HandleContextImpl ctx = new HandleContextImpl(_appAktor, log, _msg);
+    HandleContextImpl ctx = new HandleContextImpl(_appAktor, log, _msg, _remoteNode);
     handler.onHandle(ctx);
   }
 
   private final AppAktor _appAktor;
 
   private final Object _msg;
+
+  private final ActorMessageHandler.Node _remoteNode;
 }

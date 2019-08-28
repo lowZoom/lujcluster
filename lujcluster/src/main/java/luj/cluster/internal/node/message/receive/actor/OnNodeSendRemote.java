@@ -20,7 +20,7 @@ final class OnNodeSendRemote implements FI.UnitApply<NodeSendRemoteMsg> {
     System.out.println("收到远程节点消息");
     System.out.println(msgKey + handler);
 
-    NodeMessageListenInvoker.Factory.create(_actor, i.getMessage(), handler).invoke();
+    NodeMessageListenInvoker.Factory.create(_actor, msgKey, i.getMessage(), handler).invoke();
   }
 
   private final NodeReceiveAktor _actor;

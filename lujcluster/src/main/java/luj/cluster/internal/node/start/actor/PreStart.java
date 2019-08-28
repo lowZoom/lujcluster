@@ -2,6 +2,7 @@ package luj.cluster.internal.node.start.actor;
 
 import akka.actor.ActorContext;
 import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.cluster.Cluster;
 import akka.event.DiagnosticLoggingAdapter;
 import akka.event.Logging;
@@ -50,12 +51,14 @@ final class PreStart {
 
   private ActorRef createReceiveActor(ActorRef sendRef, ActorRef appRootRef) {
     NodeMessageListener messageListener = _beanCollect.getMessageListener();
-    return _aktorCtx.actorOf(NodeReceiveAktor.props(messageListener, sendRef, appRootRef));
+    Props prop = NodeReceiveAktor.props(messageListener, sendRef, appRootRef);
+    return _aktorCtx.actorOf(prop, "recv");
   }
 
   private void createMemberActor() {
     Cluster cluster = Cluster.get(_aktorCtx.system());
-    _aktorCtx.actorOf(NodeMemberAktor.props(cluster), "cluster");
+    Props prop = NodeMemberAktor.props(cluster, _beanCollect.getMemberUpListener());
+    _aktorCtx.actorOf(prop, "member");
   }
 
   private final NodeStartAktor _aktor;

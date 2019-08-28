@@ -11,6 +11,13 @@ public interface ActorMessageHandler<A, M> {
     <M> M getMessage(ActorMessageHandler<?, M> handler);
 
     Log getLogger();
+
+    Node getRemoteNode();
+  }
+
+  interface Node {
+
+    String getIp();
   }
 
   void onHandle(Context ctx);
