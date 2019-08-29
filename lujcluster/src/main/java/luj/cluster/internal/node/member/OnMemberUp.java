@@ -32,7 +32,7 @@ final class OnMemberUp implements FI.UnitApply<ClusterEvent.MemberUp> {
     Address addr = member.address();
 
     ActorSelection recvRef = _aktor.context().actorSelection(addr + "/user/start/recv");
-    NodeImpl node = new NodeImpl(recvRef);
+    NodeImpl node = new NodeImpl(recvRef, _aktor.self());
 
     MemberContextImpl ctx = new MemberContextImpl(node);
     _joinListener.onMember(ctx);

@@ -7,14 +7,17 @@ import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMs
 
 final class NodeImpl implements NodeNewMemberListener.Node {
 
-  NodeImpl(ActorSelection remoteRef) {
+  NodeImpl(ActorSelection remoteRef, ActorRef memberRef) {
     _remoteRef = remoteRef;
+    _memberRef = memberRef;
   }
 
   @Override
   public void sendMessage(String msgKey, Object msg) {
-    _remoteRef.tell(new NodeSendRemoteMsg(msgKey, msg), ActorRef.noSender());
+    _remoteRef.tell(new NodeSendRemoteMsg(msgKey, msg), _memberRef);
   }
 
   private final ActorSelection _remoteRef;
+
+  private final ActorRef _memberRef;
 }

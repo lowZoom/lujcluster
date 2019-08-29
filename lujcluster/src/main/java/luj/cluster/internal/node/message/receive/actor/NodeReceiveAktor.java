@@ -3,23 +3,22 @@ package luj.cluster.internal.node.message.receive.actor;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import java.util.HashMap;
-import java.util.Map;
 import luj.cluster.api.node.NodeMessageListener;
+import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
 public class NodeReceiveAktor extends AbstractActor {
 
-  public static Props props(NodeMessageListener nodeMessageListener,
-      ActorRef nodeSendRef, ActorRef appRootRef) {
+  public static Props props(ActorMessageHandleMapV2 messageHandleMap,
+      NodeMessageListener nodeMessageListener, ActorRef nodeSendRef, ActorRef appRootRef) {
     return Props.create(NodeReceiveAktor.class, () ->
-        new NodeReceiveAktor(new HashMap<>(), nodeMessageListener, nodeSendRef, appRootRef));
+        new NodeReceiveAktor(messageHandleMap, nodeMessageListener, nodeSendRef, appRootRef));
   }
 
-  NodeReceiveAktor(Map<String, Object> handlerMap,
+  NodeReceiveAktor(ActorMessageHandleMapV2 messageHandleMap,
       NodeMessageListener messageListener, ActorRef nodeSendRef, ActorRef appRootRef) {
-    _handlerMap = handlerMap;
+    _messageHandleMap = messageHandleMap;
     _messageListener = messageListener;
 
     _nodeSendRef = nodeSendRef;
@@ -46,12 +45,11 @@ public class NodeReceiveAktor extends AbstractActor {
     return _appRootRef;
   }
 
-  Map<String, Object> getHandlerMap() {
-    return _handlerMap;
+  public ActorMessageHandleMapV2 getMessageHandleMap() {
+    return _messageHandleMap;
   }
 
-  @Deprecated
-  private final Map<String, Object> _handlerMap;
+  private final ActorMessageHandleMapV2 _messageHandleMap;
 
   private final NodeMessageListener _messageListener;
 

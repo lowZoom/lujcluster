@@ -46,7 +46,8 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
   @Autowired(required = false)
   private List<NodeStartListener> _startListeners;
 
-  @Autowired
+  @Deprecated
+  @Autowired(required = false)
   private NodeMessageListener _messageListener;
 
   @Autowired(required = false)

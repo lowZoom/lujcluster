@@ -1,9 +1,11 @@
 package luj.cluster.internal.node.appactor.meta;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import luj.ava.reflect.type.TypeX;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
@@ -15,12 +17,12 @@ enum ActorMetaMapFactoryImpl {
   ActorMetaMap create(ClusterBeanCollector.Result beanCollect) {
     Map<Class<?>, ActorPreStartHandler<?>> prestartMap = beanCollect
         .getActorPreStartHandlers().stream()
-        .collect(Collectors.toMap(this::getActorType, Function.identity()));
+        .collect(toMap(this::getActorType, Function.identity()));
 
     return new ActorMetaMapImpl(beanCollect.getActorMessageHandlers().stream()
-        .collect(Collectors.groupingBy(h -> getMsgHandleParam(h, 0)))
+        .collect(groupingBy(h -> getMsgHandleParam(h, 0)))
         .entrySet().stream()
-        .collect(Collectors.toMap(Map.Entry::getKey, e ->
+        .collect(toMap(Map.Entry::getKey, e ->
             createMeta(prestartMap.get(e.getKey()), e.getValue()))));
   }
 
@@ -34,7 +36,7 @@ enum ActorMetaMapFactoryImpl {
   private ActorMeta createMeta(ActorPreStartHandler<?> prestartHandler,
       List<ActorMessageHandler<?, ?>> msgHandlerList) {
     MessageHandleMapImpl handleMap = new MessageHandleMapImpl(msgHandlerList.stream()
-        .collect(Collectors.toMap(h -> getMsgHandleParam(h, 1), Function.identity())));
+        .collect(toMap(h -> getMsgHandleParam(h, 1), Function.identity())));
 
     return new ActorMetaImpl(prestartHandler, handleMap);
   }

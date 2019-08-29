@@ -1,5 +1,7 @@
 package luj.cluster.internal.node.appactor.akka.root;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import akka.actor.ActorRef;
 import akka.japi.pf.FI;
 import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
@@ -15,7 +17,8 @@ final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
     Class<?> appType = i.getActorType();
     ActorRef akkaRef = _rootAktor.getChildRefMap().get(appType);
 
-    akkaRef.tell(i.getAppMsg(), ActorRef.noSender());
+    checkNotNull(akkaRef, appType.getName());
+    akkaRef.tell(i.getAppMsg(), _rootAktor.sender());
   }
 
   private final AppRootAktor _rootAktor;

@@ -14,7 +14,7 @@ final class OnRegisterReceive implements FI.UnitApply<RegisterReceiveMsg> {
 
   @Override
   public void apply(RegisterReceiveMsg i) {
-    Map<String, Object> handlerMap = _actor.getHandlerMap();
+    Map<String, Object> handlerMap = null;// _actor.getHandlerMap();
     Map<String, ?> registerMap = i.getRegisterMap();
     handlerMap.putAll(registerMap);
 

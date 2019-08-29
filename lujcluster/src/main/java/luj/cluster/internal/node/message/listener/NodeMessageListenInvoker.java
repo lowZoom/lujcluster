@@ -8,8 +8,9 @@ public interface NodeMessageListenInvoker {
 
     static NodeMessageListenInvoker create(NodeReceiveAktor recvActor,
         String msgKey, Object msg, Object handler) {
-      return new NodeMessageListenInvokerImpl(recvActor.getMessageListener(), msg, handler, recvActor);
-//      return new NodeMessageListenInvokerImplV2(msgKey, msg, recvActor., recvActor);
+//      return new NodeMessageListenInvokerImpl(recvActor.getMessageListener(), msg, handler, recvActor);
+      return new NodeMessageListenInvokerImplV2(msgKey, msg, recvActor.getMessageHandleMap(),
+          recvActor.getAppRootRef(), recvActor.context().sender());
     }
   }
 

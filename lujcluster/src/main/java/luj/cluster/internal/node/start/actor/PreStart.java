@@ -9,6 +9,8 @@ import akka.event.Logging;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
+import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
+import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2Factory;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 import luj.cluster.internal.node.member.NodeMemberAktor;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
@@ -51,14 +53,17 @@ final class PreStart {
 
   private ActorRef createReceiveActor(ActorRef sendRef, ActorRef appRootRef) {
     NodeMessageListener messageListener = _beanCollect.getMessageListener();
-    Props prop = NodeReceiveAktor.props(messageListener, sendRef, appRootRef);
+
+    ActorMessageHandleMapV2 handleMap = new ActorMessageHandleMapV2Factory(
+        _beanCollect.getActorMessageHandlers()).create();
+
+    Props prop = NodeReceiveAktor.props(handleMap, messageListener, sendRef, appRootRef);
     return _aktorCtx.actorOf(prop, "recv");
   }
 
   private void createMemberActor() {
     Cluster cluster = Cluster.get(_aktorCtx.system());
-    Props prop = NodeMemberAktor.props(cluster, _beanCollect.getMemberUpListener());
-    _aktorCtx.actorOf(prop, "member");
+    _aktorCtx.actorOf(NodeMemberAktor.props(cluster, _beanCollect.getMemberUpListener()));
   }
 
   private final NodeStartAktor _aktor;
