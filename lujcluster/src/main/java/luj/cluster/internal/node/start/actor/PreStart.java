@@ -33,8 +33,7 @@ final class PreStart {
     ActorRef appRootRef = createAppRoot();
     ActorRef sendRef = createSendActor();
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
-
-    createMemberActor();
+    createMemberActor(receiveRef);
 
     ContextImpl context = new ContextImpl(receiveRef, sendRef, appRootRef, _aktor, null);
     for (NodeStartListener listener : _beanCollect.getStartListeners()) {
@@ -48,7 +47,7 @@ final class PreStart {
   }
 
   private ActorRef createSendActor() {
-    return _aktorCtx.actorOf(NodeSendAktor.props());
+    return _aktorCtx.actorOf(NodeSendAktor.props(), "send");
   }
 
   private ActorRef createReceiveActor(ActorRef sendRef, ActorRef appRootRef) {
@@ -61,9 +60,10 @@ final class PreStart {
     return _aktorCtx.actorOf(prop, "recv");
   }
 
-  private void createMemberActor() {
+  private void createMemberActor(ActorRef receiveRef) {
     Cluster cluster = Cluster.get(_aktorCtx.system());
-    _aktorCtx.actorOf(NodeMemberAktor.props(cluster, _beanCollect.getMemberUpListener()));
+    Props prop = NodeMemberAktor.props(cluster, _beanCollect.getMemberUpListener(), receiveRef);
+    _aktorCtx.actorOf(prop, "member");
   }
 
   private final NodeStartAktor _aktor;

@@ -51,6 +51,7 @@ public class NodeReceiveAktor extends AbstractActor {
 
   private final ActorMessageHandleMapV2 _messageHandleMap;
 
+  @Deprecated
   private final NodeMessageListener _messageListener;
 
   /**

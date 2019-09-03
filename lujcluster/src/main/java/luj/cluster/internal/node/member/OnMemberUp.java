@@ -41,6 +41,5 @@ final class OnMemberUp implements FI.UnitApply<ClusterEvent.MemberUp> {
   private static final Logger LOG = LoggerFactory.getLogger(OnMemberUp.class);
 
   private final NodeMemberAktor _aktor;
-
   private final NodeNewMemberListener _joinListener;
 }

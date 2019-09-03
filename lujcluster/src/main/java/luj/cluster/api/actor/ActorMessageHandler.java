@@ -18,6 +18,8 @@ public interface ActorMessageHandler<A, M> {
   interface Node {
 
     String getIp();
+
+    void sendMessage(Object msg);
   }
 
   void onHandle(Context ctx);

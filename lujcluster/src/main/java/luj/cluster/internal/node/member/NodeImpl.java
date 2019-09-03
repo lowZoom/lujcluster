@@ -17,6 +17,9 @@ final class NodeImpl implements NodeNewMemberListener.Node {
     _remoteRef.tell(new NodeSendRemoteMsg(msgKey, msg), _memberRef);
   }
 
+  /**
+   * @see luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor
+   */
   private final ActorSelection _remoteRef;
 
   private final ActorRef _memberRef;
