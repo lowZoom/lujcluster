@@ -9,13 +9,18 @@ public interface NodeStartListener {
 
     void registerMessageHandler(Map<String, ?> handlerMap);
 
-    void createApplicationActor(Object actorState);
+    Actor createApplicationActor(Object actorState);
 
     void sendMessage(String msgKey, Object msg);
 
     <T> T getStartParam();
 
     LoggingAdapter getLogger();
+  }
+
+  interface Actor {
+
+    void tell(Object msg);
   }
 
   void onStart(Context ctx) throws Exception;

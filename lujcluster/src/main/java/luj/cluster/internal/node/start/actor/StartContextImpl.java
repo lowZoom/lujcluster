@@ -8,9 +8,9 @@ import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.send.actor.message.NodeSendStartMsg;
 
-final class ContextImpl implements NodeStartListener.Context {
+final class StartContextImpl implements NodeStartListener.Context {
 
-  ContextImpl(ActorRef receiveRef, ActorRef sendRef,
+  StartContextImpl(ActorRef receiveRef, ActorRef sendRef,
       ActorRef appRootRef, NodeStartAktor startActor, LoggingAdapter logger) {
     _receiveRef = receiveRef;
     _sendRef = sendRef;
@@ -30,8 +30,10 @@ final class ContextImpl implements NodeStartListener.Context {
   }
 
   @Override
-  public void createApplicationActor(Object actorState) {
-    _appRootRef.tell(new CreateAppActorMsg(actorState.getClass(), actorState), ActorRef.noSender());
+  public NodeStartListener.Actor createApplicationActor(Object actorState) {
+    Class<?> actorType = actorState.getClass();
+    _appRootRef.tell(new CreateAppActorMsg(actorType, actorState), ActorRef.noSender());
+    return new ActorImpl(_appRootRef, actorType);
   }
 
   /**

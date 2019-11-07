@@ -35,7 +35,7 @@ final class PreStart {
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
     createMemberActor(receiveRef);
 
-    ContextImpl context = new ContextImpl(receiveRef, sendRef, appRootRef, _aktor, null);
+    StartContextImpl context = new StartContextImpl(receiveRef, sendRef, appRootRef, _aktor, null);
     for (NodeStartListener listener : _beanCollect.getStartListeners()) {
       listener.onStart(context);
     }
