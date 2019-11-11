@@ -27,7 +27,7 @@ final class AppAktorCreatorImpl implements AppAktorCreator {
     checkNotNull(meta, _actorType);
 
     Props props = AppAktor.props(_actorState, meta, _actorMetaMap);
-    return _aktorCtx.actorOf(props, _actorType.getSimpleName());
+    return _aktorCtx.actorOf(props);//, _actorType.getSimpleName());
   }
 
   private final ActorMetaMap _actorMetaMap;

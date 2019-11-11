@@ -24,7 +24,13 @@ final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
     Log log = LogFactory.get(_appAktor, handler);
 
     HandleContextImpl ctx = new HandleContextImpl(_appAktor, log, _msg, _remoteNode);
-    handler.onHandle(ctx);
+
+    try {
+      handler.onHandle(ctx);
+
+    } catch (Exception e) {
+      throw new UnsupportedOperationException(e);
+    }
   }
 
   private final AppAktor _appAktor;

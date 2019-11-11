@@ -19,12 +19,7 @@ final class HandleContextImpl implements ActorPreStartHandler.Context {
 
   @Override
   public ActorPreStartHandler.Actor getActor() {
-    return new ActorImpl(getActorRef());
-  }
-
-  @Override
-  public ActorRef getActorRef() {
-    return _appAktor.self();
+    return new ActorImpl(_appAktor.self());
   }
 
   @Override

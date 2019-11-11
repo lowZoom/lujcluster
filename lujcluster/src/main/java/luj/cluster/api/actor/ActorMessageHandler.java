@@ -15,6 +15,8 @@ public interface ActorMessageHandler<A, M> {
 
     <A> A getActorState(ActorMessageHandler<A, ?> handler);
 
+    ActorRef getActorRef();
+
     <M> M getMessage(ActorMessageHandler<?, M> handler);
 
     Log getLogger();
@@ -31,5 +33,5 @@ public interface ActorMessageHandler<A, M> {
     void sendMessage(Object msg);
   }
 
-  void onHandle(Context ctx);
+  void onHandle(Context ctx) throws Exception;
 }

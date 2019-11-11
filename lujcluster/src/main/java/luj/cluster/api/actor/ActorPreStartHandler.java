@@ -1,7 +1,5 @@
 package luj.cluster.api.actor;
 
-import akka.actor.ActorRef;
-
 public interface ActorPreStartHandler<A> {
 
   interface Context {
@@ -9,8 +7,6 @@ public interface ActorPreStartHandler<A> {
     <A> A getActorState(ActorPreStartHandler<A> handler);
 
     Actor getActor();
-
-    ActorRef getActorRef();
 
     Actor createActor(Object actorState);
   }
