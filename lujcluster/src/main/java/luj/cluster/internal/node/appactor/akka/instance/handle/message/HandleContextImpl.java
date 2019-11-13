@@ -28,8 +28,8 @@ final class HandleContextImpl implements ActorMessageHandler.Context {
   }
 
   @Override
-  public ActorRef getActorRef() {
-    return _appAktor.self();
+  public ActorMessageHandler.Ref getActorRef() {
+    return new ActorRefImpl(_appAktor.self(), _appAktor.context());
   }
 
   @Override

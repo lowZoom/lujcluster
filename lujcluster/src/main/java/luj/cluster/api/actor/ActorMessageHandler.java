@@ -1,6 +1,7 @@
 package luj.cluster.api.actor;
 
 import akka.actor.ActorRef;
+import java.time.Duration;
 import luj.cluster.api.logging.Log;
 
 public interface ActorMessageHandler<A, M> {
@@ -15,7 +16,7 @@ public interface ActorMessageHandler<A, M> {
 
     <A> A getActorState(ActorMessageHandler<A, ?> handler);
 
-    ActorRef getActorRef();
+    Ref getActorRef();
 
     <M> M getMessage(ActorMessageHandler<?, M> handler);
 
@@ -31,6 +32,11 @@ public interface ActorMessageHandler<A, M> {
     String getIp();
 
     void sendMessage(Object msg);
+  }
+
+  interface Ref {
+
+    void tell(Object msg, Duration delay);
   }
 
   void onHandle(Context ctx) throws Exception;
