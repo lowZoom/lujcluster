@@ -8,7 +8,7 @@ public interface AppMessageHandleInvoker {
   interface Factory {
 
     static AppMessageHandleInvoker create(AppAktor appAktor, Object msg, ActorRef senderRef) {
-      RemoteNodeImpl remoteNode = new RemoteNodeImpl(senderRef);
+      RemoteNodeImpl remoteNode = new RemoteNodeImpl(senderRef, appAktor.self());
       return new AppMessageHandleInvokerImpl(appAktor, msg, remoteNode);
     }
   }

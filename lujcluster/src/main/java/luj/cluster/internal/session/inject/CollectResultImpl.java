@@ -16,7 +16,7 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
 
   @Override
   public List<NodeStartListener> getStartListeners() {
-    return nonnull(_startListeners);
+    return nonNull(_startListeners);
   }
 
   @Override
@@ -31,15 +31,15 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
 
   @Override
   public List<ActorPreStartHandler<?>> getActorPreStartHandlers() {
-    return nonnull(_actorPreStartHandlers);
+    return nonNull(_actorPreStartHandlers);
   }
 
   @Override
   public List<ActorMessageHandler<?, ?>> getActorMessageHandlers() {
-    return nonnull(_actorMessageHandlers);
+    return nonNull(_actorMessageHandlers);
   }
 
-  private <T> List<T> nonnull(List<T> list) {
+  private <T> List<T> nonNull(List<T> list) {
     return MoreObjects.firstNonNull(list, ImmutableList.of());
   }
 

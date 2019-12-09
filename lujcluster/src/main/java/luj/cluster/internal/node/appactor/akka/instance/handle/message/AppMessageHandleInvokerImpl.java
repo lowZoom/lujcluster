@@ -1,5 +1,7 @@
 package luj.cluster.internal.node.appactor.akka.instance.handle.message;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.logging.Log;
 import luj.cluster.internal.logging.LogFactory;
@@ -18,7 +20,9 @@ final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
   public void invoke() {
     Class<?> msgType = _msg.getClass();
     ActorMessageHandleMap handleMap = _appAktor.getMeta().getMessageHandleMap();
+
     ActorMessageHandler<?, ?> handler = handleMap.getHandler(msgType);
+    checkNotNull(handler, "%s @ %s", msgType.getName(), _appAktor.getState().getClass().getName());
 
     //FIXME: temp
     Log log = LogFactory.get(_appAktor, handler);
