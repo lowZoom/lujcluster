@@ -8,6 +8,9 @@ import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
+/**
+ * 用于接收所有外部节点消息，然后会根据注册关系派发给内部actor
+ */
 public class NodeReceiveAktor extends AbstractActor {
 
   public static Props props(ActorMessageHandleMapV2 messageHandleMap,
