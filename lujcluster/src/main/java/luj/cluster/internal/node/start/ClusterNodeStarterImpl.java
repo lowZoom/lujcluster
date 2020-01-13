@@ -34,6 +34,11 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
     return String.join("\n", ImmutableList.<String>builder()
         .add("akka.remote.netty.tcp.hostname=\"" + _selfHost + "\"")
         .add("akka.remote.netty.tcp.port=\"" + _selfPort + "\"")
+
+        // https://doc.akka.io/docs/akka/2.5/remoting.html?language=scala#akka-behind-nat-or-in-a-docker-container
+        .add("akka.remote.netty.tcp.bind-hostname=\"0.0.0.0\"")
+        .add("akka.remote.netty.tcp.bind-port=\"" + _selfPort + "\"")
+
         .add("akka.cluster.seed-nodes=[\"akka.tcp://lujcluster@" + _seedAddr + "\"]")
         .build());
   }
