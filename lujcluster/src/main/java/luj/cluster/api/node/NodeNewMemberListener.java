@@ -1,5 +1,8 @@
 package luj.cluster.api.node;
 
+/**
+ * 当集群中有新成员加入时触发
+ */
 public interface NodeNewMemberListener {
 
   interface Context {
