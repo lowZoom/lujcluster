@@ -17,8 +17,10 @@ final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
     Class<?> appType = i.getActorType();
     ActorRef akkaRef = _rootAktor.getChildRefMap().get(appType);
 
-    checkNotNull(akkaRef, appType.getName());
-    akkaRef.tell(i.getAppMsg(), _rootAktor.sender());
+    Object msg = i.getAppMsg();
+    checkNotNull(akkaRef, "%s(%s)", appType.getName(), msg.getClass().getName());
+
+    akkaRef.tell(msg, _rootAktor.sender());
   }
 
   private final AppRootAktor _rootAktor;
