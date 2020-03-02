@@ -20,6 +20,11 @@ final class RemoteNodeImpl implements ActorMessageHandler.Node {
     _remoteRef.tell(msg, _localRef);
   }
 
+  @Override
+  public String toString() {
+    return _remoteRef.toString();
+  }
+
   /**
    * @see luj.cluster.internal.node.member.NodeMemberAktor
    */

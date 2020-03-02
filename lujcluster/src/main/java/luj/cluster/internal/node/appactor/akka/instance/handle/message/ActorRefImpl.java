@@ -17,7 +17,7 @@ final class ActorRefImpl implements ActorMessageHandler.Ref {
   public void tell(Object msg, Duration delay) {
     ActorSystem system = _actorContext.system();
     system.scheduler().scheduleOnce(delay,
-        _actorRef, msg, system.dispatcher(), ActorRef.noSender());
+        _actorRef, msg, system.dispatcher(), _actorContext.sender());
   }
 
   private final ActorRef _actorRef;
