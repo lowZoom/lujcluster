@@ -17,7 +17,7 @@ public class NodeStartAktor extends AbstractActor {
 
   @Override
   public void preStart() throws Exception {
-    new PreStart(this, context(), _collectResult).run();
+    new PreStart(this, context(), _collectResult, _startParam).run();
   }
 
   @Override

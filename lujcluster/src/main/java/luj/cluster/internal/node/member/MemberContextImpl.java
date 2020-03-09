@@ -4,8 +4,9 @@ import luj.cluster.api.node.NodeNewMemberListener;
 
 final class MemberContextImpl implements NodeNewMemberListener.Context {
 
-  MemberContextImpl(NodeNewMemberListener.Node node) {
+  MemberContextImpl(NodeNewMemberListener.Node node, Object applicationBean) {
     _node = node;
+    _applicationBean = applicationBean;
   }
 
   @Override
@@ -13,5 +14,13 @@ final class MemberContextImpl implements NodeNewMemberListener.Context {
     return _node;
   }
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public <T> T getApplicationBean() {
+    return (T) _applicationBean;
+  }
+
   private final NodeNewMemberListener.Node _node;
+
+  private final Object _applicationBean;
 }

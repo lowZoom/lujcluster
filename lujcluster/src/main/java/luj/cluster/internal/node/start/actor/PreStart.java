@@ -19,11 +19,12 @@ import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 final class PreStart {
 
-  PreStart(NodeStartAktor aktor, ActorContext aktorCtx, ClusterBeanCollector.Result beanCollect) {
+  PreStart(NodeStartAktor aktor, ActorContext aktorCtx,
+      ClusterBeanCollector.Result beanCollect, Object applicationBean) {
     _aktor = aktor;
-
     _aktorCtx = aktorCtx;
     _beanCollect = beanCollect;
+    _applicationBean = applicationBean;
   }
 
   void run() throws Exception {
@@ -62,12 +63,15 @@ final class PreStart {
 
   private void createMemberActor(ActorRef receiveRef) {
     Cluster cluster = Cluster.get(_aktorCtx.system());
-    Props prop = NodeMemberAktor.props(cluster, _beanCollect.getMemberUpListener(), receiveRef);
-    _aktorCtx.actorOf(prop, "member");
+
+    _aktorCtx.actorOf(NodeMemberAktor.props(cluster,
+        _beanCollect.getMemberUpListener(), receiveRef, _applicationBean), "member");
   }
 
   private final NodeStartAktor _aktor;
 
   private final ActorContext _aktorCtx;
   private final ClusterBeanCollector.Result _beanCollect;
+
+  private final Object _applicationBean;
 }

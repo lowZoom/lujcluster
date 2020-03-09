@@ -10,16 +10,18 @@ import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMs
 
 public class NodeMemberAktor extends AbstractActor {
 
-  public static Props props(Cluster cluster,
-      NodeNewMemberListener joinListener, ActorRef receiveRef) {
-    return Props.create(NodeMemberAktor.class,
-        () -> new NodeMemberAktor(cluster, joinListener, receiveRef));
+  public static Props props(Cluster cluster, NodeNewMemberListener joinListener,
+      ActorRef receiveRef, Object applicationBean) {
+    return Props.create(NodeMemberAktor.class, () ->
+        new NodeMemberAktor(cluster, joinListener, receiveRef, applicationBean));
   }
 
-  public NodeMemberAktor(Cluster cluster, NodeNewMemberListener joinListener, ActorRef receiveRef) {
+  public NodeMemberAktor(Cluster cluster, NodeNewMemberListener joinListener,
+      ActorRef receiveRef, Object applicationBean) {
     _cluster = cluster;
     _joinListener = joinListener;
     _receiveRef = receiveRef;
+    _applicationBean = applicationBean;
   }
 
   @Override
@@ -35,17 +37,18 @@ public class NodeMemberAktor extends AbstractActor {
   @Override
   public Receive createReceive() {
     return receiveBuilder()
-        .match(ClusterEvent.MemberUp.class, new OnMemberUp(this, _joinListener))
+        .match(ClusterEvent.MemberUp.class, new OnMemberUp(this, _joinListener, _applicationBean))
         .match(NodeSendRemoteMsg.class, new OnSendRemote(this, _receiveRef))
         .build();
   }
 
   private final Cluster _cluster;
-
   private final NodeNewMemberListener _joinListener;
 
   /**
    * @see luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor
    */
   private final ActorRef _receiveRef;
+
+  private final Object _applicationBean;
 }

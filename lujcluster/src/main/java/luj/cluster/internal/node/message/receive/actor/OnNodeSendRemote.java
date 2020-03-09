@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import luj.cluster.internal.node.message.listener.NodeMessageListenInvoker;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 final class OnNodeSendRemote implements FI.UnitApply<NodeSendRemoteMsg> {
 
@@ -14,15 +16,17 @@ final class OnNodeSendRemote implements FI.UnitApply<NodeSendRemoteMsg> {
 
   @Override
   public void apply(NodeSendRemoteMsg i) {
+    @Deprecated
     Map<String, Object> handlerMap = ImmutableMap.of();// _actor.getHandlerMap();
+
     String msgKey = i.getMessageKey();
     Object handler = handlerMap.get(msgKey);
 
-    System.out.println("收到远程节点消息");
-    System.out.println(msgKey + handler);
-
+    LOG.debug("收到远程节点消息：{}（{}）", msgKey, _actor.sender());
     NodeMessageListenInvoker.Factory.create(_actor, msgKey, i.getMessage(), handler).invoke();
   }
+
+  private static final Logger LOG = LoggerFactory.getLogger(OnNodeSendRemote.class);
 
   private final NodeReceiveAktor _actor;
 }

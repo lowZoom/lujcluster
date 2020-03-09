@@ -8,6 +8,8 @@ public interface NodeNewMemberListener {
   interface Context {
 
     Node getMemberNode();
+
+    <T> T getApplicationBean();
   }
 
   interface Node {
@@ -15,5 +17,5 @@ public interface NodeNewMemberListener {
     void sendMessage(String msgKey, Object msg);
   }
 
-  void onMember(Context ctx);
+  void onMember(Context ctx) throws Exception;
 }
