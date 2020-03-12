@@ -2,6 +2,7 @@ package luj.cluster.internal.node.appactor.akka.instance.handle.message;
 
 import akka.actor.ActorRef;
 import luj.cluster.api.actor.ActorMessageHandler;
+import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
 final class RemoteNodeImpl implements ActorMessageHandler.Node {
 
@@ -18,6 +19,11 @@ final class RemoteNodeImpl implements ActorMessageHandler.Node {
   @Override
   public void sendMessage(Object msg) {
     _remoteRef.tell(msg, _localRef);
+  }
+
+  @Override
+  public void sendMessage(String msgKey, Object msg) {
+    _remoteRef.tell(new NodeSendRemoteMsg(msgKey, msg), _localRef);
   }
 
   @Override

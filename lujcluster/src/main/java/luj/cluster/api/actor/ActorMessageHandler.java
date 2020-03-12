@@ -31,7 +31,13 @@ public interface ActorMessageHandler<A, M> {
 
     String getIp();
 
+    /**
+     * @see #sendMessage(String, Object)
+     */
+    @Deprecated
     void sendMessage(Object msg);
+
+    void sendMessage(String msgKey, Object msg);
   }
 
   interface Ref {
