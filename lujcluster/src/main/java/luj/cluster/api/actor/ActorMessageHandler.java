@@ -22,6 +22,8 @@ public interface ActorMessageHandler<A, M> {
 
     Log getLogger();
 
+    //FIXME: 本地actor可互发，这个概念不存在
+    @Deprecated
     Node getRemoteNode();
 
     ActorRef createActor(Object actorState);

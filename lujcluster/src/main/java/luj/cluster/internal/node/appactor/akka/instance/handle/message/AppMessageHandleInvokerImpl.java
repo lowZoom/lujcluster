@@ -38,7 +38,6 @@ final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
   }
 
   private final AppAktor _appAktor;
-
   private final Object _msg;
 
   private final ActorMessageHandler.Node _remoteNode;

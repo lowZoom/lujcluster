@@ -34,6 +34,9 @@ final class PreStart {
     ActorRef appRootRef = createAppRoot();
     ActorRef sendRef = createSendActor();
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
+
+    //FIXME: 要在receiveActor完全启动后才能创建memberActor，不然在clusterJoin发的消息可能会因为太快到达，
+    // receiveActor还没启动完成而无法处理
     createMemberActor(receiveRef);
 
     StartContextImpl context = new StartContextImpl(receiveRef, sendRef, appRootRef, _aktor, null);
