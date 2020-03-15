@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 final class AccountLoginHandler implements GameProtoHandler<AccountLoginReq> {
 
   /**
-   * @see luj.cluster.example.module.player.proto.LoginHandler#onHandle
+   * @see luj.cluster.example.module.player.proto.PlayerLoginHandler#onHandle
    */
   @Override
   public void onHandle(Context<AccountLoginReq> ctx) {

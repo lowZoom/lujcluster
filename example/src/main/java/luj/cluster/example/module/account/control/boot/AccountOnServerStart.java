@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 final class AccountOnServerStart implements GameStartListener {
 
+  /**
+   * @see luj.cluster.example.module.account.proto.AccountLoginHandler#onHandle
+   */
   @Override
   public void onStart(Context ctx) throws InterruptedException {
     System.out.println("登录服启动。。。");

@@ -14,6 +14,9 @@ final class Main {
     }
   }
 
+  /**
+   * @see luj.cluster.example.module.account.control.boot.AccountOnServerStart
+   */
   private void run(ApplicationContext appContext) {
     Jamver.start(appContext);
   }
