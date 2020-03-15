@@ -10,17 +10,11 @@ final class Main {
   public static void main(String[] args) {
     try (AnnotationConfigApplicationContext ctx =
         new AnnotationConfigApplicationContext(ExampleInjectConf.class)) {
-      new Main(ctx).run();
+      new Main().run(ctx);
     }
   }
 
-  private Main(ApplicationContext appContext) {
-    _appContext = appContext;
+  private void run(ApplicationContext appContext) {
+    Jamver.start(appContext);
   }
-
-  private void run() {
-    Jamver.start(_appContext);
-  }
-
-  private final ApplicationContext _appContext;
 }

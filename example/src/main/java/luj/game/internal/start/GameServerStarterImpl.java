@@ -26,8 +26,8 @@ final class GameServerStarterImpl implements GameServerStarter {
 
       //TODO: 读取配置，确定服务器id
 
-      LujCluster.start(jamCtx)
-          .startNode(createStartParam(jamCtx));
+      LujCluster.start(jamCtx).startNode(
+          "192.168.1.99", 2552, "192.168.1.99:2552", createStartParam(jamCtx));
     }
   }
 
