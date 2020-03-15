@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/../../lujdata/lujdata/target/classes" />
+    <output-test url="file://$MODULE_DIR$/../../lujdata/lujdata/target/test-classes" />
+    <content url="file://$MODULE_DIR$/../../lujdata/lujdata">
+      <sourceFolder url="file://$MODULE_DIR$/../../lujdata/lujdata/src/main/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../lujdata/lujdata/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

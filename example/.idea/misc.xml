@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/../lujcluster/pom.xml" />
         <option value="$PROJECT_DIR$/../../lujava/lujava/pom.xml" />
         <option value="$PROJECT_DIR$/../../lujparent/lujparent/pom.xml" />
+        <option value="$PROJECT_DIR$/../../lujdata/lujdata/pom.xml" />
       </list>
     </option>
   </component>
