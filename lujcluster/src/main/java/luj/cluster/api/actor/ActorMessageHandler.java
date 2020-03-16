@@ -44,6 +44,8 @@ public interface ActorMessageHandler<A, M> {
 
   interface Ref {
 
+//    void tell(Object msg);
+
     void tell(Object msg, Duration delay);
   }
 
