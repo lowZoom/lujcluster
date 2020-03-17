@@ -11,18 +11,18 @@ final class LogImpl implements Log {
   }
 
   @Override
-  public void error(String message) {
-    _impl.error(message);
+  public void error(String msg) {
+    _impl.error(msg);
   }
 
   @Override
-  public void error(String template, Object arg1) {
-    _impl.error(template, arg1);
+  public void error(String format, Object arg) {
+    _impl.error(format, arg);
   }
 
   @Override
-  public void error(String template, Object arg1, Object arg2) {
-    _impl.error(template, arg1, arg2);
+  public void error(String format, Object arg1, Object arg2) {
+    _impl.error(format, arg1, arg2);
   }
 
   @Override
