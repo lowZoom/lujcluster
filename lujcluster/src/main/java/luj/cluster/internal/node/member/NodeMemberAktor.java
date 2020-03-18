@@ -38,7 +38,7 @@ public class NodeMemberAktor extends AbstractActor {
   public Receive createReceive() {
     return receiveBuilder()
         .match(ClusterEvent.MemberUp.class, new OnMemberUp(this, _joinListener, _applicationBean))
-        .match(NodeSendRemoteMsg.class, new OnSendRemote(this, _receiveRef))
+        .match(NodeSendRemoteMsg.class, m -> _receiveRef.forward(m, context()))
         .build();
   }
 

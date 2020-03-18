@@ -14,16 +14,21 @@ final class ActorRefImpl implements ActorMessageHandler.Ref {
   }
 
   @Override
+  public void tell(Object msg) {
+    _actorRef.tell(msg, _actorContext.sender());
+  }
+
+  @Override
   public void tell(Object msg, Duration delay) {
-    ActorRef sender = _actorContext.sender();
     if (delay.equals(Duration.ZERO)) {
-      _actorRef.tell(msg, sender);
+      tell(msg);
       return;
     }
 
-    // schedule零秒不能保证消息先发先到！
+    // scheduler零秒不能保证消息先发先到！
     ActorSystem system = _actorContext.system();
-    system.scheduler().scheduleOnce(delay, _actorRef, msg, system.dispatcher(), sender);
+    system.scheduler().scheduleOnce(delay, _actorRef,
+        msg, system.dispatcher(), _actorContext.sender());
   }
 
   private final ActorRef _actorRef;
