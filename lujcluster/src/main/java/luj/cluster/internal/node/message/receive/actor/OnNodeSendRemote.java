@@ -22,7 +22,7 @@ final class OnNodeSendRemote implements FI.UnitApply<NodeSendRemoteMsg> {
     String msgKey = i.getMessageKey();
     Object handler = handlerMap.get(msgKey);
 
-    LOG.debug("收到远程节点消息：{}（{}）", msgKey, _actor.sender());
+    LOG.debug("[cluster]收到远程节点消息：{}（{}）", msgKey, _actor.sender());
     NodeMessageListenInvoker.Factory.create(_actor, msgKey, i.getMessage(), handler).invoke();
   }
 

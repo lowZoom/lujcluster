@@ -22,7 +22,7 @@ final class NodeMessageListenInvokerImplV2 implements NodeMessageListenInvoker {
   public void invoke() {
     Collection<Class<?>> actorTypes = _handleMap.getHandleList(_messageKey);
     if (actorTypes.isEmpty()) {
-      LOG.info("消息没有处理器，忽略：{}", _messageKey);
+      LOG.info("[cluster]消息没有处理器，忽略：{}", _messageKey);
       return;
     }
 

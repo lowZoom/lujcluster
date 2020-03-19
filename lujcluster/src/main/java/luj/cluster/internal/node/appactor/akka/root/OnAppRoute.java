@@ -5,6 +5,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import akka.actor.ActorRef;
 import akka.japi.pf.FI;
 import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
 
@@ -18,10 +20,16 @@ final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
     ActorRef akkaRef = _rootAktor.getChildRefMap().get(appType);
 
     Object msg = i.getAppMsg();
-    checkNotNull(akkaRef, "%s(%s)", appType.getName(), msg.getClass().getName());
+    Class<?> msgType = msg.getClass();
 
+    String actorName = appType.getName();
+    checkNotNull(akkaRef, "%s(%s)", actorName, msgType.getName());
+
+    LOG.debug("[cluster]投递应用消息：{} -> {}", msgType.getSimpleName(), actorName);
     akkaRef.tell(msg, _rootAktor.sender());
   }
+
+  private static final Logger LOG = LoggerFactory.getLogger(OnAppRoute.class);
 
   private final AppRootAktor _rootAktor;
 }

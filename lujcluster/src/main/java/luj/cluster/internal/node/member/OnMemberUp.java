@@ -22,10 +22,10 @@ final class OnMemberUp implements FI.UnitApply<ClusterEvent.MemberUp> {
    */
   @Override
   public void apply(ClusterEvent.MemberUp i) {
-    LOG.debug("新节点加入：{}", i);
+    LOG.debug("[cluster]新节点加入：{}", i);
 
     if (_joinListener == null) {
-      LOG.info("没有监听新节点事件（NodeNewMemberListener），事件被忽略");
+      LOG.info("[cluster]没有监听新节点事件（NodeNewMemberListener），事件被忽略");
       return;
     }
 
