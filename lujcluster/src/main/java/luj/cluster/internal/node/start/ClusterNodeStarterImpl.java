@@ -3,6 +3,8 @@ package luj.cluster.internal.node.start;
 import akka.actor.ActorSystem;
 import com.google.common.collect.ImmutableList;
 import com.typesafe.config.ConfigFactory;
+import java.util.List;
+import java.util.stream.Collectors;
 import luj.cluster.internal.node.start.actor.NodeStartAktor;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 import org.springframework.context.ApplicationContext;
@@ -10,11 +12,11 @@ import org.springframework.context.ApplicationContext;
 final class ClusterNodeStarterImpl implements ClusterNodeStarter {
 
   ClusterNodeStarterImpl(ApplicationContext appContext, String selfHost, int selfPort,
-      String seedAddr, Object startParam) {
+      List<String> seedList, Object startParam) {
     _appContext = appContext;
     _selfHost = selfHost;
     _selfPort = selfPort;
-    _seedAddr = seedAddr;
+    _seedList = seedList;
     _startParam = startParam;
   }
 
@@ -39,8 +41,14 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
         .add("akka.remote.netty.tcp.bind-hostname=\"0.0.0.0\"")
         .add("akka.remote.netty.tcp.bind-port=\"" + _selfPort + "\"")
 
-        .add("akka.cluster.seed-nodes=[\"akka.tcp://lujcluster@" + _seedAddr + "\"]")
+        .add("akka.cluster.seed-nodes=[" + makeSeedStr() + "]")
         .build());
+  }
+
+  private String makeSeedStr() {
+    return _seedList.stream()
+        .map(s -> "\"akka.tcp://lujcluster@" + s + "\"")
+        .collect(Collectors.joining(",\n"));
   }
 
   private final ApplicationContext _appContext;
@@ -48,6 +56,6 @@ final class ClusterNodeStarterImpl implements ClusterNodeStarter {
   private final String _selfHost;
   private final int _selfPort;
 
-  private final String _seedAddr;
+  private final List<String> _seedList;
   private final Object _startParam;
 }

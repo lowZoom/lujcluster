@@ -29,7 +29,7 @@ final class PreStart {
 
   void run() throws Exception {
     DiagnosticLoggingAdapter log = Logging.getLogger(_aktor);
-    log.debug("节点开始启动...");
+    log.debug("[cluster]节点开始启动...");
 
     ActorRef appRootRef = createAppRoot();
     ActorRef sendRef = createSendActor();
