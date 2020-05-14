@@ -3,6 +3,8 @@ package luj.cluster.internal.node.appactor.meta;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -19,11 +21,16 @@ enum ActorMetaMapFactoryImpl {
         .getActorPreStartHandlers().stream()
         .collect(toMap(this::getActorType, Function.identity()));
 
-    return new ActorMetaMapImpl(beanCollect.getActorMessageHandlers().stream()
-        .collect(groupingBy(h -> getMsgHandleParam(h, 0)))
-        .entrySet().stream()
-        .collect(toMap(Map.Entry::getKey, e ->
-            createMeta(prestartMap.get(e.getKey()), e.getValue()))));
+    Map<Class<?>, List<ActorMessageHandler<?, ?>>> messageHandleMap = beanCollect
+        .getActorMessageHandlers().stream()
+        .collect(groupingBy(h -> getMsgHandleParam(h, 0)));
+
+    return new ActorMetaMapImpl(ImmutableSet.<Class<?>>builder()
+        .addAll(prestartMap.keySet())
+        .addAll(messageHandleMap.keySet())
+        .build().stream()
+        .collect(toMap(Function.identity(), k -> createMeta(
+            prestartMap.get(k), messageHandleMap.getOrDefault(k, ImmutableList.of())))));
   }
 
   private Class<?> getActorType(ActorPreStartHandler<?> handler) {
