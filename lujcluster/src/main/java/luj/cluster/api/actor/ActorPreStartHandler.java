@@ -16,5 +16,5 @@ public interface ActorPreStartHandler<A> {
     void tell(Object msg);
   }
 
-  void onHandle(Context ctx);
+  void onHandle(Context ctx) throws Exception;
 }

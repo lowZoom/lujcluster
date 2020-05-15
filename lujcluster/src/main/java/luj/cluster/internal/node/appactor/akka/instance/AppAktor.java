@@ -21,8 +21,8 @@ public final class AppAktor extends AbstractActor {
   }
 
   @Override
-  public void preStart() {
-    AppPrestartHandleInvoker.Factory.create(this).invoke();
+  public void preStart() throws Exception {
+    new AppPrestartHandleInvoker(this).invoke();
   }
 
   @Override
