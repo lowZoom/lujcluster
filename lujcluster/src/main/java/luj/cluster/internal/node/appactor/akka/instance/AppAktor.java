@@ -3,6 +3,7 @@ package luj.cluster.internal.node.appactor.akka.instance;
 import akka.actor.AbstractActor;
 import akka.actor.Props;
 import luj.cluster.internal.node.appactor.akka.instance.handle.message.AppMessageHandleInvoker;
+import luj.cluster.internal.node.appactor.akka.instance.handle.poststop.AppPoststopHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.handle.prestart.AppPrestartHandleInvoker;
 import luj.cluster.internal.node.appactor.meta.ActorMeta;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
@@ -23,6 +24,11 @@ public final class AppAktor extends AbstractActor {
   @Override
   public void preStart() throws Exception {
     new AppPrestartHandleInvoker(this).invoke();
+  }
+
+  @Override
+  public void postStop() throws Exception {
+    new AppPoststopHandleInvoker(this).invoke();
   }
 
   @Override

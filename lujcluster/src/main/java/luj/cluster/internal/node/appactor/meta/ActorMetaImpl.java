@@ -1,15 +1,10 @@
 package luj.cluster.internal.node.appactor.meta;
 
+import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMap;
 
 final class ActorMetaImpl implements ActorMeta {
-
-  ActorMetaImpl(ActorPreStartHandler<?> preStartHandler,
-      ActorMessageHandleMap actorMessageHandleMap) {
-    _preStartHandler = preStartHandler;
-    _actorMessageHandleMap = actorMessageHandleMap;
-  }
 
   @Override
   public ActorPreStartHandler<?> getPreStartHandler() {
@@ -17,11 +12,17 @@ final class ActorMetaImpl implements ActorMeta {
   }
 
   @Override
+  public ActorPostStopHandler<?> getPostStopHandler() {
+    return _postStopHandler;
+  }
+
+  @Override
   public ActorMessageHandleMap getMessageHandleMap() {
     return _actorMessageHandleMap;
   }
 
-  private final ActorPreStartHandler<?> _preStartHandler;
+  ActorPreStartHandler<?> _preStartHandler;
+  ActorPostStopHandler<?> _postStopHandler;
 
-  private final ActorMessageHandleMap _actorMessageHandleMap;
+  ActorMessageHandleMap _actorMessageHandleMap;
 }

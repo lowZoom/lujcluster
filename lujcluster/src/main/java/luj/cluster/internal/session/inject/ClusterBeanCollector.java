@@ -2,6 +2,7 @@ package luj.cluster.internal.session.inject;
 
 import java.util.List;
 import luj.cluster.api.actor.ActorMessageHandler;
+import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.api.node.NodeNewMemberListener;
@@ -26,6 +27,8 @@ public interface ClusterBeanCollector {
     NodeNewMemberListener getMemberUpListener();
 
     List<ActorPreStartHandler<?>> getActorPreStartHandlers();
+
+    List<ActorPostStopHandler<?>> getActorPostStopHandlers();
 
     List<ActorMessageHandler<?, ?>> getActorMessageHandlers();
   }

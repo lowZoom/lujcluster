@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.function.Function;
 import luj.ava.reflect.type.TypeX;
 import luj.cluster.api.actor.ActorMessageHandler;
+import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
@@ -19,7 +20,11 @@ enum ActorMetaMapFactoryImpl {
   ActorMetaMap create(ClusterBeanCollector.Result beanCollect) {
     Map<Class<?>, ActorPreStartHandler<?>> prestartMap = beanCollect
         .getActorPreStartHandlers().stream()
-        .collect(toMap(this::getActorType, Function.identity()));
+        .collect(toMap(h -> getActorType(h, ActorPreStartHandler.class), Function.identity()));
+
+    Map<Class<?>, ActorPostStopHandler<?>> poststopMap = beanCollect
+        .getActorPostStopHandlers().stream()
+        .collect(toMap(h -> getActorType(h, ActorPostStopHandler.class), Function.identity()));
 
     Map<Class<?>, List<ActorMessageHandler<?, ?>>> messageHandleMap = beanCollect
         .getActorMessageHandlers().stream()
@@ -29,23 +34,27 @@ enum ActorMetaMapFactoryImpl {
         .addAll(prestartMap.keySet())
         .addAll(messageHandleMap.keySet())
         .build().stream()
-        .collect(toMap(Function.identity(), k -> createMeta(
-            prestartMap.get(k), messageHandleMap.getOrDefault(k, ImmutableList.of())))));
+        .collect(toMap(Function.identity(), k -> createMeta(prestartMap.get(k),
+            poststopMap.get(k), messageHandleMap.getOrDefault(k, ImmutableList.of())))));
   }
 
-  private Class<?> getActorType(ActorPreStartHandler<?> handler) {
+  private Class<?> getActorType(Object handler, Class<?> handlerType) {
     return TypeX.ofInstance(handler)
-        .getSupertype(ActorPreStartHandler.class)
+        .getSupertype(handlerType)
         .getTypeParam(0)
         .asClass();
   }
 
   private ActorMeta createMeta(ActorPreStartHandler<?> prestartHandler,
-      List<ActorMessageHandler<?, ?>> msgHandlerList) {
-    MessageHandleMapImpl handleMap = new MessageHandleMapImpl(msgHandlerList.stream()
+      ActorPostStopHandler<?> postStopHandler, List<ActorMessageHandler<?, ?>> msgHandlerList) {
+    ActorMetaImpl meta = new ActorMetaImpl();
+    meta._preStartHandler = prestartHandler;
+    meta._postStopHandler = postStopHandler;
+
+    meta._actorMessageHandleMap = new MessageHandleMapImpl(msgHandlerList.stream()
         .collect(toMap(h -> getMsgHandleParam(h, 1), Function.identity())));
 
-    return new ActorMetaImpl(prestartHandler, handleMap);
+    return meta;
   }
 
   private Class<?> getMsgHandleParam(ActorMessageHandler<?, ?> handler, int index) {
