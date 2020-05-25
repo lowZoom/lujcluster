@@ -2,6 +2,7 @@ package luj.cluster.internal.node.appactor.akka.instance.handle.message;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.lang.reflect.Proxy;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.logging.Log;
 import luj.cluster.internal.logging.LogFactory;
@@ -18,7 +19,7 @@ final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
 
   @Override
   public void invoke() {
-    Class<?> msgType = _msg.getClass();
+    Class<?> msgType = getMessageType();
     ActorMessageHandleMap handleMap = _appAktor.getMeta().getMessageHandleMap();
 
     ActorMessageHandler<?, ?> handler = handleMap.getHandler(msgType);
@@ -35,6 +36,14 @@ final class AppMessageHandleInvokerImpl implements AppMessageHandleInvoker {
     } catch (Exception e) {
       throw new UnsupportedOperationException(e);
     }
+  }
+
+  private Class<?> getMessageType() {
+    Class<?> type = _msg.getClass();
+    if (Proxy.isProxyClass(type)) {
+      return type.getInterfaces()[0];
+    }
+    return type;
   }
 
   private final AppAktor _appAktor;
