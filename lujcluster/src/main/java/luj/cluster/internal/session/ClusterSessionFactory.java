@@ -3,11 +3,15 @@ package luj.cluster.internal.session;
 import luj.cluster.api.ClusterSession;
 import org.springframework.context.ApplicationContext;
 
-public interface ClusterSessionFactory {
+public class ClusterSessionFactory {
 
-  static ClusterSessionFactory get(ApplicationContext appContext) {
-    return new ClusterSessionFactoryImpl(appContext);
+  public ClusterSessionFactory(ApplicationContext appContext) {
+    _appContext = appContext;
   }
 
-  ClusterSession create();
+  public ClusterSession create() {
+    return new ClusterSessionImpl(_appContext);
+  }
+
+  private final ApplicationContext _appContext;
 }

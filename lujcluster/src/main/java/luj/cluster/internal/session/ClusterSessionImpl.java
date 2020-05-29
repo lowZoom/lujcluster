@@ -3,6 +3,7 @@ package luj.cluster.internal.session;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import luj.cluster.api.ClusterSession;
+import luj.cluster.api.node.ClusterNode;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
 import org.springframework.context.ApplicationContext;
 
@@ -18,8 +19,8 @@ final class ClusterSessionImpl implements ClusterSession {
   }
 
   @Override
-  public void startNode(String host, int port, List<String> seedList, Object startParam) {
-    ClusterNodeStarter.Factory.create(_appContext, host, port, seedList, startParam).start();
+  public ClusterNode startNode(String host, int port, List<String> seedList, Object startParam) {
+    return new ClusterNodeStarter(_appContext, host, port, seedList, startParam).start();
   }
 
   private final ApplicationContext _appContext;

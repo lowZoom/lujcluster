@@ -14,5 +14,10 @@ final class ActorImpl implements ActorPreStartHandler.Actor {
     _aktorRef.tell(msg, ActorRef.noSender());
   }
 
+  @Override
+  public ActorRef getAkkaRef() {
+    return _aktorRef;
+  }
+
   private final ActorRef _aktorRef;
 }

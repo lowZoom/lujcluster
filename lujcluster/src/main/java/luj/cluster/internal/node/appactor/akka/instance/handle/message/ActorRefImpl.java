@@ -8,14 +8,15 @@ import luj.cluster.api.actor.ActorMessageHandler;
 
 final class ActorRefImpl implements ActorMessageHandler.Ref {
 
-  ActorRefImpl(ActorRef actorRef, ActorContext actorContext) {
+  ActorRefImpl(ActorRef actorRef, ActorContext actorContext, ActorRef senderRef) {
     _actorRef = actorRef;
     _actorContext = actorContext;
+    _senderRef = senderRef;
   }
 
   @Override
   public void tell(Object msg) {
-    _actorRef.tell(msg, _actorContext.sender());
+    _actorRef.tell(msg, _senderRef);
   }
 
   @Override
@@ -27,11 +28,11 @@ final class ActorRefImpl implements ActorMessageHandler.Ref {
 
     // scheduler零秒不能保证消息先发先到！
     ActorSystem system = _actorContext.system();
-    system.scheduler().scheduleOnce(delay, _actorRef,
-        msg, system.dispatcher(), _actorContext.sender());
+    system.scheduler().scheduleOnce(delay, _actorRef, msg, system.dispatcher(), _senderRef);
   }
 
   private final ActorRef _actorRef;
 
   private final ActorContext _actorContext;
+  private final ActorRef _senderRef;
 }

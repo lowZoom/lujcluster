@@ -6,7 +6,6 @@ import luj.cluster.api.logging.Log;
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 import luj.cluster.internal.node.appactor.akka.instance.create.AppAktorCreator;
 
-@SuppressWarnings("unchecked")
 final class HandleContextImpl implements ActorMessageHandler.Context {
 
   HandleContextImpl(AppAktor appAktor, Log logger, Object msg,
@@ -17,11 +16,7 @@ final class HandleContextImpl implements ActorMessageHandler.Context {
     _remoteNode = remoteNode;
   }
 
-  @Override
-  public <A> A getActor(ActorMessageHandler<A, ?> handler) {
-    return getActorState(handler);
-  }
-
+  @SuppressWarnings("unchecked")
   @Override
   public <A> A getActorState(ActorMessageHandler<A, ?> handler) {
     return (A) _appAktor.getState();
@@ -29,9 +24,10 @@ final class HandleContextImpl implements ActorMessageHandler.Context {
 
   @Override
   public ActorMessageHandler.Ref getActorRef() {
-    return new ActorRefImpl(_appAktor.self(), _appAktor.context());
+    return new ActorRefImpl(_appAktor.self(), _appAktor.context(), _appAktor.sender());
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public <M> M getMessage(ActorMessageHandler<?, M> handler) {
     return (M) _msg;
@@ -45,6 +41,11 @@ final class HandleContextImpl implements ActorMessageHandler.Context {
   @Override
   public ActorMessageHandler.Node getRemoteNode() {
     return _remoteNode;
+  }
+
+  @Override
+  public ActorMessageHandler.Ref getSenderRef() {
+    return new ActorRefImpl(_appAktor.sender(), _appAktor.context(), _appAktor.self());
   }
 
   @Override

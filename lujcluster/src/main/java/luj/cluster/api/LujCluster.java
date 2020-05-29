@@ -7,6 +7,6 @@ public enum LujCluster {
   ;
 
   public static ClusterSession start(ApplicationContext appContext) {
-    return ClusterSessionFactory.get(appContext).create();
+    return new ClusterSessionFactory(appContext).create();
   }
 }

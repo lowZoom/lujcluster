@@ -6,6 +6,7 @@ import akka.actor.Props;
 import akka.cluster.Cluster;
 import akka.event.DiagnosticLoggingAdapter;
 import akka.event.Logging;
+import java.util.function.Consumer;
 import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
@@ -19,11 +20,12 @@ import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 final class PreStart {
 
-  PreStart(NodeStartAktor aktor, ActorContext aktorCtx,
-      ClusterBeanCollector.Result beanCollect, Object applicationBean) {
+  PreStart(NodeStartAktor aktor, ActorContext aktorCtx, ClusterBeanCollector.Result beanCollect,
+      Consumer<ActorRef> receiveRefHolder, Object applicationBean) {
     _aktor = aktor;
     _aktorCtx = aktorCtx;
     _beanCollect = beanCollect;
+    _receiveRefHolder = receiveRefHolder;
     _applicationBean = applicationBean;
   }
 
@@ -33,10 +35,12 @@ final class PreStart {
 
     ActorRef appRootRef = createAppRoot();
     ActorRef sendRef = createSendActor();
+
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
+    _receiveRefHolder.accept(receiveRef);
 
     //FIXME: 要在receiveActor完全启动后才能创建memberActor，不然在clusterJoin发的消息可能会因为太快到达，
-    // receiveActor还没启动完成而无法处理
+    //       receiveActor还没启动完成而无法处理
     createMemberActor(receiveRef);
 
     StartContextImpl context = new StartContextImpl(receiveRef, sendRef, appRootRef, _aktor, null);
@@ -76,5 +80,6 @@ final class PreStart {
   private final ActorContext _aktorCtx;
   private final ClusterBeanCollector.Result _beanCollect;
 
+  private final Consumer<ActorRef> _receiveRefHolder;
   private final Object _applicationBean;
 }

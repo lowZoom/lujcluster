@@ -8,12 +8,6 @@ public interface ActorMessageHandler<A, M> {
 
   interface Context {
 
-    /**
-     * @see #getActorState
-     */
-    @Deprecated
-    <A> A getActor(ActorMessageHandler<A, ?> handler);
-
     <A> A getActorState(ActorMessageHandler<A, ?> handler);
 
     Ref getActorRef();
@@ -25,6 +19,8 @@ public interface ActorMessageHandler<A, M> {
     //FIXME: 本地actor可互发，这个概念不存在
     @Deprecated
     Node getRemoteNode();
+
+    Ref getSenderRef();
 
     ActorRef createActor(Object actorState);
   }

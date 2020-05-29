@@ -1,5 +1,7 @@
 package luj.cluster.api.actor;
 
+import akka.actor.ActorRef;
+
 public interface ActorPreStartHandler<A> {
 
   interface Context {
@@ -14,6 +16,8 @@ public interface ActorPreStartHandler<A> {
   interface Actor {
 
     void tell(Object msg);
+
+    ActorRef getAkkaRef();
   }
 
   void onHandle(Context ctx) throws Exception;
