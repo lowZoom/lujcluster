@@ -13,9 +13,7 @@ public interface ActorPreStartHandler<A> {
     Actor createActor(Object actorState);
   }
 
-  interface Actor {
-
-    void tell(Object msg);
+  interface Actor extends Tellable {
 
     ActorRef getAkkaRef();
   }

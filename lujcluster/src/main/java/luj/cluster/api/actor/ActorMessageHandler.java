@@ -38,9 +38,7 @@ public interface ActorMessageHandler<A, M> {
     void sendMessage(String msgKey, Object msg);
   }
 
-  interface Ref {
-
-    void tell(Object msg);
+  interface Ref extends Tellable {
 
     void tell(Object msg, Duration delay);
   }
