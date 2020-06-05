@@ -2,11 +2,16 @@ package luj.cluster.internal.node.appactor.akka.instance;
 
 import akka.actor.AbstractActor;
 import akka.actor.Props;
+import akka.japi.pf.ReceiveBuilder;
+import java.util.Map;
+import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.internal.node.appactor.akka.instance.handle.message.AppMessageHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.handle.poststop.AppPoststopHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.handle.prestart.AppPrestartHandleInvoker;
 import luj.cluster.internal.node.appactor.meta.ActorMeta;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class AppAktor extends AbstractActor {
 
@@ -33,9 +38,17 @@ public final class AppAktor extends AbstractActor {
 
   @Override
   public Receive createReceive() {
-    return receiveBuilder()
-        .matchAny(this::onMessage)
-        .build();
+    ReceiveBuilder builder = receiveBuilder();
+    for (Map.Entry<Class<?>, ActorMessageHandler<?, ?>> e : _meta.getMessageHandleMap()) {
+      ActorMessageHandler<?, ?> handler = e.getValue();
+      builder.match(e.getKey(), m -> onMessage(m, handler));
+    }
+    return builder.build();
+  }
+
+  @Override
+  public void unhandled(Object message) {
+    LOG.warn("未处理的消息：{} @ {}", message.getClass().getName(), _state.getClass().getName());
   }
 
   public Object getState() {
@@ -50,9 +63,11 @@ public final class AppAktor extends AbstractActor {
     return _actorMetaMap;
   }
 
-  private void onMessage(Object msg) {
-    AppMessageHandleInvoker.Factory.create(this, msg, getSender()).invoke();
+  private void onMessage(Object msg, ActorMessageHandler<?, ?> handler) {
+    new AppMessageHandleInvoker(this, handler, msg, getSender()).invoke();
   }
+
+  private static final Logger LOG = LoggerFactory.getLogger(AppAktor.class);
 
   private final Object _state;
   private final ActorMeta _meta;

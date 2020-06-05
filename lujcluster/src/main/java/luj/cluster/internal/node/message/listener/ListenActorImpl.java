@@ -2,7 +2,6 @@ package luj.cluster.internal.node.message.listener;
 
 import akka.actor.ActorRef;
 import luj.cluster.api.node.NodeMessageListener;
-import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
 import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
 
 final class ListenActorImpl implements NodeMessageListener.Actor {
@@ -20,7 +19,7 @@ final class ListenActorImpl implements NodeMessageListener.Actor {
   private final Class<?> _actorType;
 
   /**
-   * @see AppRootAktor
+   * @see luj.cluster.internal.node.appactor.akka.root.AppRootAktor
    */
   private final ActorRef _rootRef;
 }

@@ -14,6 +14,9 @@ final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
     _rootAktor = rootAktor;
   }
 
+  /**
+   * @see luj.cluster.internal.node.appactor.akka.instance.AppAktor
+   */
   @Override
   public void apply(AppRouteMsg i) {
     Class<?> appType = i.getActorType();

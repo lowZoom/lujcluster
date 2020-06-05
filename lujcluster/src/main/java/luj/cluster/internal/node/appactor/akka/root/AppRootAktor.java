@@ -9,7 +9,7 @@ import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
 import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 
-public final class AppRootAktor extends AbstractActor {
+public class AppRootAktor extends AbstractActor {
 
   public static Props props(ActorMetaMap actorMetaMap) {
     return Props.create(AppRootAktor.class, () -> new AppRootAktor(actorMetaMap, new HashMap<>()));

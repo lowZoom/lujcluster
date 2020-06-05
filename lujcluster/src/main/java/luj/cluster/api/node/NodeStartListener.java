@@ -2,6 +2,7 @@ package luj.cluster.api.node;
 
 import akka.event.LoggingAdapter;
 import java.util.Map;
+import luj.cluster.api.actor.Tellable;
 
 public interface NodeStartListener {
 
@@ -18,9 +19,8 @@ public interface NodeStartListener {
     LoggingAdapter getLogger();
   }
 
-  interface Actor {
-
-    void tell(Object msg);
+  interface Actor extends Tellable {
+    //TODO: 暂时没有，后面应该会有
   }
 
   void onStart(Context ctx) throws Exception;
