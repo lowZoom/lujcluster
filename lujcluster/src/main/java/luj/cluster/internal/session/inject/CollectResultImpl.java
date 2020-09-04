@@ -7,7 +7,6 @@ import luj.ava.spring.Internal;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
-import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.api.node.NodeNewMemberListener;
 import luj.cluster.api.node.NodeStartListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,6 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
   @Override
   public List<NodeStartListener> getStartListeners() {
     return nonNull(_startListeners);
-  }
-
-  @Override
-  public NodeMessageListener getMessageListener() {
-    return _messageListener;
   }
 
   @Override
@@ -51,10 +45,6 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
 
   @Autowired(required = false)
   private List<NodeStartListener> _startListeners;
-
-  @Deprecated
-  @Autowired(required = false)
-  private NodeMessageListener _messageListener;
 
   @Autowired(required = false)
   private NodeNewMemberListener _memberUpListener;

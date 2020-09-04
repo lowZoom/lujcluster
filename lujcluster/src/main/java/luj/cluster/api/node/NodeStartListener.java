@@ -20,7 +20,7 @@ public interface NodeStartListener {
   }
 
   interface Actor extends Tellable {
-    //TODO: 暂时没有，后面应该会有
+    //TODO: 暂时没有方法，后面应该会有
   }
 
   void onStart(Context ctx) throws Exception;

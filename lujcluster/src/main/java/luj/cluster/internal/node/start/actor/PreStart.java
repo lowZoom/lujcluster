@@ -4,10 +4,9 @@ import akka.actor.ActorContext;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.cluster.Cluster;
-import akka.event.DiagnosticLoggingAdapter;
 import akka.event.Logging;
+import akka.event.LoggingAdapter;
 import java.util.function.Consumer;
-import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
@@ -30,7 +29,7 @@ final class PreStart {
   }
 
   void run() throws Exception {
-    DiagnosticLoggingAdapter log = Logging.getLogger(_aktor);
+    LoggingAdapter log = Logging.getLogger(_aktor);
     log.debug("[cluster]节点开始启动...");
 
     ActorRef appRootRef = createAppRoot();
@@ -59,12 +58,10 @@ final class PreStart {
   }
 
   private ActorRef createReceiveActor(ActorRef sendRef, ActorRef appRootRef) {
-    NodeMessageListener messageListener = _beanCollect.getMessageListener();
-
     ActorMessageHandleMapV2 handleMap = new ActorMessageHandleMapV2Factory(
         _beanCollect.getActorMessageHandlers()).create();
 
-    Props prop = NodeReceiveAktor.props(handleMap, messageListener, sendRef, appRootRef);
+    Props prop = NodeReceiveAktor.props(handleMap, sendRef, appRootRef);
     return _aktorCtx.actorOf(prop, "recv");
   }
 

@@ -9,6 +9,9 @@ import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
 import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 
+/**
+ * 应用层actor根节点
+ */
 public class AppRootAktor extends AbstractActor {
 
   public static Props props(ActorMetaMap actorMetaMap) {

@@ -3,7 +3,6 @@ package luj.cluster.internal.node.message.receive.actor;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import luj.cluster.api.node.NodeMessageListener;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
@@ -14,15 +13,14 @@ import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMs
 public class NodeReceiveAktor extends AbstractActor {
 
   public static Props props(ActorMessageHandleMapV2 messageHandleMap,
-      NodeMessageListener nodeMessageListener, ActorRef nodeSendRef, ActorRef appRootRef) {
+      ActorRef nodeSendRef, ActorRef appRootRef) {
     return Props.create(NodeReceiveAktor.class, () ->
-        new NodeReceiveAktor(messageHandleMap, nodeMessageListener, nodeSendRef, appRootRef));
+        new NodeReceiveAktor(messageHandleMap, nodeSendRef, appRootRef));
   }
 
   NodeReceiveAktor(ActorMessageHandleMapV2 messageHandleMap,
-      NodeMessageListener messageListener, ActorRef nodeSendRef, ActorRef appRootRef) {
+      ActorRef nodeSendRef, ActorRef appRootRef) {
     _messageHandleMap = messageHandleMap;
-    _messageListener = messageListener;
 
     _nodeSendRef = nodeSendRef;
     _appRootRef = appRootRef;
@@ -34,10 +32,6 @@ public class NodeReceiveAktor extends AbstractActor {
         .match(RegisterReceiveMsg.class, new OnRegisterReceive(this))
         .match(NodeSendRemoteMsg.class, new OnNodeSendRemote(this))
         .build();
-  }
-
-  public NodeMessageListener getMessageListener() {
-    return _messageListener;
   }
 
   public ActorRef getNodeSendRef() {
@@ -53,9 +47,6 @@ public class NodeReceiveAktor extends AbstractActor {
   }
 
   private final ActorMessageHandleMapV2 _messageHandleMap;
-
-  @Deprecated
-  private final NodeMessageListener _messageListener;
 
   /**
    * @see luj.cluster.internal.node.message.send.actor.NodeSendAktor
