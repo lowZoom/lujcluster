@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.start.actor;
+package luj.cluster.internal.node.start.actor.trigger;
 
 import akka.actor.ActorRef;
 import akka.event.LoggingAdapter;
@@ -11,13 +11,12 @@ import luj.cluster.internal.node.message.send.actor.message.NodeSendStartMsg;
 final class StartContextImpl implements NodeStartListener.Context {
 
   StartContextImpl(ActorRef receiveRef, ActorRef sendRef,
-      ActorRef appRootRef, NodeStartAktor startActor, LoggingAdapter logger) {
+      ActorRef appRootRef, Object startParam, LoggingAdapter logger) {
     _receiveRef = receiveRef;
     _sendRef = sendRef;
-
     _appRootRef = appRootRef;
 
-    _startActor = startActor;
+    _startParam = startParam;
     _logger = logger;
   }
 
@@ -47,7 +46,7 @@ final class StartContextImpl implements NodeStartListener.Context {
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getStartParam() {
-    return (T) _startActor.getStartParam();
+    return (T) _startParam;
   }
 
   @Override
@@ -60,6 +59,6 @@ final class StartContextImpl implements NodeStartListener.Context {
 
   private final ActorRef _appRootRef;
 
-  private final NodeStartAktor _startActor;
+  private final Object _startParam;
   private final LoggingAdapter _logger;
 }

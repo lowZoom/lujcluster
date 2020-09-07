@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.start.actor;
+package luj.cluster.internal.node.start.actor.trigger;
 
 import akka.actor.ActorRef;
 import luj.cluster.api.node.NodeStartListener;

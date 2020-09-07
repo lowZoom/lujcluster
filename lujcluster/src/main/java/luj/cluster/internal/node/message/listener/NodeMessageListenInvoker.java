@@ -1,18 +1,42 @@
 package luj.cluster.internal.node.message.listener;
 
-import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
+import akka.actor.ActorRef;
+import java.util.Collection;
+import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
+import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public interface NodeMessageListenInvoker {
+public class NodeMessageListenInvoker {
 
-  interface Factory {
+  public NodeMessageListenInvoker(String messageKey, Object message,
+      ActorMessageHandleMapV2 handleMap, ActorRef appRootRef, ActorRef senderRef) {
+    _messageKey = messageKey;
+    _message = message;
+    _handleMap = handleMap;
+    _appRootRef = appRootRef;
+    _senderRef = senderRef;
+  }
 
-    static NodeMessageListenInvoker create(NodeReceiveAktor recvActor,
-        String msgKey, Object msg, Object handler) {
-//      return new NodeMessageListenInvokerImpl(recvActor.getMessageListener(), msg, handler, recvActor);
-      return new NodeMessageListenInvokerImplV2(msgKey, msg, recvActor.getMessageHandleMap(),
-          recvActor.getAppRootRef(), recvActor.context().sender());
+  public void invoke() {
+    Collection<Class<?>> actorTypes = _handleMap.getHandleList(_messageKey);
+    if (actorTypes.isEmpty()) {
+      LOG.info("[cluster]消息没有处理器，忽略：{}", _messageKey);
+      return;
+    }
+
+    for (Class<?> type : actorTypes) {
+      _appRootRef.tell(new AppRouteMsg(type, _message), _senderRef);
     }
   }
 
-  void invoke();
+  private static final Logger LOG = LoggerFactory.getLogger(NodeMessageListenInvoker.class);
+
+  private final String _messageKey;
+  private final Object _message;
+
+  private final ActorMessageHandleMapV2 _handleMap;
+  private final ActorRef _appRootRef;
+
+  private final ActorRef _senderRef;
 }

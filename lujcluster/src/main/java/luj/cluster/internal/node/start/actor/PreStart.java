@@ -7,7 +7,6 @@ import akka.cluster.Cluster;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import java.util.function.Consumer;
-import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2Factory;
@@ -15,6 +14,7 @@ import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 import luj.cluster.internal.node.member.NodeMemberAktor;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 import luj.cluster.internal.node.message.send.actor.NodeSendAktor;
+import luj.cluster.internal.node.start.actor.trigger.StartListenerTrigger;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 final class PreStart {
@@ -38,14 +38,12 @@ final class PreStart {
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
     _receiveRefHolder.accept(receiveRef);
 
-    //FIXME: 要在receiveActor完全启动后才能创建memberActor，不然在clusterJoin发的消息可能会因为太快到达，
-    //       receiveActor还没启动完成而无法处理
-    createMemberActor(receiveRef);
+    // 这里面其实可能也会有初始化逻辑
+    new StartListenerTrigger(receiveRef, sendRef, appRootRef,
+        _applicationBean, _beanCollect.getStartListeners()).trigger();
 
-    StartContextImpl context = new StartContextImpl(receiveRef, sendRef, appRootRef, _aktor, null);
-    for (NodeStartListener listener : _beanCollect.getStartListeners()) {
-      listener.onStart(context);
-    }
+    // 需要在最后（即初始化完全完成）再加入集群
+    createMemberActor(receiveRef);
   }
 
   private ActorRef createAppRoot() {

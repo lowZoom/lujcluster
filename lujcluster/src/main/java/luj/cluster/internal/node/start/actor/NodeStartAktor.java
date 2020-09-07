@@ -31,10 +31,6 @@ public class NodeStartAktor extends AbstractActor {
     return emptyBehavior();
   }
 
-  Object getStartParam() {
-    return _startParam;
-  }
-
   private final ClusterBeanCollector.Result _collectResult;
   private final Consumer<ActorRef> _receiveRefHolder;
 
