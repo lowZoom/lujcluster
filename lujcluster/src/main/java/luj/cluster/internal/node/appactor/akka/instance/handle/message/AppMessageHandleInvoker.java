@@ -9,18 +9,19 @@ import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 public class AppMessageHandleInvoker {
 
   public AppMessageHandleInvoker(AppAktor appAktor, ActorMessageHandler<?, ?> handler, Object msg,
-      ActorRef senderRef) {
+      ActorRef senderRef, ActorRef clusterMemberRef) {
     _appAktor = appAktor;
     _handler = handler;
     _msg = msg;
     _senderRef = senderRef;
+    _clusterMemberRef = clusterMemberRef;
   }
 
   public void invoke() {
     //FIXME: temp
     Log log = LogFactory.get(_appAktor, _handler);
 
-    RemoteNodeImpl remoteNode = new RemoteNodeImpl(_senderRef, _appAktor.self());
+    RemoteNodeImpl remoteNode = new RemoteNodeImpl(_senderRef, _clusterMemberRef);
     HandleContextImpl ctx = new HandleContextImpl(_appAktor, log, _msg, remoteNode);
 
     try {
@@ -38,4 +39,5 @@ public class AppMessageHandleInvoker {
   private final Object _msg;
 
   private final ActorRef _senderRef;
+  private final ActorRef _clusterMemberRef;
 }

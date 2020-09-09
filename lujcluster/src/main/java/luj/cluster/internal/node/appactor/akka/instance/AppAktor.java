@@ -1,6 +1,7 @@
 package luj.cluster.internal.node.appactor.akka.instance;
 
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.japi.pf.ReceiveBuilder;
 import java.util.Map;
@@ -15,15 +16,17 @@ import org.slf4j.LoggerFactory;
 
 public final class AppAktor extends AbstractActor {
 
-  public static Props props(Object state, ActorMeta meta, ActorMetaMap metaMap) {
-    return Props.create(AppAktor.class, () -> new AppAktor(state, meta, metaMap));
+  public static Props props(Object state, ActorMeta meta, ActorMetaMap metaMap,
+      ActorRef clusterMemberRef) {
+    return Props.create(AppAktor.class, () -> new AppAktor(state, meta, metaMap, clusterMemberRef));
   }
 
-  AppAktor(Object state, ActorMeta meta, ActorMetaMap actorMetaMap) {
+  AppAktor(Object state, ActorMeta meta, ActorMetaMap actorMetaMap, ActorRef clusterMemberRef) {
     _state = state;
     _meta = meta;
 
     _actorMetaMap = actorMetaMap;
+    _clusterMemberRef = clusterMemberRef;
   }
 
   @Override
@@ -63,8 +66,12 @@ public final class AppAktor extends AbstractActor {
     return _actorMetaMap;
   }
 
+  public ActorRef getClusterMemberRef() {
+    return _clusterMemberRef;
+  }
+
   private void onMessage(Object msg, ActorMessageHandler<?, ?> handler) {
-    new AppMessageHandleInvoker(this, handler, msg, getSender()).invoke();
+    new AppMessageHandleInvoker(this, handler, msg, getSender(), _clusterMemberRef).invoke();
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(AppAktor.class);
@@ -73,4 +80,5 @@ public final class AppAktor extends AbstractActor {
   private final ActorMeta _meta;
 
   private final ActorMetaMap _actorMetaMap;
+  private final ActorRef _clusterMemberRef;
 }

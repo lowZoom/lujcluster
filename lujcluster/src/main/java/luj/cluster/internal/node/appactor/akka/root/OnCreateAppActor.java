@@ -15,8 +15,8 @@ final class OnCreateAppActor implements FI.UnitApply<CreateAppActorMsg> {
   public void apply(CreateAppActorMsg i) {
     Class<?> appType = i.getActorType();
 
-    ActorRef appRef = AppAktorCreator.Factory.create(_rootAktor.getActorMetaMap(),
-        appType, i.getActorState(), _rootAktor.context()).create();
+    ActorRef appRef = new AppAktorCreator(_rootAktor.getActorMetaMap(), appType, i.getActorState(),
+        _rootAktor.getMemberRef(), _rootAktor.context()).create();
 
     _rootAktor.getChildRefMap().put(appType, appRef);
   }

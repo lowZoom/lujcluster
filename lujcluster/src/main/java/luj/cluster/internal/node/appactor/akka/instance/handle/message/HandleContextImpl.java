@@ -50,8 +50,8 @@ final class HandleContextImpl implements ActorMessageHandler.Context {
 
   @Override
   public ActorRef createActor(Object actorState) {
-    return AppAktorCreator.Factory.create(_appAktor.getActorMetaMap(), actorState.getClass(),
-        actorState, _appAktor.context()).create();
+    return new AppAktorCreator(_appAktor.getActorMetaMap(), actorState.getClass(),
+        actorState, _appAktor.getClusterMemberRef(), _appAktor.context()).create();
   }
 
   private final AppAktor _appAktor;

@@ -1,35 +1,24 @@
-package luj.cluster.internal.node.member;
+package luj.cluster.internal.node.member.join;
 
 import akka.actor.ActorSelection;
 import akka.actor.Address;
 import akka.cluster.ClusterEvent;
 import akka.cluster.Member;
-import akka.japi.pf.FI;
 import luj.cluster.api.node.NodeNewMemberListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import luj.cluster.internal.node.member.actor.NodeMemberAktor;
 
-final class OnMemberUp implements FI.UnitApply<ClusterEvent.MemberUp> {
+public class MemberJoinTrigger {
 
-  OnMemberUp(NodeMemberAktor aktor, NodeNewMemberListener joinListener, Object applicationBean) {
+  public MemberJoinTrigger(ClusterEvent.MemberUp event,
+      NodeMemberAktor aktor, NodeNewMemberListener joinListener, Object applicationBean) {
+    _event = event;
     _aktor = aktor;
     _joinListener = joinListener;
     _applicationBean = applicationBean;
   }
 
-  /**
-   * @see luj.cluster.internal.node.start.actor.PreStart#createMemberActor
-   */
-  @Override
-  public void apply(ClusterEvent.MemberUp i) {
-    LOG.debug("[cluster]新节点加入：{}", i);
-
-    if (_joinListener == null) {
-      LOG.info("[cluster]没有监听新节点事件（NodeNewMemberListener），事件被忽略");
-      return;
-    }
-
-    Member member = i.member();
+  public void trigger() {
+    Member member = _event.member();
     Address addr = member.address();
 
     ActorSelection recvRef = _aktor.context().actorSelection(addr + "/user/start/recv");
@@ -45,7 +34,7 @@ final class OnMemberUp implements FI.UnitApply<ClusterEvent.MemberUp> {
     }
   }
 
-  private static final Logger LOG = LoggerFactory.getLogger(OnMemberUp.class);
+  private final ClusterEvent.MemberUp _event;
 
   private final NodeMemberAktor _aktor;
   private final NodeNewMemberListener _joinListener;

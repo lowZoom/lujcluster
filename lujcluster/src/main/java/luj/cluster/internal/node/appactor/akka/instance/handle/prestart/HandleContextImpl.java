@@ -24,8 +24,8 @@ final class HandleContextImpl implements ActorPreStartHandler.Context {
 
   @Override
   public ActorPreStartHandler.Actor createActor(Object actorState) {
-    ActorRef ref = AppAktorCreator.Factory.create(_appAktor.getActorMetaMap(),
-        actorState.getClass(), actorState, _appAktor.context()).create();
+    ActorRef ref = new AppAktorCreator(_appAktor.getActorMetaMap(), actorState.getClass(),
+        actorState, _appAktor.getClusterMemberRef(), _appAktor.context()).create();
 
     return new ActorImpl(ref);
   }

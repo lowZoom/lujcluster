@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.member;
+package luj.cluster.internal.node.member.join;
 
 import luj.cluster.api.node.NodeNewMemberListener;
 

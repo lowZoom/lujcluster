@@ -16,13 +16,16 @@ public interface ActorMessageHandler<A, M> {
 
     Log getLogger();
 
-    //FIXME: 本地actor可互发，这个概念不存在
-    @Deprecated
-    Node getRemoteNode();
-
     Ref getSenderRef();
 
     ActorRef createActor(Object actorState);
+
+    Node getRemoteNode();
+  }
+
+  interface Ref extends Tellable {
+
+    void tell(Object msg, Duration delay);
   }
 
   interface Node {
@@ -36,11 +39,6 @@ public interface ActorMessageHandler<A, M> {
     void sendMessage(Object msg);
 
     void sendMessage(String msgKey, Object msg);
-  }
-
-  interface Ref extends Tellable {
-
-    void tell(Object msg, Duration delay);
   }
 
   void onHandle(Context ctx) throws Exception;

@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.member;
+package luj.cluster.internal.node.member.join;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;

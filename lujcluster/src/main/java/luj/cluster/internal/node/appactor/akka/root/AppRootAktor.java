@@ -14,13 +14,16 @@ import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
  */
 public class AppRootAktor extends AbstractActor {
 
-  public static Props props(ActorMetaMap actorMetaMap) {
-    return Props.create(AppRootAktor.class, () -> new AppRootAktor(actorMetaMap, new HashMap<>()));
+  public static Props props(ActorMetaMap actorMetaMap, ActorRef memberRef) {
+    return Props.create(AppRootAktor.class, () ->
+        new AppRootAktor(actorMetaMap, new HashMap<>(), memberRef));
   }
 
-  AppRootAktor(ActorMetaMap actorMetaMap, Map<Class<?>, ActorRef> childRefMap) {
+  AppRootAktor(ActorMetaMap actorMetaMap, Map<Class<?>, ActorRef> childRefMap,
+      ActorRef memberRef) {
     _actorMetaMap = actorMetaMap;
     _childRefMap = childRefMap;
+    _memberRef = memberRef;
   }
 
   @Override
@@ -29,6 +32,10 @@ public class AppRootAktor extends AbstractActor {
         .match(CreateAppActorMsg.class, new OnCreateAppActor(this))
         .match(AppRouteMsg.class, new OnAppRoute(this))
         .build();
+  }
+
+  public ActorRef getMemberRef() {
+    return _memberRef;
   }
 
   public ActorMetaMap getActorMetaMap() {
@@ -40,6 +47,10 @@ public class AppRootAktor extends AbstractActor {
   }
 
   private final ActorMetaMap _actorMetaMap;
-
   private final Map<Class<?>, ActorRef> _childRefMap;
+
+  /**
+   * @see luj.cluster.internal.node.member.actor.NodeMemberAktor
+   */
+  private final ActorRef _memberRef;
 }
