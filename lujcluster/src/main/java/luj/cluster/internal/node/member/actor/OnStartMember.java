@@ -15,9 +15,10 @@ final class OnStartMember implements FI.UnitApply<StartMemberMsg> {
   @Override
   public void apply(StartMemberMsg i) {
     _aktor.setReceiveRef(i.getReceiveRef());
-
     ActorContext context = _aktor.context();
+
     Cluster cluster = Cluster.get(context.system());
+    _aktor.setCluster(cluster);
 
     cluster.subscribe(_aktor.self(),
         ClusterEvent.initialStateAsEvents(), ClusterEvent.MemberUp.class);
