@@ -11,7 +11,7 @@ final class ClusterNodeImpl implements ClusterNode {
     _receiveRef.tell(new NodeSendRemoteMsg(msgKey, msg), sender);
   }
 
-  public void setReceiveRef(ActorRef receiveRef) {
+  void setReceiveRef(ActorRef receiveRef) {
     _receiveRef = receiveRef;
   }
 

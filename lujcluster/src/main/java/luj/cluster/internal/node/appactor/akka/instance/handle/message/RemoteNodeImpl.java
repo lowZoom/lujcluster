@@ -32,7 +32,7 @@ final class RemoteNodeImpl implements ActorMessageHandler.Node {
   }
 
   /**
-   * @see luj.cluster.internal.node.member.NodeMemberAktor
+   * @see luj.cluster.internal.node.member.actor.NodeMemberAktor
    */
   private final ActorRef _remoteRef;
 

@@ -33,7 +33,7 @@ final class PreStart {
     log.debug("[cluster]节点开始启动...");
 
     ActorRef memberRef = _aktorCtx.actorOf(NodeMemberAktor.props(
-        _beanCollect.getMemberUpListener(), _applicationBean), "member");
+        _beanCollect.getNodeJoinListener(), _applicationBean), "member");
 
     ActorRef appRootRef = createAppRoot(memberRef);
     ActorRef sendRef = createSendActor();
@@ -43,7 +43,7 @@ final class PreStart {
 
     // 这里面可能也会包含初始化逻辑
     new StartListenerTrigger(receiveRef, sendRef, appRootRef,
-        _applicationBean, _beanCollect.getStartListeners()).trigger();
+        _applicationBean, _beanCollect.getNodeStartListeners()).trigger();
 
     // 所以需要在最后（即初始化完全完成）再加入集群
     memberRef.tell(new StartMemberMsg(receiveRef), _aktor.self());

@@ -4,6 +4,7 @@ import java.util.List;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
+import luj.cluster.api.node.NodeMessageSerializer;
 import luj.cluster.api.node.NodeNewMemberListener;
 import luj.cluster.api.node.NodeStartListener;
 import org.springframework.context.ApplicationContext;
@@ -19,9 +20,11 @@ public interface ClusterBeanCollector {
 
   interface Result {
 
-    List<NodeStartListener> getStartListeners();
+    List<NodeStartListener> getNodeStartListeners();
 
-    NodeNewMemberListener getMemberUpListener();
+    NodeNewMemberListener getNodeJoinListener();
+
+    List<NodeMessageSerializer<?>> getNodeMessageSerializers();
 
     List<ActorPreStartHandler<?>> getActorPreStartHandlers();
 

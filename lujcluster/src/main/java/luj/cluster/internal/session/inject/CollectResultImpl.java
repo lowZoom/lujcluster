@@ -7,6 +7,7 @@ import luj.ava.spring.Internal;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
+import luj.cluster.api.node.NodeMessageSerializer;
 import luj.cluster.api.node.NodeNewMemberListener;
 import luj.cluster.api.node.NodeStartListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 final class CollectResultImpl implements ClusterBeanCollector.Result {
 
   @Override
-  public List<NodeStartListener> getStartListeners() {
-    return nonNull(_startListeners);
+  public List<NodeStartListener> getNodeStartListeners() {
+    return nonNull(_nodeStartListeners);
   }
 
   @Override
-  public NodeNewMemberListener getMemberUpListener() {
-    return _memberUpListener;
+  public NodeNewMemberListener getNodeJoinListener() {
+    return _nodeJoinListener;
+  }
+
+  @Override
+  public List<NodeMessageSerializer<?>> getNodeMessageSerializers() {
+    return nonNull(_nodeMessageSerializers);
   }
 
   @Override
@@ -39,15 +45,18 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
     return nonNull(_actorMessageHandlers);
   }
 
-  private <T> List<T> nonNull(List<T> list) {
+  static <T> List<T> nonNull(List<T> list) {
     return MoreObjects.firstNonNull(list, ImmutableList.of());
   }
 
   @Autowired(required = false)
-  private List<NodeStartListener> _startListeners;
+  private List<NodeStartListener> _nodeStartListeners;
 
   @Autowired(required = false)
-  private NodeNewMemberListener _memberUpListener;
+  private NodeNewMemberListener _nodeJoinListener;
+
+  @Autowired(required = false)
+  private List<NodeMessageSerializer<?>> _nodeMessageSerializers;
 
   @Autowired(required = false)
   private List<ActorPreStartHandler<?>> _actorPreStartHandlers;

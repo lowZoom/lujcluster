@@ -1,8 +1,6 @@
 package luj.cluster.internal.node.message.receive.message.remote;
 
-import java.io.Serializable;
-
-public class NodeSendRemoteMsg implements Serializable {
+public class NodeSendRemoteMsg {
 
   public NodeSendRemoteMsg(String messageKey, Object message) {
     _messageKey = messageKey;

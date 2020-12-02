@@ -13,6 +13,11 @@
   <artifactId>lujcluster</artifactId>
   <version>0.1-SNAPSHOT</version>
 
+  <properties>
+    <akka.scala>2.13</akka.scala>
+    <akka.version>2.5.32</akka.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>luj.ava</groupId>
@@ -23,20 +28,20 @@
     <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
     <dependency>
       <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-actor_2.12</artifactId>
-      <version>2.5.25</version>
+      <artifactId>akka-actor_${akka.scala}</artifactId>
+      <version>${akka.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-slf4j -->
     <dependency>
       <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-slf4j_2.12</artifactId>
-      <version>2.5.25</version>
+      <artifactId>akka-slf4j_${akka.scala}</artifactId>
+      <version>${akka.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-cluster -->
     <dependency>
       <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-cluster_2.12</artifactId>
-      <version>2.5.25</version>
+      <artifactId>akka-cluster_${akka.scala}</artifactId>
+      <version>${akka.version}</version>
     </dependency>
 
     <dependency>
