@@ -6,8 +6,9 @@ import com.typesafe.config.ConfigFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 import luj.cluster.api.node.ClusterNode;
+import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 import luj.cluster.internal.node.message.serialize.AkkaMessageSerializer;
-import luj.cluster.internal.node.message.serialize.MessageTypeGetter;
+import luj.cluster.internal.node.message.serialize.MessageSerializerCollector;
 import luj.cluster.internal.node.start.actor.NodeStartAktor;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 import org.springframework.context.ApplicationContext;
@@ -27,8 +28,12 @@ public class ClusterNodeStarter {
     ClusterBeanCollector.Result beanCollect =
         ClusterBeanCollector.Factory.create(_appContext).collect();
 
+    AkkaMessageSerializer.sApplicationBean = _startParam;
+    AkkaMessageSerializer.sSerializerMap =
+        new MessageSerializerCollector(beanCollect.getNodeMessageSerializers()).collect();
+
     ActorSystem sys = ActorSystem.create("lujcluster", ConfigFactory.empty()
-        .withFallback(ConfigFactory.parseString(makeConfigStr(beanCollect)))
+        .withFallback(ConfigFactory.parseString(makeConfigStr()))
         .withFallback(ConfigFactory.parseResources("akka.conf")));
 
     ClusterNodeImpl node = new ClusterNodeImpl();
@@ -37,7 +42,7 @@ public class ClusterNodeStarter {
     return node;
   }
 
-  private String makeConfigStr(ClusterBeanCollector.Result beanCollect) {
+  private String makeConfigStr() {
     return String.join("\n", ImmutableList.<String>builder()
         .add(strField("akka.remote.netty.tcp.hostname", _selfHost))
         .add("akka.remote.netty.tcp.port=" + _selfPort)
@@ -48,10 +53,10 @@ public class ClusterNodeStarter {
 
         .add("akka.cluster.seed-nodes=[" + makeSeedStr() + "]")
 
-//        .add(strField("akka.actor.serializers.luj", AkkaMessageSerializer.class.getName()))
-        .add("akka.actor.serializers { luj=\"luj.cluster.internal.node.message.serialize.AkkaMessageSerializer\" }")
-//        .add("akka.actor.serialization-bindings {\n" + makeSerialBindings(beanCollect) + "\n}")
-        .add("akka.actor.serialization-bindings {\n\"luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg\"=luj\n}")
+        .add(strField("akka.actor.serializers.luj", AkkaMessageSerializer.class.getName()))
+        .add("akka.actor.serialization-bindings {\n"
+            + strField("\"" + NodeSendRemoteMsg.class.getName() + "\"", "luj")
+            + "\n}")
 
         .build());
   }
@@ -60,15 +65,6 @@ public class ClusterNodeStarter {
     return _seedList.stream()
         .map(s -> "\"akka.tcp://lujcluster@" + s + "\"")
         .collect(Collectors.joining(",\n"));
-  }
-
-  private String makeSerialBindings(ClusterBeanCollector.Result beanCollect) {
-    return beanCollect.getNodeMessageSerializers().stream()
-        .map(MessageTypeGetter.GET::getType)
-        .map(Class::getName)
-//        .map(n -> strField(" \"" + n + "\"", "luj"))
-        .map(n -> " \"" + n + "\"=luj")
-        .collect(Collectors.joining("\n"));
   }
 
   private String strField(String key, String value) {
