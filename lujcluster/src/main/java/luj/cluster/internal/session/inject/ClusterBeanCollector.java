@@ -4,9 +4,10 @@ import java.util.List;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
-import luj.cluster.api.node.NodeMessageSerializer;
 import luj.cluster.api.node.NodeNewMemberListener;
 import luj.cluster.api.node.NodeStartListener;
+import luj.cluster.api.node.message.MessageValueResolver;
+import luj.cluster.api.node.message.NodeMessageSerializer;
 import org.springframework.context.ApplicationContext;
 
 public interface ClusterBeanCollector {
@@ -23,6 +24,8 @@ public interface ClusterBeanCollector {
     List<NodeStartListener> getNodeStartListeners();
 
     NodeNewMemberListener getNodeJoinListener();
+
+    MessageValueResolver getMessageTypeResolver();
 
     List<NodeMessageSerializer<?>> getNodeMessageSerializers();
 

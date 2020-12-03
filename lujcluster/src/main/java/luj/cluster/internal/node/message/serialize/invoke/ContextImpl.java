@@ -1,6 +1,6 @@
 package luj.cluster.internal.node.message.serialize.invoke;
 
-import luj.cluster.api.node.NodeMessageSerializer;
+import luj.cluster.api.node.message.NodeMessageSerializer;
 
 final class ContextImpl implements NodeMessageSerializer.Context {
 

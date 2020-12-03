@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import luj.cluster.api.node.ClusterNode;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 import luj.cluster.internal.node.message.serialize.AkkaMessageSerializer;
-import luj.cluster.internal.node.message.serialize.MessageSerializerCollector;
+import luj.cluster.internal.node.message.serialize.AkkaSerializeInitializer;
 import luj.cluster.internal.node.start.actor.NodeStartAktor;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 import org.springframework.context.ApplicationContext;
@@ -28,9 +28,7 @@ public class ClusterNodeStarter {
     ClusterBeanCollector.Result beanCollect =
         ClusterBeanCollector.Factory.create(_appContext).collect();
 
-    AkkaMessageSerializer.sApplicationBean = _startParam;
-    AkkaMessageSerializer.sSerializerMap =
-        new MessageSerializerCollector(beanCollect.getNodeMessageSerializers()).collect();
+    new AkkaSerializeInitializer(beanCollect, _startParam).init();
 
     ActorSystem sys = ActorSystem.create("lujcluster", ConfigFactory.empty()
         .withFallback(ConfigFactory.parseString(makeConfigStr()))

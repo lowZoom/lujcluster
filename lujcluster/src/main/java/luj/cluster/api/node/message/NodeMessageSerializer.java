@@ -1,4 +1,4 @@
-package luj.cluster.api.node;
+package luj.cluster.api.node.message;
 
 public interface NodeMessageSerializer<M> {
 
@@ -9,5 +9,5 @@ public interface NodeMessageSerializer<M> {
 
   byte[] serialize(Context ctx, M msg);
 
-  M deserialize(Context ctx, byte[] bytes);
+  Object deserialize(Context ctx, byte[] bytes);
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import luj.ava.reflect.type.TypeX;
-import luj.cluster.api.node.NodeMessageSerializer;
+import luj.cluster.api.node.message.NodeMessageSerializer;
 
 public class MessageSerializerCollector {
 

@@ -28,7 +28,9 @@ final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
     String actorName = appType.getName();
     checkNotNull(akkaRef, "%s(%s)", actorName, msgType.getName());
 
-    LOG.debug("[cluster]投递应用消息：{} -> {}", msgType.getSimpleName(), actorName);
+    LOG.debug("[cluster]投递应用消息：{}{} -> {}",
+        msgType.getSimpleName(), msgType.getInterfaces(), actorName);
+
     akkaRef.tell(msg, _rootAktor.sender());
   }
 

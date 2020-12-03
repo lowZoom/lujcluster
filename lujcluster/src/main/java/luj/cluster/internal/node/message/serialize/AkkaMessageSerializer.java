@@ -7,15 +7,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Map;
-import luj.cluster.api.node.NodeMessageSerializer;
+import luj.cluster.api.node.message.MessageValueResolver;
+import luj.cluster.api.node.message.NodeMessageSerializer;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 import luj.cluster.internal.node.message.serialize.invoke.MessageDeserializeInvoker;
 import luj.cluster.internal.node.message.serialize.invoke.MessageSerializeInvoker;
 
 public class AkkaMessageSerializer extends JSerializer {
 
-  public static Map<String, NodeMessageSerializer<?>> sSerializerMap;
-  public static Object sApplicationBean;
+  static MessageValueResolver sTypeResolver;
+  static Map<String, NodeMessageSerializer<?>> sSerializerMap;
+  static Object sApplicationBean;
 
   @Override
   public int identifier() {
@@ -37,8 +39,8 @@ public class AkkaMessageSerializer extends JSerializer {
         ObjectOutputStream objOut = new ObjectOutputStream(byteOut)) {
       objOut.writeObject(msg.getMessageKey());
 
-      objOut.writeObject(MessageSerializeInvoker.GET
-          .invoke(msg.getMessage(), sSerializerMap, sApplicationBean));
+      objOut.writeObject(MessageSerializeInvoker.GET.invoke(
+          msg.getMessage(), sTypeResolver, sSerializerMap, sApplicationBean));
 
       objOut.flush();
       return byteOut.toByteArray();
@@ -53,12 +55,10 @@ public class AkkaMessageSerializer extends JSerializer {
     try (ByteArrayInputStream byteIn = new ByteArrayInputStream(bytes);
         ObjectInputStream objIn = new ObjectInputStream(byteIn)) {
       String msgKey = (String) objIn.readObject();
-
-      String msgType = (String) objIn.readObject();
       byte[] msgData = (byte[]) objIn.readObject();
 
       Object msgObj = MessageDeserializeInvoker.GET
-          .invoke(msgType, msgData, sSerializerMap, sApplicationBean);
+          .invoke(msgData, sSerializerMap, sApplicationBean);
 
       return new NodeSendRemoteMsg(msgKey, msgObj);
 
