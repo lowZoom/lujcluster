@@ -20,12 +20,13 @@ import luj.cluster.internal.session.inject.ClusterBeanCollector;
 final class PreStart {
 
   PreStart(NodeStartAktor aktor, ActorContext aktorCtx, ClusterBeanCollector.Result beanCollect,
-      Consumer<ActorRef> receiveRefHolder, Object applicationBean) {
+      Consumer<ActorRef> receiveRefHolder, Object applicationBean, boolean clusterEnabled) {
     _aktor = aktor;
     _aktorCtx = aktorCtx;
     _beanCollect = beanCollect;
     _receiveRefHolder = receiveRefHolder;
     _applicationBean = applicationBean;
+    _clusterEnabled = clusterEnabled;
   }
 
   void run() throws Exception {
@@ -46,7 +47,7 @@ final class PreStart {
         _applicationBean, _beanCollect.getNodeStartListeners()).trigger();
 
     // 所以需要在最后（即初始化完全完成）再加入集群
-    memberRef.tell(new StartMemberMsg(receiveRef), _aktor.self());
+    memberRef.tell(new StartMemberMsg(receiveRef, _clusterEnabled), _aktor.self());
   }
 
   private ActorRef createAppRoot(ActorRef memberRef) {
@@ -73,4 +74,6 @@ final class PreStart {
 
   private final Consumer<ActorRef> _receiveRefHolder;
   private final Object _applicationBean;
+
+  private final boolean _clusterEnabled;
 }

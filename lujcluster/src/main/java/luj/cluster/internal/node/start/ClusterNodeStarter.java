@@ -4,10 +4,7 @@ import akka.actor.ActorSystem;
 import com.google.common.collect.ImmutableList;
 import com.typesafe.config.ConfigFactory;
 import java.util.List;
-import java.util.stream.Collectors;
 import luj.cluster.api.node.ClusterNode;
-import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
-import luj.cluster.internal.node.message.serialize.AkkaMessageSerializer;
 import luj.cluster.internal.node.message.serialize.AkkaSerializeInitializer;
 import luj.cluster.internal.node.start.actor.NodeStartAktor;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
@@ -29,44 +26,26 @@ public class ClusterNodeStarter {
         ClusterBeanCollector.Factory.create(_appContext).collect();
 
     new AkkaSerializeInitializer(beanCollect, _startParam).init();
+    boolean clusterEnabled = _selfHost != null;
 
     ActorSystem sys = ActorSystem.create("lujcluster", ConfigFactory.empty()
-        .withFallback(ConfigFactory.parseString(makeConfigStr()))
+        .withFallback(ConfigFactory.parseString(makeConfigStr(!clusterEnabled)))
         .withFallback(ConfigFactory.parseResources("akka.conf")));
 
     ClusterNodeImpl node = new ClusterNodeImpl();
-    sys.actorOf(NodeStartAktor.props(beanCollect, _startParam, node::setReceiveRef), "start");
+    sys.actorOf(NodeStartAktor.props(beanCollect,
+        _startParam, node::setReceiveRef, clusterEnabled), "start");
 
     return node;
   }
 
-  private String makeConfigStr() {
+  private String makeConfigStr(boolean clusterDisabled) {
+    List<String> clusterConf = clusterDisabled ? ImmutableList.of()
+        : new AkkaClusterConfigMaker(_selfHost, _selfPort, _seedList).make();
+
     return String.join("\n", ImmutableList.<String>builder()
-        .add(strField("akka.remote.netty.tcp.hostname", _selfHost))
-        .add("akka.remote.netty.tcp.port=" + _selfPort)
-
-        // https://doc.akka.io/docs/akka/2.5/remoting.html?language=scala#akka-behind-nat-or-in-a-docker-container
-        .add(strField("akka.remote.netty.tcp.bind-hostname", "0.0.0.0"))
-        .add("akka.remote.netty.tcp.bind-port=" + _selfPort)
-
-        .add("akka.cluster.seed-nodes=[" + makeSeedStr() + "]")
-
-        .add(strField("akka.actor.serializers.luj", AkkaMessageSerializer.class.getName()))
-        .add("akka.actor.serialization-bindings {\n"
-            + strField("\"" + NodeSendRemoteMsg.class.getName() + "\"", "luj")
-            + "\n}")
-
+        .addAll(clusterConf)
         .build());
-  }
-
-  private String makeSeedStr() {
-    return _seedList.stream()
-        .map(s -> "\"akka.tcp://lujcluster@" + s + "\"")
-        .collect(Collectors.joining(",\n"));
-  }
-
-  private String strField(String key, String value) {
-    return key + "=\"" + value + "\"";
   }
 
   private final ApplicationContext _appContext;

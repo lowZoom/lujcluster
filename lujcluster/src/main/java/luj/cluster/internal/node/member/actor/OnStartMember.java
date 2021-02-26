@@ -17,10 +17,14 @@ final class OnStartMember implements FI.UnitApply<StartMemberMsg> {
     _aktor.setReceiveRef(i.getReceiveRef());
     ActorContext context = _aktor.context();
 
+    if (!i.isClusterEnabled()) {
+      return;
+    }
+
     Cluster cluster = Cluster.get(context.system());
     _aktor.setCluster(cluster);
 
-    cluster.subscribe(_aktor.self(),
+    cluster.subscribe(_aktor.self(), (ClusterEvent.SubscriptionInitialStateMode)
         ClusterEvent.initialStateAsEvents(), ClusterEvent.MemberUp.class);
   }
 
