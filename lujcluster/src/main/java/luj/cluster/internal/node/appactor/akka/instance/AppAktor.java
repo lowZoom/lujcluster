@@ -71,7 +71,7 @@ public final class AppAktor extends AbstractActor {
   }
 
   private void onMessage(Object msg, ActorMessageHandler<?, ?> handler) {
-    new AppMessageHandleInvoker(this, handler, msg, getSender(), _clusterMemberRef).invoke();
+    AppMessageHandleInvoker.GET.invoke(this, handler, msg, _clusterMemberRef);
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(AppAktor.class);

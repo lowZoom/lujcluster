@@ -1,43 +1,42 @@
 package luj.cluster.internal.node.appactor.akka.instance.handle.message;
 
+import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.logging.Log;
 import luj.cluster.internal.logging.LogFactory;
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 
-public class AppMessageHandleInvoker {
+public enum AppMessageHandleInvoker {
+  GET;
 
-  public AppMessageHandleInvoker(AppAktor appAktor, ActorMessageHandler<?, ?> handler, Object msg,
-      ActorRef senderRef, ActorRef clusterMemberRef) {
-    _appAktor = appAktor;
-    _handler = handler;
-    _msg = msg;
-    _senderRef = senderRef;
-    _clusterMemberRef = clusterMemberRef;
-  }
-
-  public void invoke() {
+  public void invoke(AppAktor appAktor, ActorMessageHandler<?, ?> handler, Object msg,
+      ActorRef clusterMemberRef) {
     //FIXME: temp
-    Log log = LogFactory.get(_appAktor, _handler);
+    Log log = LogFactory.get(appAktor, handler);
 
-    RemoteNodeImpl remoteNode = new RemoteNodeImpl(_senderRef, _clusterMemberRef);
-    HandleContextImpl ctx = new HandleContextImpl(_appAktor, log, _msg, remoteNode);
+    AbstractActor.ActorContext actorCtx = appAktor.getContext();
+    RemoteNodeImpl remoteNode = new RemoteNodeImpl();
+    remoteNode._remoteRef = actorCtx.getSender();
+    remoteNode._localRef = clusterMemberRef;
+
+    LocalNodeImpl localNode = new LocalNodeImpl();
+    localNode._selfRef = appAktor.getSelf();
+    localNode._clusterMemberRef = clusterMemberRef;
+
+    HandleContextImpl ctx = new HandleContextImpl();
+    ctx._appAktor = appAktor;
+    ctx._logger = log;
+    ctx._msg = msg;
+    ctx._remoteNode = remoteNode;
+    ctx._localNode = localNode;
 
     try {
-      _handler.onHandle(ctx);
+      handler.onHandle(ctx);
     } catch (RuntimeException e) {
       throw e;
     } catch (Exception e) {
       throw new UnsupportedOperationException(e);
     }
   }
-
-  private final AppAktor _appAktor;
-
-  private final ActorMessageHandler<?, ?> _handler;
-  private final Object _msg;
-
-  private final ActorRef _senderRef;
-  private final ActorRef _clusterMemberRef;
 }

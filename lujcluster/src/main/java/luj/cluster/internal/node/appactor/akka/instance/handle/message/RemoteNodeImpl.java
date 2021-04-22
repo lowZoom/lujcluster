@@ -6,11 +6,6 @@ import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMs
 
 final class RemoteNodeImpl implements ActorMessageHandler.Node {
 
-  RemoteNodeImpl(ActorRef remoteRef, ActorRef localRef) {
-    _remoteRef = remoteRef;
-    _localRef = localRef;
-  }
-
   @Override
   public String getIp() {
     return _remoteRef.path().address().host().get();
@@ -34,7 +29,7 @@ final class RemoteNodeImpl implements ActorMessageHandler.Node {
   /**
    * @see luj.cluster.internal.node.member.actor.NodeMemberAktor
    */
-  private final ActorRef _remoteRef;
+  ActorRef _remoteRef;
 
-  private final ActorRef _localRef;
+  ActorRef _localRef;
 }

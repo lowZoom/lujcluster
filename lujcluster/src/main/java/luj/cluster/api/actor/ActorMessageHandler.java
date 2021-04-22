@@ -18,14 +18,21 @@ public interface ActorMessageHandler<A, M> {
 
     Ref getSenderRef();
 
-    ActorRef createActor(Object actorState);
-
     Node getRemoteNode();
+
+    NodeLocal getLocalNode();
+
+    ActorRef createActor(Object actorState);
   }
 
   interface Ref extends Tellable {
 
     void tell(Object msg, Duration delay);
+  }
+
+  interface NodeLocal {
+
+    void shutdown();
   }
 
   interface Node {

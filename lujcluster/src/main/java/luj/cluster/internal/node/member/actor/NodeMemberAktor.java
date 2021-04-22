@@ -6,6 +6,7 @@ import akka.actor.Props;
 import akka.cluster.Cluster;
 import akka.cluster.ClusterEvent;
 import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.internal.node.member.message.LeaveAndShutdownMsg;
 import luj.cluster.internal.node.member.message.StartMemberMsg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
@@ -29,8 +30,9 @@ public class NodeMemberAktor extends AbstractActor {
   @Override
   public Receive createReceive() {
     return receiveBuilder()
-        .match(StartMemberMsg.class, new OnStartMember(this))
         .match(ClusterEvent.MemberUp.class, new OnClusterMemberUp(this))
+        .match(StartMemberMsg.class, new OnStartMember(this))
+        .match(LeaveAndShutdownMsg.class, new OnLeaveAndShutdown(this))
         .match(NodeSendRemoteMsg.class, m -> _receiveRef.forward(m, context()))
         .build();
   }
