@@ -6,6 +6,8 @@ import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.logging.Log;
 import luj.cluster.internal.logging.LogFactory;
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public enum AppMessageHandleInvoker {
   GET;
@@ -33,10 +35,10 @@ public enum AppMessageHandleInvoker {
 
     try {
       handler.onHandle(ctx);
-    } catch (RuntimeException e) {
-      throw e;
     } catch (Exception e) {
-      throw new UnsupportedOperationException(e);
+      LOG.error(e.getMessage(), e);
     }
   }
+
+  private static final Logger LOG = LoggerFactory.getLogger(AppMessageHandleInvoker.class);
 }
