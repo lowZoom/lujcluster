@@ -20,7 +20,7 @@ final class OnNodeSendRemote implements FI.UnitApply<NodeSendRemoteMsg> {
     LOG.debug("[cluster]收到远程节点消息：{}（{}）", msgKey, senderRef);
 
     new NodeMessageListenInvoker(msgKey, i.getMessage(),
-        _actor.getMessageHandleMap(), _actor.getAppRootRef(), senderRef).invoke();
+        _actor.getMsgHandleMap(), _actor.getAppRootRef(), senderRef).invoke();
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(OnNodeSendRemote.class);

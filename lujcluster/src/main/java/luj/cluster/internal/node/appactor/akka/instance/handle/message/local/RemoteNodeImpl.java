@@ -1,10 +1,11 @@
-package luj.cluster.internal.node.appactor.akka.instance.handle.message;
+package luj.cluster.internal.node.appactor.akka.instance.handle.message.local;
 
 import akka.actor.ActorRef;
 import luj.cluster.api.actor.ActorMessageHandler;
+import luj.cluster.api.node.NodeNewMemberListener;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
-final class RemoteNodeImpl implements ActorMessageHandler.Node {
+final class RemoteNodeImpl implements ActorMessageHandler.Node, NodeNewMemberListener.Node {
 
   @Override
   public String getIp() {

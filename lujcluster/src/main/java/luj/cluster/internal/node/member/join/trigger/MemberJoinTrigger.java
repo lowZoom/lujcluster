@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.member.join;
+package luj.cluster.internal.node.member.join.trigger;
 
 import akka.actor.ActorSelection;
 import akka.actor.Address;
@@ -18,13 +18,11 @@ public class MemberJoinTrigger {
   }
 
   public void trigger() {
-    Member member = _event.member();
-    Address addr = member.address();
+    MemberContextImpl ctx = new MemberContextImpl();
+    ctx._selfNode = makeSelfNode();
+    ctx._memberNode = makeRemoteNode();
+    ctx._applicationBean = _applicationBean;
 
-    ActorSelection recvRef = _aktor.context().actorSelection(addr + "/user/start/recv");
-    NodeImpl node = new NodeImpl(recvRef, _aktor.self());
-
-    MemberContextImpl ctx = new MemberContextImpl(node, _applicationBean);
     try {
       _joinListener.onMember(ctx);
     } catch (RuntimeException e) {
@@ -32,6 +30,25 @@ public class MemberJoinTrigger {
     } catch (Exception e) {
       throw new UnsupportedOperationException(e);
     }
+  }
+
+  private NodeSelfImpl makeSelfNode() {
+    NodeSelfImpl node = new NodeSelfImpl();
+    node._receiveRef = _aktor.getReceiveRef();
+    node._memberRef = _aktor.self();
+    return node;
+  }
+
+  private NodeMemberImpl makeRemoteNode() {
+    Member member = _event.member();
+    Address addr = member.address();
+    ActorSelection recvRef = _aktor.context().actorSelection(addr + "/user/start/recv");
+
+    NodeMemberImpl node = new NodeMemberImpl();
+    node._remoteRef = recvRef;
+    node._memberRef = _aktor.self();
+
+    return node;
   }
 
   private final ClusterEvent.MemberUp _event;

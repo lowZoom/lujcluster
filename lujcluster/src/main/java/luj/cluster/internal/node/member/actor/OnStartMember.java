@@ -6,6 +6,7 @@ import akka.cluster.Cluster;
 import akka.cluster.ClusterEvent;
 import akka.japi.pf.FI;
 import java.util.Queue;
+import luj.cluster.internal.node.consul.start.NodeConsulStarter;
 import luj.cluster.internal.node.member.message.StartMemberMsg;
 import luj.cluster.internal.node.member.receive.NodeSendItem;
 import org.slf4j.Logger;
@@ -18,9 +19,13 @@ final class OnStartMember implements FI.UnitApply<StartMemberMsg> {
   }
 
   @Override
-  public void apply(StartMemberMsg i) {
+  public void apply(StartMemberMsg i) throws Exception {
     ActorRef receiveRef = i.getReceiveRef();
     _aktor.setReceiveRef(receiveRef);
+
+    Object appBean = _aktor.getApplicationBean();
+    new NodeConsulStarter(i.getNodeConfig(), _aktor.getJoinListener(),
+        receiveRef, _aktor.self(), appBean).start();
 
     if (!i.isClusterEnabled()) {
       return;

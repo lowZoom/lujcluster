@@ -3,8 +3,11 @@ package luj.cluster.internal.node.message.receive.actor;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
+import java.util.Map;
+import luj.cluster.api.node.message.NodeMessageSerializer;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
 import luj.cluster.internal.node.message.receive.message.RegisterReceiveMsg;
+import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemote2Msg;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
 /**
@@ -12,15 +15,18 @@ import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMs
  */
 public class NodeReceiveAktor extends AbstractActor {
 
-  public static Props props(ActorMessageHandleMapV2 messageHandleMap,
-      ActorRef nodeSendRef, ActorRef appRootRef) {
+  public static Props props(ActorMessageHandleMapV2 msgHandleMap,
+      Map<String, NodeMessageSerializer<?>> msgCodecMap, ActorRef nodeSendRef,
+      ActorRef appRootRef) {
     return Props.create(NodeReceiveAktor.class, () ->
-        new NodeReceiveAktor(messageHandleMap, nodeSendRef, appRootRef));
+        new NodeReceiveAktor(msgHandleMap, msgCodecMap, nodeSendRef, appRootRef));
   }
 
-  NodeReceiveAktor(ActorMessageHandleMapV2 messageHandleMap,
-      ActorRef nodeSendRef, ActorRef appRootRef) {
-    _messageHandleMap = messageHandleMap;
+  NodeReceiveAktor(ActorMessageHandleMapV2 msgHandleMap,
+      Map<String, NodeMessageSerializer<?>> msgCodecMap, ActorRef nodeSendRef,
+      ActorRef appRootRef) {
+    _msgHandleMap = msgHandleMap;
+    _msgCodecMap = msgCodecMap;
 
     _nodeSendRef = nodeSendRef;
     _appRootRef = appRootRef;
@@ -31,6 +37,7 @@ public class NodeReceiveAktor extends AbstractActor {
     return receiveBuilder()
         .match(RegisterReceiveMsg.class, new OnRegisterReceive(this))
         .match(NodeSendRemoteMsg.class, new OnNodeSendRemote(this))
+        .match(NodeSendRemote2Msg.class, new OnNodeSendRemote2(this))
         .build();
   }
 
@@ -42,11 +49,16 @@ public class NodeReceiveAktor extends AbstractActor {
     return _appRootRef;
   }
 
-  public ActorMessageHandleMapV2 getMessageHandleMap() {
-    return _messageHandleMap;
+  public ActorMessageHandleMapV2 getMsgHandleMap() {
+    return _msgHandleMap;
   }
 
-  private final ActorMessageHandleMapV2 _messageHandleMap;
+  public Map<String, NodeMessageSerializer<?>> getMsgCodecMap() {
+    return _msgCodecMap;
+  }
+
+  private final ActorMessageHandleMapV2 _msgHandleMap;
+  private final Map<String, NodeMessageSerializer<?>> _msgCodecMap;
 
   /**
    * @see luj.cluster.internal.node.message.send.actor.NodeSendAktor

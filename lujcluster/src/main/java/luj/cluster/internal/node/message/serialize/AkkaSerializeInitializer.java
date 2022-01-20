@@ -1,23 +1,26 @@
 package luj.cluster.internal.node.message.serialize;
 
+import java.util.Map;
+import luj.cluster.api.node.message.NodeMessageSerializer;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 public class AkkaSerializeInitializer {
 
-  public AkkaSerializeInitializer(ClusterBeanCollector.Result beanCollect, Object appBean) {
+  public AkkaSerializeInitializer(ClusterBeanCollector.Result beanCollect,
+      Map<String, NodeMessageSerializer<?>> msgCodecMap, Object appBean) {
     _beanCollect = beanCollect;
+    _msgCodecMap = msgCodecMap;
     _appBean = appBean;
   }
 
   public void init() {
-    AkkaMessageSerializer.sApplicationBean = _appBean;
     AkkaMessageSerializer.sTypeResolver = _beanCollect.getMessageTypeResolver();
-
-    AkkaMessageSerializer.sSerializerMap =
-        new MessageSerializerCollector(_beanCollect.getNodeMessageSerializers()).collect();
+    AkkaMessageSerializer.sSerializerMap = _msgCodecMap;
+    AkkaMessageSerializer.sApplicationBean = _appBean;
   }
 
   private final ClusterBeanCollector.Result _beanCollect;
+  private final Map<String, NodeMessageSerializer<?>> _msgCodecMap;
 
   private final Object _appBean;
 }

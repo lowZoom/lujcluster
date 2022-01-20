@@ -5,6 +5,7 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import java.util.HashMap;
 import java.util.Map;
+import luj.cluster.internal.node.appactor.akka.root.message.AppRouteFromRemoteMsg;
 import luj.cluster.internal.node.appactor.akka.root.message.AppRouteMsg;
 import luj.cluster.internal.node.appactor.akka.root.message.CreateAppActorMsg;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
@@ -31,6 +32,7 @@ public class AppRootAktor extends AbstractActor {
     return receiveBuilder()
         .match(CreateAppActorMsg.class, new OnCreateAppActor(this))
         .match(AppRouteMsg.class, new OnAppRoute(this))
+        .match(AppRouteFromRemoteMsg.class, new OnAppRouteFromRemote(this))
         .build();
   }
 

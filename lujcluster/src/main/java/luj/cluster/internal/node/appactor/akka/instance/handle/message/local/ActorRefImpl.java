@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.appactor.akka.instance.handle.message;
+package luj.cluster.internal.node.appactor.akka.instance.handle.message.local;
 
 import akka.actor.ActorContext;
 import akka.actor.ActorRef;

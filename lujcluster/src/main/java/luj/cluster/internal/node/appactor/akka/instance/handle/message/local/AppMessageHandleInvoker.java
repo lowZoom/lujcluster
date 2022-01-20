@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.appactor.akka.instance.handle.message;
+package luj.cluster.internal.node.appactor.akka.instance.handle.message.local;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
@@ -12,15 +12,22 @@ import org.slf4j.LoggerFactory;
 public enum AppMessageHandleInvoker {
   GET;
 
+  public void invoke(AppAktor actor, ActorMessageHandler<?, ?> handler, Object msg) {
+    RemoteNodeImpl remoteNode = new RemoteNodeImpl();
+    ActorRef memberRef = actor.getClusterMemberRef();
+    remoteNode._localRef = memberRef;
+
+    // 有可能不是远程节点
+    AbstractActor.ActorContext actorCtx = actor.getContext();
+    remoteNode._remoteRef = actorCtx.getSender();
+
+    invoke(actor, handler, msg, memberRef, remoteNode);
+  }
+
   public void invoke(AppAktor appAktor, ActorMessageHandler<?, ?> handler, Object msg,
-      ActorRef clusterMemberRef) {
+      ActorRef clusterMemberRef, ActorMessageHandler.Node remoteNode) {
     //FIXME: temp
     Log log = LogFactory.get(appAktor, handler);
-
-    AbstractActor.ActorContext actorCtx = appAktor.getContext();
-    RemoteNodeImpl remoteNode = new RemoteNodeImpl();
-    remoteNode._remoteRef = actorCtx.getSender();
-    remoteNode._localRef = clusterMemberRef;
 
     LocalNodeImpl localNode = new LocalNodeImpl();
     localNode._selfRef = appAktor.getSelf();

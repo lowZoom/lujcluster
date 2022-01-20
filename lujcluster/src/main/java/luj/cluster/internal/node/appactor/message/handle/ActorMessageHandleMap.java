@@ -4,7 +4,7 @@ import java.util.Map;
 import luj.cluster.api.actor.ActorMessageHandler;
 
 public interface ActorMessageHandleMap extends
-    Iterable<Map.Entry<Class<?>, ActorMessageHandler<?, ?>>> {
+    Iterable<Map.Entry<String, ActorMessageHandler<?, ?>>> {
 
-  ActorMessageHandler<?, ?> getHandler(Class<?> msgType);
+  ActorMessageHandler<?, ?> getHandler(String msgKey);
 }

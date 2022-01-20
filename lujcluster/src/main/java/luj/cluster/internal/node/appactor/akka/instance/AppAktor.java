@@ -6,9 +6,10 @@ import akka.actor.Props;
 import akka.japi.pf.ReceiveBuilder;
 import java.util.Map;
 import luj.cluster.api.actor.ActorMessageHandler;
-import luj.cluster.internal.node.appactor.akka.instance.handle.message.AppMessageHandleInvoker;
+import luj.cluster.internal.node.appactor.akka.instance.handle.message.local.AppMessageHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.handle.poststop.AppPoststopHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.handle.prestart.AppPrestartHandleInvoker;
+import luj.cluster.internal.node.appactor.akka.instance.message.MessageFromRemote;
 import luj.cluster.internal.node.appactor.meta.ActorMeta;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 import org.slf4j.Logger;
@@ -42,9 +43,11 @@ public final class AppAktor extends AbstractActor {
   @Override
   public Receive createReceive() {
     ReceiveBuilder builder = receiveBuilder();
-    for (Map.Entry<Class<?>, ActorMessageHandler<?, ?>> e : _meta.getMessageHandleMap()) {
+    builder.match(MessageFromRemote.class, new OnMessageFromRemote(this));
+
+    for (Map.Entry<String, ActorMessageHandler<?, ?>> e : _meta.getMessageHandleMap()) {
       ActorMessageHandler<?, ?> handler = e.getValue();
-      builder.match(e.getKey(), m -> onMessage(m, handler));
+      builder.match(loadClass(e.getKey()), m -> onMessage(m, handler));
     }
     return builder.build();
   }
@@ -70,8 +73,16 @@ public final class AppAktor extends AbstractActor {
     return _clusterMemberRef;
   }
 
+  private Class<?> loadClass(String name) {
+    try {
+      return Class.forName(name);
+    } catch (ClassNotFoundException e) {
+      throw new UnsupportedOperationException(e);
+    }
+  }
+
   private void onMessage(Object msg, ActorMessageHandler<?, ?> handler) {
-    AppMessageHandleInvoker.GET.invoke(this, handler, msg, _clusterMemberRef);
+    AppMessageHandleInvoker.GET.invoke(this, handler, msg);
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(AppAktor.class);

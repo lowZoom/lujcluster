@@ -31,7 +31,7 @@ final class OnAppRoute implements FI.UnitApply<AppRouteMsg> {
     LOG.debug("[cluster]投递应用消息：{}{} -> {}",
         msgType.getSimpleName(), msgType.getInterfaces(), actorName);
 
-    akkaRef.tell(msg, _rootAktor.sender());
+    akkaRef.tell(msg, _rootAktor.context().sender());
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(OnAppRoute.class);

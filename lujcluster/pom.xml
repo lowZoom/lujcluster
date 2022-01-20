@@ -44,6 +44,38 @@
       <version>${akka.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.ecwid.consul/consul-api -->
+    <dependency>
+      <groupId>com.ecwid.consul</groupId>
+      <artifactId>consul-api</artifactId>
+      <version>1.4.5</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+    <!--<dependency>-->
+      <!--<groupId>com.squareup.okhttp3</groupId>-->
+      <!--<artifactId>okhttp</artifactId>-->
+      <!--<version>3.14.9</version>-->
+    <!--</dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded -->
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-netty-shaded</artifactId>
+      <version>1.42.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.grpc/grpc-protobuf -->
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-protobuf</artifactId>
+      <version>1.42.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.grpc/grpc-stub -->
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-stub</artifactId>
+      <version>1.42.1</version>
+    </dependency>
+
     <dependency>
       <groupId>luj.test</groupId>
       <artifactId>lujtest</artifactId>

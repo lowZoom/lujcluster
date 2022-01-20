@@ -7,7 +7,7 @@ public interface NodeMessageSerializer<M> {
     <T> T getApplicationBean();
   }
 
-  byte[] serialize(Context ctx, M msg);
+  byte[] serialize(Context ctx, M message);
 
   Object deserialize(Context ctx, byte[] bytes);
 }

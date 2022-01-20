@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.appactor.akka.instance.handle.message;
+package luj.cluster.internal.node.appactor.akka.instance.handle.message.local;
 
 import akka.actor.ActorRef;
 import luj.cluster.api.actor.ActorMessageHandler;
@@ -55,7 +55,7 @@ final class HandleContextImpl implements ActorMessageHandler.Context {
   Object _msg;
 
   Log _logger;
-  RemoteNodeImpl _remoteNode;
+  ActorMessageHandler.Node _remoteNode;
 
   LocalNodeImpl _localNode;
 }

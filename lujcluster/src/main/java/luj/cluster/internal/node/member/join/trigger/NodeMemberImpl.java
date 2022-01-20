@@ -1,15 +1,23 @@
-package luj.cluster.internal.node.member.join;
+package luj.cluster.internal.node.member.join.trigger;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
+import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.NodeType;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
-final class NodeImpl implements NodeNewMemberListener.Node {
+final class NodeMemberImpl implements NodeNewMemberListener.NodeRemote {
 
-  NodeImpl(ActorSelection remoteRef, ActorRef memberRef) {
-    _remoteRef = remoteRef;
-    _memberRef = memberRef;
+  @Override
+  public NodeType getType() {
+    return NodeType.AKKA;
+  }
+
+  @Override
+  public Set<String> getTags() {
+    return ImmutableSet.of();
   }
 
   @Override
@@ -20,7 +28,7 @@ final class NodeImpl implements NodeNewMemberListener.Node {
   /**
    * @see luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor
    */
-  private final ActorSelection _remoteRef;
+  ActorSelection _remoteRef;
 
-  private final ActorRef _memberRef;
+  ActorRef _memberRef;
 }

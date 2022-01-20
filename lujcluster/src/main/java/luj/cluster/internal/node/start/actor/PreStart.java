@@ -5,7 +5,9 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import java.util.Map;
 import java.util.function.Consumer;
+import luj.cluster.api.node.message.NodeMessageSerializer;
 import luj.cluster.internal.node.appactor.akka.root.AppRootAktor;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2;
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2Factory;
@@ -14,40 +16,49 @@ import luj.cluster.internal.node.member.actor.NodeMemberAktor;
 import luj.cluster.internal.node.member.message.StartMemberMsg;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 import luj.cluster.internal.node.message.send.actor.NodeSendAktor;
+import luj.cluster.internal.node.message.serialize.AkkaSerializeInitializer;
+import luj.cluster.internal.node.message.serialize.MessageSerializerCollector;
+import luj.cluster.internal.node.start.ClusterNodeStarter;
 import luj.cluster.internal.node.start.actor.trigger.StartListenerTrigger;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 final class PreStart {
 
   PreStart(NodeStartAktor aktor, ActorContext aktorCtx, ClusterBeanCollector.Result beanCollect,
-      Consumer<ActorRef> receiveRefHolder, Object applicationBean, boolean clusterEnabled) {
+      ClusterNodeStarter.Config nodeConfig, boolean clusterEnabled,
+      Consumer<ActorRef> receiveRefHolder) {
     _aktor = aktor;
     _aktorCtx = aktorCtx;
     _beanCollect = beanCollect;
-    _receiveRefHolder = receiveRefHolder;
-    _applicationBean = applicationBean;
+    _nodeConfig = nodeConfig;
     _clusterEnabled = clusterEnabled;
+    _receiveRefHolder = receiveRefHolder;
   }
 
   void run() throws Exception {
     LoggingAdapter log = Logging.getLogger(_aktor);
     log.debug("[cluster]节点开始启动...");
 
-    ActorRef memberRef = _aktorCtx.actorOf(NodeMemberAktor.props(
-        _beanCollect.getNodeJoinListener(), _applicationBean), "member");
+    Map<String, NodeMessageSerializer<?>> codecMap = new MessageSerializerCollector(
+        _beanCollect.getNodeMessageSerializers()).collect();
+
+    new AkkaSerializeInitializer(_beanCollect, codecMap, _nodeConfig.startParam()).init();
+
+    ActorRef memberRef = _aktorCtx.actorOf(
+        NodeMemberAktor.props(codecMap, _beanCollect, _nodeConfig), "member");
 
     ActorRef appRootRef = createAppRoot(memberRef);
     ActorRef sendRef = createSendActor();
 
-    ActorRef receiveRef = createReceiveActor(sendRef, appRootRef);
+    ActorRef receiveRef = createReceiveActor(sendRef, appRootRef, codecMap);
     _receiveRefHolder.accept(receiveRef);
 
     // 这里面可能也会包含初始化逻辑
     new StartListenerTrigger(receiveRef, sendRef, appRootRef,
-        _applicationBean, _beanCollect.getNodeStartListeners()).trigger();
+        _nodeConfig.startParam(), _beanCollect.getNodeStartListeners()).trigger();
 
     // 所以需要在最后（即初始化完全完成）再加入集群
-    memberRef.tell(new StartMemberMsg(receiveRef, _clusterEnabled), _aktor.self());
+    memberRef.tell(new StartMemberMsg(receiveRef, _clusterEnabled, _nodeConfig), _aktor.self());
   }
 
   private ActorRef createAppRoot(ActorRef memberRef) {
@@ -59,21 +70,21 @@ final class PreStart {
     return _aktorCtx.actorOf(NodeSendAktor.props(), "send");
   }
 
-  private ActorRef createReceiveActor(ActorRef sendRef, ActorRef appRootRef) {
+  private ActorRef createReceiveActor(ActorRef sendRef, ActorRef appRootRef,
+      Map<String, NodeMessageSerializer<?>> codecMap) {
     ActorMessageHandleMapV2 handleMap = new ActorMessageHandleMapV2Factory(
         _beanCollect.getActorMessageHandlers()).create();
 
-    Props prop = NodeReceiveAktor.props(handleMap, sendRef, appRootRef);
+    Props prop = NodeReceiveAktor.props(handleMap, codecMap, sendRef, appRootRef);
     return _aktorCtx.actorOf(prop, "recv");
   }
 
   private final NodeStartAktor _aktor;
-
   private final ActorContext _aktorCtx;
+
   private final ClusterBeanCollector.Result _beanCollect;
+  private final ClusterNodeStarter.Config _nodeConfig;
+  private final boolean _clusterEnabled;
 
   private final Consumer<ActorRef> _receiveRefHolder;
-  private final Object _applicationBean;
-
-  private final boolean _clusterEnabled;
 }

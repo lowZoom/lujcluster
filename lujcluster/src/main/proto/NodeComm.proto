@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+// .\protoc.exe --plugin=protoc-gen-grpc-java.exe --proto_path=D:\work\server\lujall\lujcluster\lujcluster\src\main\proto --proto_path=D:\work\server\servertrunk\Server\protocol2\build\protoc-3.17.3-win64\include --java_out=D:\work\server\lujall\lujcluster\lujcluster\src\main\java --grpc-java_out=D:\work\server\lujall\lujcluster\lujcluster\src\main\java D:\work\server\lujall\lujcluster\lujcluster\src\main\proto\*.proto
+
+option java_multiple_files = true;
+option java_package = "luj.cluster.internal.node.consul.grpc.gen";
+// option java_outer_classname = "RouteGuideProto";
+
+package lujcluster;
+
+import "google/protobuf/empty.proto";
+
+service NodeComm {
+  rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+  rpc Receive(RpcSendRemoteMsg) returns (google.protobuf.Empty) {}
+}
+
+message RpcSendRemoteMsg {
+  string id = 1;
+  bytes data = 2;
+
+  string senderHost = 3;
+  int32 senderPort = 4;
+}

@@ -47,12 +47,14 @@ enum ActorMetaMapFactoryImpl {
 
   private ActorMeta createMeta(ActorPreStartHandler<?> prestartHandler,
       ActorPostStopHandler<?> postStopHandler, List<ActorMessageHandler<?, ?>> msgHandlerList) {
+    MessageHandleMapImpl handleMap = new MessageHandleMapImpl();
+    handleMap._handlerMap = msgHandlerList.stream()
+        .collect(toMap(h -> getMsgHandleParam(h, 1).getName(), Function.identity()));
+
     ActorMetaImpl meta = new ActorMetaImpl();
     meta._preStartHandler = prestartHandler;
     meta._postStopHandler = postStopHandler;
-
-    meta._actorMessageHandleMap = new MessageHandleMapImpl(msgHandlerList.stream()
-        .collect(toMap(h -> getMsgHandleParam(h, 1), Function.identity())));
+    meta._actorMessageHandleMap = handleMap;
 
     return meta;
   }
