@@ -32,7 +32,7 @@ final class OnMemberSendRpc implements FI.UnitApply<MemberSendRpcMsg> {
         .usePlaintext()
         .build());
 
-    LOG.debug("------------发送cluster {} to {}", i.getMessageKey(), channel);
+//    LOG.debug("------------发送cluster {} to {}", i.getMessageKey(), channel);
 
     byte[] data = MessageSerializeInvoker.GET.invoke(i.getMessage(),
         _aktor.getMsgTypeResolver(), _aktor.getMsgCodecMap(), _aktor.getApplicationBean());
