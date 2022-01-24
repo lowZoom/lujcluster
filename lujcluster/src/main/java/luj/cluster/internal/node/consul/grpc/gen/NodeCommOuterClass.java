@@ -15,6 +15,11 @@ public final class NodeCommOuterClass {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_lujcluster_RpcNodeJoinMsg_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_lujcluster_RpcNodeJoinMsg_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_lujcluster_RpcSendRemoteMsg_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -29,22 +34,30 @@ public final class NodeCommOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\016NodeComm.proto\022\nlujcluster\032\033google/pro" +
-      "tobuf/empty.proto\"T\n\020RpcSendRemoteMsg\022\n\n" +
-      "\002id\030\001 \001(\t\022\014\n\004data\030\002 \001(\014\022\022\n\nsenderHost\030\003 " +
-      "\001(\t\022\022\n\nsenderPort\030\004 \001(\0052\207\001\n\010NodeComm\0228\n\004" +
-      "Ping\022\026.google.protobuf.Empty\032\026.google.pr" +
-      "otobuf.Empty\"\000\022A\n\007Receive\022\034.lujcluster.R" +
-      "pcSendRemoteMsg\032\026.google.protobuf.Empty\"" +
-      "\000B-\n)luj.cluster.internal.node.consul.gr" +
-      "pc.genP\001b\006proto3"
+      "tobuf/empty.proto\"9\n\016RpcNodeJoinMsg\022\014\n\004h" +
+      "ost\030\001 \001(\t\022\014\n\004port\030\002 \001(\005\022\013\n\003tag\030\003 \003(\t\"T\n\020" +
+      "RpcSendRemoteMsg\022\n\n\002id\030\001 \001(\t\022\014\n\004data\030\002 \001" +
+      "(\014\022\022\n\nsenderHost\030\003 \001(\t\022\022\n\nsenderPort\030\004 \001" +
+      "(\0052\217\001\n\010NodeComm\022@\n\010FireJoin\022\032.lujcluster" +
+      ".RpcNodeJoinMsg\032\026.google.protobuf.Empty\"" +
+      "\000\022A\n\007Receive\022\034.lujcluster.RpcSendRemoteM" +
+      "sg\032\026.google.protobuf.Empty\"\000B-\n)luj.clus" +
+      "ter.internal.node.consul.grpc.genP\001b\006pro" +
+      "to3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           com.google.protobuf.EmptyProto.getDescriptor(),
         });
-    internal_static_lujcluster_RpcSendRemoteMsg_descriptor =
+    internal_static_lujcluster_RpcNodeJoinMsg_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_lujcluster_RpcNodeJoinMsg_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_lujcluster_RpcNodeJoinMsg_descriptor,
+        new java.lang.String[] { "Host", "Port", "Tag", });
+    internal_static_lujcluster_RpcSendRemoteMsg_descriptor =
+      getDescriptor().getMessageTypes().get(1);
     internal_static_lujcluster_RpcSendRemoteMsg_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_lujcluster_RpcSendRemoteMsg_descriptor,

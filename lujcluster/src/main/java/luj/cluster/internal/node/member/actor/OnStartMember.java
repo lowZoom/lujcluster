@@ -23,9 +23,8 @@ final class OnStartMember implements FI.UnitApply<StartMemberMsg> {
     ActorRef receiveRef = i.getReceiveRef();
     _aktor.setReceiveRef(receiveRef);
 
-    Object appBean = _aktor.getApplicationBean();
     new NodeConsulStarter(i.getNodeConfig(), _aktor.getJoinListener(),
-        receiveRef, _aktor.self(), appBean).start();
+        receiveRef, _aktor.self()).start();
 
     if (!i.isClusterEnabled()) {
       return;

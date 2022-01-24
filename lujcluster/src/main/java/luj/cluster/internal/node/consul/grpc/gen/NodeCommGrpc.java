@@ -15,35 +15,35 @@ public final class NodeCommGrpc {
   public static final String SERVICE_NAME = "lujcluster.NodeComm";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      com.google.protobuf.Empty> getPingMethod;
+  private static volatile io.grpc.MethodDescriptor<luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg,
+      com.google.protobuf.Empty> getFireJoinMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "Ping",
-      requestType = com.google.protobuf.Empty.class,
+      fullMethodName = SERVICE_NAME + '/' + "FireJoin",
+      requestType = luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg.class,
       responseType = com.google.protobuf.Empty.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      com.google.protobuf.Empty> getPingMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Empty, com.google.protobuf.Empty> getPingMethod;
-    if ((getPingMethod = NodeCommGrpc.getPingMethod) == null) {
+  public static io.grpc.MethodDescriptor<luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg,
+      com.google.protobuf.Empty> getFireJoinMethod() {
+    io.grpc.MethodDescriptor<luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg, com.google.protobuf.Empty> getFireJoinMethod;
+    if ((getFireJoinMethod = NodeCommGrpc.getFireJoinMethod) == null) {
       synchronized (NodeCommGrpc.class) {
-        if ((getPingMethod = NodeCommGrpc.getPingMethod) == null) {
-          NodeCommGrpc.getPingMethod = getPingMethod =
-              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, com.google.protobuf.Empty>newBuilder()
+        if ((getFireJoinMethod = NodeCommGrpc.getFireJoinMethod) == null) {
+          NodeCommGrpc.getFireJoinMethod = getFireJoinMethod =
+              io.grpc.MethodDescriptor.<luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg, com.google.protobuf.Empty>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Ping"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "FireJoin"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.Empty.getDefaultInstance()))
+                  luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.google.protobuf.Empty.getDefaultInstance()))
-              .setSchemaDescriptor(new NodeCommMethodDescriptorSupplier("Ping"))
+              .setSchemaDescriptor(new NodeCommMethodDescriptorSupplier("FireJoin"))
               .build();
         }
       }
     }
-    return getPingMethod;
+    return getFireJoinMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<luj.cluster.internal.node.consul.grpc.gen.RpcSendRemoteMsg,
@@ -127,9 +127,9 @@ public final class NodeCommGrpc {
 
     /**
      */
-    public void ping(com.google.protobuf.Empty request,
+    public void fireJoin(luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPingMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getFireJoinMethod(), responseObserver);
     }
 
     /**
@@ -142,12 +142,12 @@ public final class NodeCommGrpc {
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getPingMethod(),
+            getFireJoinMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
-                com.google.protobuf.Empty,
+                luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg,
                 com.google.protobuf.Empty>(
-                  this, METHODID_PING)))
+                  this, METHODID_FIRE_JOIN)))
           .addMethod(
             getReceiveMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -175,10 +175,10 @@ public final class NodeCommGrpc {
 
     /**
      */
-    public void ping(com.google.protobuf.Empty request,
+    public void fireJoin(luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getPingMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getFireJoinMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -206,9 +206,9 @@ public final class NodeCommGrpc {
 
     /**
      */
-    public com.google.protobuf.Empty ping(com.google.protobuf.Empty request) {
+    public com.google.protobuf.Empty fireJoin(luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getPingMethod(), getCallOptions(), request);
+          getChannel(), getFireJoinMethod(), getCallOptions(), request);
     }
 
     /**
@@ -235,10 +235,10 @@ public final class NodeCommGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> ping(
-        com.google.protobuf.Empty request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> fireJoin(
+        luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getPingMethod(), getCallOptions()), request);
+          getChannel().newCall(getFireJoinMethod(), getCallOptions()), request);
     }
 
     /**
@@ -250,7 +250,7 @@ public final class NodeCommGrpc {
     }
   }
 
-  private static final int METHODID_PING = 0;
+  private static final int METHODID_FIRE_JOIN = 0;
   private static final int METHODID_RECEIVE = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
@@ -270,8 +270,8 @@ public final class NodeCommGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_PING:
-          serviceImpl.ping((com.google.protobuf.Empty) request,
+        case METHODID_FIRE_JOIN:
+          serviceImpl.fireJoin((luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_RECEIVE:
@@ -339,7 +339,7 @@ public final class NodeCommGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new NodeCommFileDescriptorSupplier())
-              .addMethod(getPingMethod())
+              .addMethod(getFireJoinMethod())
               .addMethod(getReceiveMethod())
               .build();
         }

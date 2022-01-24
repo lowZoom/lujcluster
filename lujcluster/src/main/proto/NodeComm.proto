@@ -11,9 +11,16 @@ package lujcluster;
 import "google/protobuf/empty.proto";
 
 service NodeComm {
-  rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  rpc FireJoin(RpcNodeJoinMsg) returns (google.protobuf.Empty) {}
 
   rpc Receive(RpcSendRemoteMsg) returns (google.protobuf.Empty) {}
+}
+
+message RpcNodeJoinMsg {
+  string host = 1;
+  int32 port = 2;
+
+  repeated string tag = 3;
 }
 
 message RpcSendRemoteMsg {

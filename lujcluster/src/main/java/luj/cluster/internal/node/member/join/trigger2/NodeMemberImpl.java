@@ -24,6 +24,11 @@ final class NodeMemberImpl implements NodeNewMemberListener.NodeRemote {
         msgKey, msg, _memberHost, _memberPort), ActorRef.noSender());
   }
 
+  @Override
+  public String toString() {
+    return _memberHost + ":" + _memberPort + _tags;
+  }
+
   Set<String> _tags;
   ActorRef _memberRef;
 
