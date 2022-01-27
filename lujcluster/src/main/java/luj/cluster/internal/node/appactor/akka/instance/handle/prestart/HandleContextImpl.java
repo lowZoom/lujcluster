@@ -1,6 +1,5 @@
 package luj.cluster.internal.node.appactor.akka.instance.handle.prestart;
 
-import akka.actor.ActorRef;
 import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
 import luj.cluster.internal.node.appactor.akka.instance.create.AppAktorCreator;
@@ -19,15 +18,19 @@ final class HandleContextImpl implements ActorPreStartHandler.Context {
 
   @Override
   public ActorPreStartHandler.Actor getActor() {
-    return new ActorImpl(_appAktor.self());
+    ActorImpl actor = new ActorImpl();
+    actor._aktorRef = _appAktor.self();
+    return actor;
   }
 
   @Override
   public ActorPreStartHandler.Actor createActor(Object actorState) {
-    ActorRef ref = new AppAktorCreator(_appAktor.getActorMetaMap(), actorState.getClass(),
+    ActorImpl actor = new ActorImpl();
+
+    actor._aktorRef = new AppAktorCreator(_appAktor.getActorMetaMap(), actorState.getClass(),
         actorState, _appAktor.getClusterMemberRef(), _appAktor.context()).create();
 
-    return new ActorImpl(ref);
+    return actor;
   }
 
   private final AppAktor _appAktor;

@@ -5,10 +5,6 @@ import luj.cluster.api.actor.ActorPreStartHandler;
 
 final class ActorImpl implements ActorPreStartHandler.Actor {
 
-  ActorImpl(ActorRef aktorRef) {
-    _aktorRef = aktorRef;
-  }
-
   @Override
   public void tell(Object msg) {
     _aktorRef.tell(msg, ActorRef.noSender());
@@ -19,5 +15,5 @@ final class ActorImpl implements ActorPreStartHandler.Actor {
     return _aktorRef;
   }
 
-  private final ActorRef _aktorRef;
+  ActorRef _aktorRef;
 }

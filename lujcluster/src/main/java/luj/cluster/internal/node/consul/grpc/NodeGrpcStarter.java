@@ -4,8 +4,6 @@ import akka.actor.ActorRef;
 import io.grpc.ServerBuilder;
 import luj.cluster.api.node.NodeNewMemberListener;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class NodeGrpcStarter {
 
@@ -29,10 +27,10 @@ public class NodeGrpcStarter {
         .addService(new HealthImpl())
         .build().start();
 
-    LOG.debug("gggGRPC启动完成：{}", _nodeConfig.selfPort());
+//    LOG.debug("gggGRPC启动完成：{}", _nodeConfig.selfPort());
   }
 
-  private static final Logger LOG = LoggerFactory.getLogger(NodeGrpcStarter.class);
+//  private static final Logger LOG = LoggerFactory.getLogger(NodeGrpcStarter.class);
 
   private final ClusterNodeStarter.Config _nodeConfig;
   private final NodeNewMemberListener _joinListener;

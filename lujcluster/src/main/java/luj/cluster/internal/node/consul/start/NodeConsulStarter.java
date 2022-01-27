@@ -76,7 +76,7 @@ public class NodeConsulStarter {
         .map(HealthService::getService)
         .collect(Collectors.toList());
 
-    LOG.debug("services：{}", services);
+//    LOG.debug("services：{}", services);
     new JoinConsulTrigger(services, _nodeConfig).trigger();
 
     for (HealthService.Service s : services) {
