@@ -1,7 +1,7 @@
 package luj.cluster.internal.node.member.join.trigger2;
 
 import akka.actor.ActorRef;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
 final class NodeSelfImpl implements NodeNewMemberListener.Node {

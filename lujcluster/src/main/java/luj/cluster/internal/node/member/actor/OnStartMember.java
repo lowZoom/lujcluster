@@ -24,7 +24,7 @@ final class OnStartMember implements FI.UnitApply<StartMemberMsg> {
     _aktor.setReceiveRef(receiveRef);
 
     new NodeConsulStarter(i.getNodeConfig(), _aktor.getJoinListener(),
-        receiveRef, _aktor.self()).start();
+        _aktor.getHealthListener(), receiveRef, _aktor.self()).start();
 
     if (!i.isClusterEnabled()) {
       return;

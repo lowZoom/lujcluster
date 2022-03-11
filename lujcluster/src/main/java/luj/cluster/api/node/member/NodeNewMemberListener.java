@@ -1,4 +1,4 @@
-package luj.cluster.api.node;
+package luj.cluster.api.node.member;
 
 import java.util.Set;
 

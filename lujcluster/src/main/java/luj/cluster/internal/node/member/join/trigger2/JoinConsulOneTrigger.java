@@ -2,7 +2,7 @@ package luj.cluster.internal.node.member.join.trigger2;
 
 import akka.actor.ActorRef;
 import com.google.common.collect.ImmutableSet;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

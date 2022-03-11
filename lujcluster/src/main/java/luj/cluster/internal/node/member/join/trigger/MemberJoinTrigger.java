@@ -4,7 +4,7 @@ import akka.actor.ActorSelection;
 import akka.actor.Address;
 import akka.cluster.ClusterEvent;
 import akka.cluster.Member;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.member.actor.NodeMemberAktor;
 
 public class MemberJoinTrigger {

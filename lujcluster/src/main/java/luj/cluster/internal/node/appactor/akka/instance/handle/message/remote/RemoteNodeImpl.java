@@ -2,7 +2,7 @@ package luj.cluster.internal.node.appactor.akka.instance.handle.message.remote;
 
 import akka.actor.ActorRef;
 import luj.cluster.api.actor.ActorMessageHandler;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.member.message.MemberSendRpcMsg;
 
 final class RemoteNodeImpl implements ActorMessageHandler.Node, NodeNewMemberListener.Node {

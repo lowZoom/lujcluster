@@ -2,7 +2,7 @@ package luj.cluster.internal.node.consul.grpc;
 
 import akka.actor.ActorRef;
 import io.grpc.ServerBuilder;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
 
 public class NodeGrpcStarter {

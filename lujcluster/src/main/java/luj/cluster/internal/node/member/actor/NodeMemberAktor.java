@@ -5,13 +5,13 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.cluster.Cluster;
 import akka.cluster.ClusterEvent;
-import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeMemberHealthListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.api.node.message.MessageValueResolver;
 import luj.cluster.api.node.message.NodeMessageSerializer;
 import luj.cluster.internal.node.member.message.LeaveAndShutdownMsg;
@@ -28,18 +28,21 @@ public class NodeMemberAktor extends AbstractActor {
       ClusterBeanCollector.Result beanCollect, ClusterNodeStarter.Config nodeConfig) {
     MessageValueResolver msgTypeResolver = beanCollect.getMessageTypeResolver();
     NodeNewMemberListener nodeJoinListener = beanCollect.getNodeJoinListener();
+    NodeMemberHealthListener nodeHealthListener = beanCollect.getNodeHealthListener();
 
-    return Props.create(NodeMemberAktor.class, () -> new NodeMemberAktor(
-        msgCodecMap, msgTypeResolver, nodeJoinListener, nodeConfig.startParam(),
+    return Props.create(NodeMemberAktor.class, () -> new NodeMemberAktor(msgCodecMap,
+        msgTypeResolver, nodeJoinListener, nodeHealthListener, nodeConfig.startParam(),
         nodeConfig.selfHost(), nodeConfig.selfPort()));
   }
 
   NodeMemberAktor(Map<String, NodeMessageSerializer<?>> msgCodecMap,
       MessageValueResolver msgTypeResolver, NodeNewMemberListener joinListener,
-      Object applicationBean, String selfHost, int selfPort) {
+      NodeMemberHealthListener healthListener, Object applicationBean,
+      String selfHost, int selfPort) {
     _msgCodecMap = msgCodecMap;
     _msgTypeResolver = msgTypeResolver;
     _joinListener = joinListener;
+    _healthListener = healthListener;
     _applicationBean = applicationBean;
     _selfHost = selfHost;
     _selfPort = selfPort;
@@ -93,6 +96,10 @@ public class NodeMemberAktor extends AbstractActor {
     return _joinListener;
   }
 
+  public NodeMemberHealthListener getHealthListener() {
+    return _healthListener;
+  }
+
   public Map<String, NodeMessageSerializer<?>> getMsgCodecMap() {
     return _msgCodecMap;
   }
@@ -127,6 +134,7 @@ public class NodeMemberAktor extends AbstractActor {
   private final MessageValueResolver _msgTypeResolver;
 
   private final NodeNewMemberListener _joinListener;
+  private final NodeMemberHealthListener _healthListener;
   private final Object _applicationBean;
 
   private final String _selfHost;

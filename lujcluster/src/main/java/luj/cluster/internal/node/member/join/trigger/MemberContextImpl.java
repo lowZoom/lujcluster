@@ -1,6 +1,6 @@
 package luj.cluster.internal.node.member.join.trigger;
 
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 
 final class MemberContextImpl implements NodeNewMemberListener.Context {
 

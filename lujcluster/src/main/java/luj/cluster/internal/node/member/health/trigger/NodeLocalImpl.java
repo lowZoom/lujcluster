@@ -1,10 +1,10 @@
-package luj.cluster.internal.node.member.join.trigger;
+package luj.cluster.internal.node.member.health.trigger;
 
 import akka.actor.ActorRef;
-import luj.cluster.api.node.member.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeMemberHealthListener;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
-final class NodeSelfImpl implements NodeNewMemberListener.Node {
+final class NodeLocalImpl implements NodeMemberHealthListener.LocalNode {
 
   @Override
   public void sendMessage(String msgKey, Object msg) {

@@ -7,7 +7,8 @@ import luj.ava.spring.Internal;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeMemberHealthListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.api.node.message.MessageValueResolver;
 import luj.cluster.api.node.message.NodeMessageSerializer;
@@ -24,6 +25,11 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
   @Override
   public NodeNewMemberListener getNodeJoinListener() {
     return _nodeJoinListener;
+  }
+
+  @Override
+  public NodeMemberHealthListener getNodeHealthListener() {
+    return _nodeHealthListener;
   }
 
   @Override
@@ -60,6 +66,9 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
 
   @Autowired(required = false)
   private NodeNewMemberListener _nodeJoinListener;
+
+  @Autowired(required = false)
+  private NodeMemberHealthListener _nodeHealthListener;
 
   @Autowired(required = false)
   private MessageValueResolver _messageTypeResolver;

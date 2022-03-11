@@ -3,15 +3,17 @@ package luj.cluster.internal.node.consul.start;
 import akka.actor.ActorRef;
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.agent.model.NewService;
-import com.ecwid.consul.v1.agent.model.Service;
+import com.ecwid.consul.v1.catalog.CatalogServicesRequest;
 import com.ecwid.consul.v1.health.HealthServicesRequest;
 import com.ecwid.consul.v1.health.model.HealthService;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeMemberHealthListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.consul.grpc.NodeGrpcStarter;
 import luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg;
+import luj.cluster.internal.node.consul.health.ConsulHealthWatcher;
 import luj.cluster.internal.node.member.join.trigger2.JoinConsulTrigger;
 import luj.cluster.internal.node.member.join.trigger2.remote.JoinRemoteFirer;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
@@ -21,9 +23,10 @@ import org.slf4j.LoggerFactory;
 public class NodeConsulStarter {
 
   public NodeConsulStarter(ClusterNodeStarter.Config nodeConfig, NodeNewMemberListener joinListener,
-      ActorRef receiveRef, ActorRef memberRef) {
+      NodeMemberHealthListener healthListener, ActorRef receiveRef, ActorRef memberRef) {
     _nodeConfig = nodeConfig;
     _joinListener = joinListener;
+    _healthListener = healthListener;
     _receiveRef = receiveRef;
     _memberRef = memberRef;
   }
@@ -43,6 +46,11 @@ public class NodeConsulStarter {
     registerSelf(consul);
 
     handleOtherJoin(consul);
+//    watchHealth(consul);
+  }
+
+  private void watchHealth(ConsulClient consul) {
+    new ConsulHealthWatcher(consul, _healthListener, _receiveRef, _memberRef).watch();
   }
 
   private void registerSelf(ConsulClient consul) {
@@ -62,18 +70,20 @@ public class NodeConsulStarter {
     check.setInterval("6s");
     service.setCheck(check);
 
-//    consul.agentServiceDeregister(name);
+//    consul.agentServiceDeregister(selfName);
     consul.agentServiceRegister(service);
   }
 
   private void handleOtherJoin(ConsulClient consul) {
+    CatalogServicesRequest req = CatalogServicesRequest.newBuilder().build();
     String selfName = _nodeConfig.selfName();
 
-    Collection<HealthService.Service> services = consul.getAgentServices().getValue()
-        .values().parallelStream()
-        .filter(s -> !selfName.equals(s.getService()))
+    Collection<HealthService.Service> services = consul.getCatalogServices(req)
+        .getValue().keySet().parallelStream()
+        .filter(s -> !selfName.equals(s))
         .flatMap(s -> getHealthServices(consul, s).stream())
         .map(HealthService::getService)
+        .filter(s -> !s.getAddress().isEmpty())
         .collect(Collectors.toList());
 
 //    LOG.debug("services：{}", services);
@@ -84,9 +94,9 @@ public class NodeConsulStarter {
     }
   }
 
-  private List<HealthService> getHealthServices(ConsulClient consul, Service s) {
+  private List<HealthService> getHealthServices(ConsulClient consul, String service) {
     HealthServicesRequest passing = HealthServicesRequest.newBuilder().setPassing(true).build();
-    return consul.getHealthServices(s.getService(), passing).getValue();
+    return consul.getHealthServices(service, passing).getValue();
   }
 
   private void notifySelfJoin(HealthService.Service service) {
@@ -108,7 +118,9 @@ public class NodeConsulStarter {
   private static final Logger LOG = LoggerFactory.getLogger(NodeConsulStarter.class);
 
   private final ClusterNodeStarter.Config _nodeConfig;
+
   private final NodeNewMemberListener _joinListener;
+  private final NodeMemberHealthListener _healthListener;
 
   private final ActorRef _receiveRef;
   private final ActorRef _memberRef;

@@ -4,8 +4,8 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
-import luj.cluster.api.node.NodeNewMemberListener;
-import luj.cluster.api.node.NodeType;
+import luj.cluster.api.node.member.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeType;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 
 final class NodeMemberImpl implements NodeNewMemberListener.NodeRemote {

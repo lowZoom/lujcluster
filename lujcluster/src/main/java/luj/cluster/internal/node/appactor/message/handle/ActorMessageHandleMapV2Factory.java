@@ -22,7 +22,9 @@ public class ActorMessageHandleMapV2Factory {
         .collect(groupingBy(h -> getMsgHandleParam(h, 1).getName()))
         .forEach((k, v) -> resultMap.putAll(k, getActorType(v)));
 
-    return new ActorMessageHandleMapV2Impl(resultMap);
+    ActorMessageHandleMapV2Impl mapImpl = new ActorMessageHandleMapV2Impl();
+    mapImpl._handleMap = resultMap;
+    return mapImpl;
   }
 
   private Class<?> getMsgHandleParam(ActorMessageHandler<?, ?> handler, int index) {

@@ -3,7 +3,7 @@ package luj.cluster.internal.node.consul.grpc;
 import akka.actor.ActorRef;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
-import luj.cluster.api.node.NodeNewMemberListener;
+import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.consul.grpc.gen.NodeCommGrpc;
 import luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg;
 import luj.cluster.internal.node.consul.grpc.gen.RpcSendRemoteMsg;
