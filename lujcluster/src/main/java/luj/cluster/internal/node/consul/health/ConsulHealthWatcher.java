@@ -5,22 +5,22 @@ import static java.util.concurrent.Executors.newCachedThreadPool;
 import akka.actor.ActorRef;
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.QueryParams;
-import com.ecwid.consul.v1.Response;
 import com.ecwid.consul.v1.health.model.Check;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.stream.Collectors;
 import luj.cluster.api.node.member.NodeMemberHealthListener;
+import luj.cluster.internal.node.member.health.diff.HealthChangeComparer;
 import luj.cluster.internal.node.member.health.trigger.HealthConsulTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConsulHealthWatcher {
 
-  public ConsulHealthWatcher(ConsulClient consul, NodeMemberHealthListener healthListener,
-      ActorRef receiveRef, ActorRef memberRef) {
+  public ConsulHealthWatcher(ConsulClient consul, String selfName,
+      NodeMemberHealthListener healthListener, ActorRef receiveRef, ActorRef memberRef) {
     _consul = consul;
+    _selfName = selfName;
     _healthListener = healthListener;
     _receiveRef = receiveRef;
     _memberRef = memberRef;
@@ -39,48 +39,50 @@ public class ConsulHealthWatcher {
   }
 
   private void watchImpl() {
-    Long lastIndex = triggerHealth(null, QueryParams.DEFAULT);
+    HealthStateRequestor.Result lastRsp = triggerHealth(
+        HealthStateRequestor.nullResult(), QueryParams.DEFAULT);
 
     while (!EXEC.isShutdown()) {
-      lastIndex = triggerHealth(lastIndex, QueryParams.Builder.builder()
-          .setIndex(lastIndex)
+      lastRsp = triggerHealth(lastRsp, QueryParams.Builder.builder()
+          .setIndex(lastRsp.consulIndex())
           .build());
     }
   }
 
-  private Long triggerHealth(Long lastIndex, QueryParams params) {
+  private HealthStateRequestor.Result triggerHealth(HealthStateRequestor.Result lastRsp,
+      QueryParams params) {
     LOG.debug("sssssssssssssssssstart------------------");
 
-    Response<List<Check>> rsp = _consul.getHealthChecksState(ANY, params);
-    Long newIndex = rsp.getConsulIndex();
+    HealthStateRequestor.Result newRsp =
+        new HealthStateRequestor(_consul, params, _selfName).request();
 
-    List<Check> checkList = rsp.getValue().stream()
-        .filter(c -> !c.getServiceId().isEmpty())
-        .collect(Collectors.toList());
+    Long newIndex = newRsp.consulIndex();
+    LOG.debug("eeeeeeeeeeeeeeeeeeeeeeeeeeend------------------ {}", newIndex);
 
-    LOG.debug("eeeeeeeeeeeeeeeeeeeeeeeeeeend------------------ ");
-//    for (Check check : checkList) {
-//      LOG.debug("{}", check);
-//    }
-
-    if (newIndex.equals(lastIndex)) {
-      return lastIndex;
+    if (newIndex.equals(lastRsp.consulIndex())) {
+      return newRsp;
     }
 
-    for (Check check : checkList) {
+    List<Check> diffList = new HealthChangeComparer(
+        lastRsp.serviceMap(), newRsp.serviceMap()).diff();
+
+    for (Check check : diffList) {
+      LOG.debug("节点健康变化：{}", check);
       new HealthConsulTrigger(_healthListener, check, _receiveRef, _memberRef).trigger();
     }
-    return newIndex;
+
+    return newRsp;
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(ConsulHealthWatcher.class);
-  private static final Check.CheckStatus ANY = null;
 
   private static final ExecutorService EXEC = newCachedThreadPool(new ThreadFactoryBuilder()
       .setNameFormat("consul-watch-%d")
       .build());
 
   private final ConsulClient _consul;
+
+  private final String _selfName;
   private final NodeMemberHealthListener _healthListener;
 
   private final ActorRef _receiveRef;

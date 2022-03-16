@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private RpcNodeJoinMsg() {
     host_ = "";
+    name_ = "";
     tag_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
@@ -63,6 +64,12 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            name_ = s;
+            break;
+          }
+          case 34: {
             java.lang.String s = input.readStringRequireUtf8();
             if (!((mutable_bitField0_ & 0x00000001) != 0)) {
               tag_ = new com.google.protobuf.LazyStringArrayList();
@@ -155,10 +162,48 @@ private static final long serialVersionUID = 0L;
     return port_;
   }
 
-  public static final int TAG_FIELD_NUMBER = 3;
+  public static final int NAME_FIELD_NUMBER = 3;
+  private volatile java.lang.Object name_;
+  /**
+   * <code>string name = 3;</code>
+   * @return The name.
+   */
+  @java.lang.Override
+  public java.lang.String getName() {
+    java.lang.Object ref = name_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      name_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string name = 3;</code>
+   * @return The bytes for name.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getNameBytes() {
+    java.lang.Object ref = name_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      name_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int TAG_FIELD_NUMBER = 4;
   private com.google.protobuf.LazyStringList tag_;
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>repeated string tag = 4;</code>
    * @return A list containing the tag.
    */
   public com.google.protobuf.ProtocolStringList
@@ -166,14 +211,14 @@ private static final long serialVersionUID = 0L;
     return tag_;
   }
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>repeated string tag = 4;</code>
    * @return The count of tag.
    */
   public int getTagCount() {
     return tag_.size();
   }
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>repeated string tag = 4;</code>
    * @param index The index of the element to return.
    * @return The tag at the given index.
    */
@@ -181,7 +226,7 @@ private static final long serialVersionUID = 0L;
     return tag_.get(index);
   }
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>repeated string tag = 4;</code>
    * @param index The index of the value to return.
    * @return The bytes of the tag at the given index.
    */
@@ -210,8 +255,11 @@ private static final long serialVersionUID = 0L;
     if (port_ != 0) {
       output.writeInt32(2, port_);
     }
+    if (!getNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, name_);
+    }
     for (int i = 0; i < tag_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, tag_.getRaw(i));
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, tag_.getRaw(i));
     }
     unknownFields.writeTo(output);
   }
@@ -228,6 +276,9 @@ private static final long serialVersionUID = 0L;
     if (port_ != 0) {
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(2, port_);
+    }
+    if (!getNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, name_);
     }
     {
       int dataSize = 0;
@@ -256,6 +307,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getHost())) return false;
     if (getPort()
         != other.getPort()) return false;
+    if (!getName()
+        .equals(other.getName())) return false;
     if (!getTagList()
         .equals(other.getTagList())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
@@ -273,6 +326,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getHost().hashCode();
     hash = (37 * hash) + PORT_FIELD_NUMBER;
     hash = (53 * hash) + getPort();
+    hash = (37 * hash) + NAME_FIELD_NUMBER;
+    hash = (53 * hash) + getName().hashCode();
     if (getTagCount() > 0) {
       hash = (37 * hash) + TAG_FIELD_NUMBER;
       hash = (53 * hash) + getTagList().hashCode();
@@ -414,6 +469,8 @@ private static final long serialVersionUID = 0L;
 
       port_ = 0;
 
+      name_ = "";
+
       tag_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
       return this;
@@ -445,6 +502,7 @@ private static final long serialVersionUID = 0L;
       int from_bitField0_ = bitField0_;
       result.host_ = host_;
       result.port_ = port_;
+      result.name_ = name_;
       if (((bitField0_ & 0x00000001) != 0)) {
         tag_ = tag_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -504,6 +562,10 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getPort() != 0) {
         setPort(other.getPort());
+      }
+      if (!other.getName().isEmpty()) {
+        name_ = other.name_;
+        onChanged();
       }
       if (!other.tag_.isEmpty()) {
         if (tag_.isEmpty()) {
@@ -652,6 +714,82 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object name_ = "";
+    /**
+     * <code>string name = 3;</code>
+     * @return The name.
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string name = 3;</code>
+     * @return The bytes for name.
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string name = 3;</code>
+     * @param value The name to set.
+     * @return This builder for chaining.
+     */
+    public Builder setName(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      name_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string name = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearName() {
+      
+      name_ = getDefaultInstance().getName();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string name = 3;</code>
+     * @param value The bytes for name to set.
+     * @return This builder for chaining.
+     */
+    public Builder setNameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      name_ = value;
+      onChanged();
+      return this;
+    }
+
     private com.google.protobuf.LazyStringList tag_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureTagIsMutable() {
       if (!((bitField0_ & 0x00000001) != 0)) {
@@ -660,7 +798,7 @@ private static final long serialVersionUID = 0L;
        }
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @return A list containing the tag.
      */
     public com.google.protobuf.ProtocolStringList
@@ -668,14 +806,14 @@ private static final long serialVersionUID = 0L;
       return tag_.getUnmodifiableView();
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @return The count of tag.
      */
     public int getTagCount() {
       return tag_.size();
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @param index The index of the element to return.
      * @return The tag at the given index.
      */
@@ -683,7 +821,7 @@ private static final long serialVersionUID = 0L;
       return tag_.get(index);
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @param index The index of the value to return.
      * @return The bytes of the tag at the given index.
      */
@@ -692,7 +830,7 @@ private static final long serialVersionUID = 0L;
       return tag_.getByteString(index);
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @param index The index to set the value at.
      * @param value The tag to set.
      * @return This builder for chaining.
@@ -708,7 +846,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @param value The tag to add.
      * @return This builder for chaining.
      */
@@ -723,7 +861,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @param values The tag to add.
      * @return This builder for chaining.
      */
@@ -736,7 +874,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearTag() {
@@ -746,7 +884,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string tag = 3;</code>
+     * <code>repeated string tag = 4;</code>
      * @param value The bytes of the tag to add.
      * @return This builder for chaining.
      */

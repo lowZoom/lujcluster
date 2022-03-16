@@ -20,7 +20,8 @@ message RpcNodeJoinMsg {
   string host = 1;
   int32 port = 2;
 
-  repeated string tag = 3;
+  string name = 3;
+  repeated string tag = 4;
 }
 
 message RpcSendRemoteMsg {

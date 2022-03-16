@@ -14,6 +14,11 @@ final class NodeMemberImpl implements NodeNewMemberListener.NodeRemote {
   }
 
   @Override
+  public String getName() {
+    return _name;
+  }
+
+  @Override
   public Set<String> getTags() {
     return _tags;
   }
@@ -29,6 +34,7 @@ final class NodeMemberImpl implements NodeNewMemberListener.NodeRemote {
     return _memberHost + ":" + _memberPort + _tags;
   }
 
+  String _name;
   Set<String> _tags;
   ActorRef _memberRef;
 

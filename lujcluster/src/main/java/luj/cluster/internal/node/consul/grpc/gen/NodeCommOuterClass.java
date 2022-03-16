@@ -34,16 +34,16 @@ public final class NodeCommOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\016NodeComm.proto\022\nlujcluster\032\033google/pro" +
-      "tobuf/empty.proto\"9\n\016RpcNodeJoinMsg\022\014\n\004h" +
-      "ost\030\001 \001(\t\022\014\n\004port\030\002 \001(\005\022\013\n\003tag\030\003 \003(\t\"T\n\020" +
-      "RpcSendRemoteMsg\022\n\n\002id\030\001 \001(\t\022\014\n\004data\030\002 \001" +
-      "(\014\022\022\n\nsenderHost\030\003 \001(\t\022\022\n\nsenderPort\030\004 \001" +
-      "(\0052\217\001\n\010NodeComm\022@\n\010FireJoin\022\032.lujcluster" +
-      ".RpcNodeJoinMsg\032\026.google.protobuf.Empty\"" +
-      "\000\022A\n\007Receive\022\034.lujcluster.RpcSendRemoteM" +
-      "sg\032\026.google.protobuf.Empty\"\000B-\n)luj.clus" +
-      "ter.internal.node.consul.grpc.genP\001b\006pro" +
-      "to3"
+      "tobuf/empty.proto\"G\n\016RpcNodeJoinMsg\022\014\n\004h" +
+      "ost\030\001 \001(\t\022\014\n\004port\030\002 \001(\005\022\014\n\004name\030\003 \001(\t\022\013\n" +
+      "\003tag\030\004 \003(\t\"T\n\020RpcSendRemoteMsg\022\n\n\002id\030\001 \001" +
+      "(\t\022\014\n\004data\030\002 \001(\014\022\022\n\nsenderHost\030\003 \001(\t\022\022\n\n" +
+      "senderPort\030\004 \001(\0052\217\001\n\010NodeComm\022@\n\010FireJoi" +
+      "n\022\032.lujcluster.RpcNodeJoinMsg\032\026.google.p" +
+      "rotobuf.Empty\"\000\022A\n\007Receive\022\034.lujcluster." +
+      "RpcSendRemoteMsg\032\026.google.protobuf.Empty" +
+      "\"\000B-\n)luj.cluster.internal.node.consul.g" +
+      "rpc.genP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -55,7 +55,7 @@ public final class NodeCommOuterClass {
     internal_static_lujcluster_RpcNodeJoinMsg_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_lujcluster_RpcNodeJoinMsg_descriptor,
-        new java.lang.String[] { "Host", "Port", "Tag", });
+        new java.lang.String[] { "Host", "Port", "Name", "Tag", });
     internal_static_lujcluster_RpcSendRemoteMsg_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_lujcluster_RpcSendRemoteMsg_fieldAccessorTable = new

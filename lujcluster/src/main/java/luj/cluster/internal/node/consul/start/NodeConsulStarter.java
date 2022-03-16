@@ -50,7 +50,8 @@ public class NodeConsulStarter {
   }
 
   private void watchHealth(ConsulClient consul) {
-    new ConsulHealthWatcher(consul, _healthListener, _receiveRef, _memberRef).watch();
+    String selfName = _nodeConfig.selfName();
+    new ConsulHealthWatcher(consul, selfName, _healthListener, _receiveRef, _memberRef).watch();
   }
 
   private void registerSelf(ConsulClient consul) {
@@ -95,8 +96,9 @@ public class NodeConsulStarter {
   }
 
   private List<HealthService> getHealthServices(ConsulClient consul, String service) {
-    HealthServicesRequest passing = HealthServicesRequest.newBuilder().setPassing(true).build();
-    return consul.getHealthServices(service, passing).getValue();
+    return consul.getHealthServices(service, HealthServicesRequest.newBuilder()
+//        .setPassing(true)
+        .build()).getValue();
   }
 
   private void notifySelfJoin(HealthService.Service service) {
@@ -109,6 +111,7 @@ public class NodeConsulStarter {
     channel.fireJoin(RpcNodeJoinMsg.newBuilder()
         .setHost(_nodeConfig.selfHost())
         .setPort(_nodeConfig.selfPort())
+        .setName(_nodeConfig.selfName())
         .addAllTag(_nodeConfig.selfTags())
         .build());
 

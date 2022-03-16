@@ -26,6 +26,8 @@ public interface NodeNewMemberListener {
     //TODO: 看看是否真的需要
     NodeType getType();
 
+    String getName();
+
     Set<String> getTags();
   }
 

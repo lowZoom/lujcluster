@@ -26,24 +26,36 @@ public interface RpcNodeJoinMsgOrBuilder extends
   int getPort();
 
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>string name = 3;</code>
+   * @return The name.
+   */
+  java.lang.String getName();
+  /**
+   * <code>string name = 3;</code>
+   * @return The bytes for name.
+   */
+  com.google.protobuf.ByteString
+      getNameBytes();
+
+  /**
+   * <code>repeated string tag = 4;</code>
    * @return A list containing the tag.
    */
   java.util.List<java.lang.String>
       getTagList();
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>repeated string tag = 4;</code>
    * @return The count of tag.
    */
   int getTagCount();
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>repeated string tag = 4;</code>
    * @param index The index of the element to return.
    * @return The tag at the given index.
    */
   java.lang.String getTag(int index);
   /**
-   * <code>repeated string tag = 3;</code>
+   * <code>repeated string tag = 4;</code>
    * @param index The index of the value to return.
    * @return The bytes of the tag at the given index.
    */

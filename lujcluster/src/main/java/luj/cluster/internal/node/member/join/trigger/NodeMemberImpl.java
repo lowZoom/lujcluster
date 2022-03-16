@@ -16,6 +16,11 @@ final class NodeMemberImpl implements NodeNewMemberListener.NodeRemote {
   }
 
   @Override
+  public String getName() {
+    return _remoteRef.pathString();
+  }
+
+  @Override
   public Set<String> getTags() {
     return ImmutableSet.of();
   }

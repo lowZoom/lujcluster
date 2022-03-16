@@ -40,6 +40,7 @@ public class JoinConsulOneTrigger {
 
   private NodeMemberImpl makeRemoteNode(RpcNodeJoinMsg service) {
     NodeMemberImpl node = new NodeMemberImpl();
+    node._name = service.getName();
     node._tags = ImmutableSet.copyOf(service.getTagList());
 
     node._memberRef = _memberRef;
