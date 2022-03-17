@@ -46,7 +46,7 @@ public class NodeConsulStarter {
     registerSelf(consul);
 
     handleOtherJoin(consul);
-//    watchHealth(consul);
+    watchHealth(consul);
   }
 
   private void watchHealth(ConsulClient consul) {

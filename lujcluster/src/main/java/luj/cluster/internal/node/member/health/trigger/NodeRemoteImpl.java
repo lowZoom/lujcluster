@@ -8,7 +8,7 @@ final class NodeRemoteImpl implements NodeMemberHealthListener.RemoteNode {
 
   @Override
   public String getId() {
-    return _serviceCheck.getName();
+    return _serviceCheck.getServiceName();
   }
 
   @Override
