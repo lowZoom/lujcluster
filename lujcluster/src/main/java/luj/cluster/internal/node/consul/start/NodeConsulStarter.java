@@ -34,7 +34,7 @@ public class NodeConsulStarter {
   public void start() throws Exception {
     String consulHost = _nodeConfig.discoveryConsulHost();
     if (consulHost == null) {
-      LOG.debug("[cluster]不使用consul");
+//      LOG.debug("[cluster]不使用consul");
       return;
     }
 

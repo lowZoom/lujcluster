@@ -31,6 +31,7 @@ public class JoinConsulTrigger {
     channel.fireJoin(RpcNodeJoinMsg.newBuilder()
         .setHost(service.getAddress())
         .setPort(service.getPort())
+        .setName(service.getService())
         .addAllTag(service.getTags())
         .build());
   }
