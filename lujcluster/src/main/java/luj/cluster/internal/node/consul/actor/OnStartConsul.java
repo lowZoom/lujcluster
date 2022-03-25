@@ -29,8 +29,6 @@ final class OnStartConsul implements FI.UnitApply<StartConsulMsg> {
 
   @Override
   public void apply(StartConsulMsg i) throws Exception {
-    //TODO: 校验name不一样的地址重复
-
     ClusterNodeStarter.Config nodeConfig = i.getNodeConfig();
     _aktor.setSelfName(nodeConfig.selfName());
 
@@ -48,18 +46,6 @@ final class OnStartConsul implements FI.UnitApply<StartConsulMsg> {
     registerSelf(consul, nodeConfig);
     handleOtherJoin(consul, nodeConfig);
     watchHealth(consul, nodeConfig);
-  }
-
-  private void watchHealth(ConsulClient consul, ClusterNodeStarter.Config config) {
-    ExecutorService exec = Executors.newCachedThreadPool(new ThreadFactoryBuilder()
-        .setNameFormat("consul-watch-%d")
-        .build());
-
-    _aktor.setWatchExec(exec);
-    String selfName = config.selfName();
-
-    new ConsulHealthWatcher(consul, exec, selfName,
-        _aktor.getHealthListener(), _aktor.getReceiveRef(), _aktor.getMemberRef()).watch();
   }
 
   private void registerSelf(ConsulClient consul, ClusterNodeStarter.Config config) {
@@ -99,6 +85,18 @@ final class OnStartConsul implements FI.UnitApply<StartConsulMsg> {
     for (HealthService.Service s : services) {
       notifySelfJoin(s, config);
     }
+  }
+
+  private void watchHealth(ConsulClient consul, ClusterNodeStarter.Config config) {
+    ExecutorService exec = Executors.newCachedThreadPool(new ThreadFactoryBuilder()
+        .setNameFormat("consul-watch-%d")
+        .build());
+
+    _aktor.setWatchExec(exec);
+    String selfName = config.selfName();
+
+    new ConsulHealthWatcher(consul, exec, selfName,
+        _aktor.getHealthListener(), _aktor.getReceiveRef(), _aktor.getMemberRef()).watch();
   }
 
   private List<HealthService> getHealthServices(ConsulClient consul, String service) {

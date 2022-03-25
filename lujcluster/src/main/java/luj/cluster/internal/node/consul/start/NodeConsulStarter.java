@@ -2,6 +2,7 @@ package luj.cluster.internal.node.consul.start;
 
 import akka.actor.ActorContext;
 import akka.actor.ActorRef;
+import akka.actor.CoordinatedShutdown;
 import luj.cluster.internal.node.consul.actor.MemberConsulAktor;
 import luj.cluster.internal.node.consul.actor.message.StartConsulMsg;
 import luj.cluster.internal.node.member.actor.NodeMemberAktor;
@@ -20,6 +21,9 @@ public class NodeConsulStarter {
 //      LOG.debug("[cluster]不使用consul");
       return;
     }
+
+    //TODO: 校验name不一样的地址重复
+    CoordinatedShutdown.get(_aktor.context().system());//.runAll();
 
     ActorContext context = _aktor.context();
     ActorRef consulRef = context.actorOf(MemberConsulAktor.props(_aktor), "consul");

@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import com.typesafe.config.ConfigFactory;
 import java.util.List;
 import luj.cluster.api.node.ClusterNode;
-import luj.cluster.internal.node.message.serialize.AkkaSerializeInitializer;
 import luj.cluster.internal.node.start.actor.NodeStartAktor;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 import org.springframework.context.ApplicationContext;
