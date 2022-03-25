@@ -1,6 +1,7 @@
 package luj.cluster.internal.node.consul.grpc;
 
 import akka.actor.ActorRef;
+import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
@@ -15,19 +16,22 @@ public class NodeGrpcStarter {
     _memberRef = memberRef;
   }
 
-  public void start() throws Exception {
+  public Server start() throws Exception {
     NodeGrpcImpl nodeComm = new NodeGrpcImpl();
     nodeComm._joinListener = _joinListener;
     nodeComm._clusterStartParam = _nodeConfig.startParam();
     nodeComm._receiveRef = _receiveRef;
     nodeComm._memberRef = _memberRef;
 
-    ServerBuilder.forPort(_nodeConfig.selfPort())
+    Server grpc = ServerBuilder.forPort(_nodeConfig.selfPort())
         .addService(nodeComm)
         .addService(new HealthImpl())
-        .build().start();
+        .build();
 
+    grpc.start();
 //    LOG.debug("gggGRPC启动完成：{}", _nodeConfig.selfPort());
+
+    return grpc;
   }
 
 //  private static final Logger LOG = LoggerFactory.getLogger(NodeGrpcStarter.class);

@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.member.message;
+package luj.cluster.internal.node.member.actor.message;
 
 /**
  * 将本地消息请求转化为grpc调用

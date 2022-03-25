@@ -14,9 +14,9 @@ import luj.cluster.api.node.member.NodeMemberHealthListener;
 import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.api.node.message.MessageValueResolver;
 import luj.cluster.api.node.message.NodeMessageSerializer;
-import luj.cluster.internal.node.member.message.LeaveAndShutdownMsg;
-import luj.cluster.internal.node.member.message.MemberSendRpcMsg;
-import luj.cluster.internal.node.member.message.StartMemberMsg;
+import luj.cluster.internal.node.member.actor.message.LeaveAndShutdownMsg;
+import luj.cluster.internal.node.member.actor.message.MemberSendRpcMsg;
+import luj.cluster.internal.node.member.actor.message.StartMemberMsg;
 import luj.cluster.internal.node.member.receive.NodeSendItem;
 import luj.cluster.internal.node.message.receive.message.remote.NodeSendRemoteMsg;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
@@ -37,8 +37,8 @@ public class NodeMemberAktor extends AbstractActor {
 
   NodeMemberAktor(Map<String, NodeMessageSerializer<?>> msgCodecMap,
       MessageValueResolver msgTypeResolver, NodeNewMemberListener joinListener,
-      NodeMemberHealthListener healthListener, Object applicationBean,
-      String selfHost, int selfPort) {
+      NodeMemberHealthListener healthListener, Object applicationBean, String selfHost,
+      int selfPort) {
     _msgCodecMap = msgCodecMap;
     _msgTypeResolver = msgTypeResolver;
     _joinListener = joinListener;

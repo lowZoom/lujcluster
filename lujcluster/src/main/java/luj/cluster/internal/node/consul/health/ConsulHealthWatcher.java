@@ -1,12 +1,9 @@
 package luj.cluster.internal.node.consul.health;
 
-import static java.util.concurrent.Executors.newCachedThreadPool;
-
 import akka.actor.ActorRef;
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.QueryParams;
 import com.ecwid.consul.v1.health.model.Check;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import luj.cluster.api.node.member.NodeMemberHealthListener;
@@ -17,9 +14,10 @@ import org.slf4j.LoggerFactory;
 
 public class ConsulHealthWatcher {
 
-  public ConsulHealthWatcher(ConsulClient consul, String selfName,
+  public ConsulHealthWatcher(ConsulClient consul, ExecutorService exec, String selfName,
       NodeMemberHealthListener healthListener, ActorRef receiveRef, ActorRef memberRef) {
     _consul = consul;
+    _exec = exec;
     _selfName = selfName;
     _healthListener = healthListener;
     _receiveRef = receiveRef;
@@ -27,7 +25,7 @@ public class ConsulHealthWatcher {
   }
 
   public void watch() {
-    EXEC.submit(this::watchWrap);
+    _exec.submit(this::watchWrap);
   }
 
   private void watchWrap() {
@@ -42,7 +40,7 @@ public class ConsulHealthWatcher {
     HealthStateRequestor.Result lastRsp = triggerHealth(
         HealthStateRequestor.nullResult(), QueryParams.DEFAULT);
 
-    while (!EXEC.isShutdown()) {
+    while (!_exec.isShutdown()) {
       lastRsp = triggerHealth(lastRsp, QueryParams.Builder.builder()
           .setIndex(lastRsp.consulIndex())
           .build());
@@ -51,13 +49,13 @@ public class ConsulHealthWatcher {
 
   private HealthStateRequestor.Result triggerHealth(HealthStateRequestor.Result lastRsp,
       QueryParams params) {
-    LOG.debug("sssssssssssssssssstart------------------");
+//    LOG.debug("sssssssssssssssssstart------------------");
 
     HealthStateRequestor.Result newRsp =
         new HealthStateRequestor(_consul, params, _selfName).request();
 
     Long newIndex = newRsp.consulIndex();
-    LOG.debug("eeeeeeeeeeeeeeeeeeeeeeeeeeend------------------ {}", newIndex);
+//    LOG.debug("eeeeeeeeeeeeeeeeeeeeeeeeeeend------------------ {}", newIndex);
 
     if (newIndex.equals(lastRsp.consulIndex())) {
       return newRsp;
@@ -76,11 +74,8 @@ public class ConsulHealthWatcher {
 
   private static final Logger LOG = LoggerFactory.getLogger(ConsulHealthWatcher.class);
 
-  private static final ExecutorService EXEC = newCachedThreadPool(new ThreadFactoryBuilder()
-      .setNameFormat("consul-watch-%d")
-      .build());
-
   private final ConsulClient _consul;
+  private final ExecutorService _exec;
 
   private final String _selfName;
   private final NodeMemberHealthListener _healthListener;

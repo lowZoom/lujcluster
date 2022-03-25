@@ -2,7 +2,7 @@ package luj.cluster.internal.node.member.actor;
 
 import akka.cluster.Cluster;
 import akka.japi.pf.FI;
-import luj.cluster.internal.node.member.message.LeaveAndShutdownMsg;
+import luj.cluster.internal.node.member.actor.message.LeaveAndShutdownMsg;
 
 final class OnLeaveAndShutdown implements FI.UnitApply<LeaveAndShutdownMsg> {
 

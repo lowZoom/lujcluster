@@ -13,7 +13,7 @@ import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2
 import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMapV2Factory;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
 import luj.cluster.internal.node.member.actor.NodeMemberAktor;
-import luj.cluster.internal.node.member.message.StartMemberMsg;
+import luj.cluster.internal.node.member.actor.message.StartMemberMsg;
 import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 import luj.cluster.internal.node.message.send.actor.NodeSendAktor;
 import luj.cluster.internal.node.message.serialize.AkkaSerializeInitializer;

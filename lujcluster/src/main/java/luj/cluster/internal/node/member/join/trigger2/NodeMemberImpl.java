@@ -4,7 +4,7 @@ import akka.actor.ActorRef;
 import java.util.Set;
 import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.api.node.member.NodeType;
-import luj.cluster.internal.node.member.message.MemberSendRpcMsg;
+import luj.cluster.internal.node.member.actor.message.MemberSendRpcMsg;
 
 final class NodeMemberImpl implements NodeNewMemberListener.NodeRemote {
 

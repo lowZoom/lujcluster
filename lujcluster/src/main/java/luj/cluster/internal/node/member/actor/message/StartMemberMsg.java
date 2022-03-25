@@ -1,4 +1,4 @@
-package luj.cluster.internal.node.member.message;
+package luj.cluster.internal.node.member.actor.message;
 
 import akka.actor.ActorRef;
 import luj.cluster.internal.node.start.ClusterNodeStarter;

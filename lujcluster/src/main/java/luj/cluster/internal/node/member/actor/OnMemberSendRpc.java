@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import luj.cluster.internal.node.consul.grpc.gen.NodeCommGrpc;
 import luj.cluster.internal.node.consul.grpc.gen.RpcSendRemoteMsg;
-import luj.cluster.internal.node.member.message.MemberSendRpcMsg;
+import luj.cluster.internal.node.member.actor.message.MemberSendRpcMsg;
 import luj.cluster.internal.node.message.serialize.invoke.MessageSerializeInvoker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

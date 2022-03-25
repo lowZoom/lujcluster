@@ -1,5 +1,7 @@
 package luj.cluster.internal.node.consul.health;
 
+import static java.util.stream.Collectors.toMap;
+
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.QueryParams;
 import com.ecwid.consul.v1.Response;
@@ -8,7 +10,6 @@ import com.google.common.collect.ImmutableMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class HealthStateRequestor {
 
@@ -48,7 +49,7 @@ public class HealthStateRequestor {
     Map<String, Check> serviceMap = rsp.getValue().stream()
         .filter(c -> !c.getServiceId().isEmpty())
         .filter(c -> !_selfName.equals(c.getServiceName()))
-        .collect(Collectors.toMap(Check::getServiceName, Function.identity()));
+        .collect(toMap(Check::getServiceName, Function.identity()));
 
     Long consulIndex = rsp.getConsulIndex();
     return new Result() {
@@ -65,7 +66,6 @@ public class HealthStateRequestor {
   }
 
 //  private static final Logger LOG = LoggerFactory.getLogger(HealthStateRequestor.class);
-
   private static final Check.CheckStatus ANY = null;
 
   private final ConsulClient _consul;
