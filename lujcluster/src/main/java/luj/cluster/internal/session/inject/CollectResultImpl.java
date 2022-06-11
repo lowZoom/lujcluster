@@ -25,7 +25,7 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
 
   @Override
   public List<NodeShutdownListener> getNodeShutdownListeners() {
-    return _nodeShutdownListeners;
+    return nonNull(_nodeShutdownListeners);
   }
 
   @Override
