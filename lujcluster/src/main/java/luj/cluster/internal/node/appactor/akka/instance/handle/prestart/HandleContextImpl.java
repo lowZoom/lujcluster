@@ -6,10 +6,6 @@ import luj.cluster.internal.node.appactor.akka.instance.create.AppAktorCreator;
 
 final class HandleContextImpl implements ActorPreStartHandler.Context {
 
-  HandleContextImpl(AppAktor appAktor) {
-    _appAktor = appAktor;
-  }
-
   @SuppressWarnings("unchecked")
   @Override
   public <A> A getActorState(ActorPreStartHandler<A> handler) {
@@ -24,6 +20,13 @@ final class HandleContextImpl implements ActorPreStartHandler.Context {
   }
 
   @Override
+  public ActorPreStartHandler.System getSystem() {
+    SystemImpl system = new SystemImpl();
+    system._system = _appAktor.context().system();
+    return system;
+  }
+
+  @Override
   public ActorPreStartHandler.Actor createActor(Object actorState) {
     ActorImpl actor = new ActorImpl();
 
@@ -33,5 +36,5 @@ final class HandleContextImpl implements ActorPreStartHandler.Context {
     return actor;
   }
 
-  private final AppAktor _appAktor;
+  AppAktor _appAktor;
 }

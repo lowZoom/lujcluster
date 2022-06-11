@@ -4,9 +4,9 @@ import akka.actor.ActorRef;
 import java.util.List;
 import luj.cluster.api.node.NodeStartListener;
 
-public class StartListenerTrigger {
+public class StartListenTrigger {
 
-  public StartListenerTrigger(ActorRef receiveRef, ActorRef sendRef, ActorRef appRootRef,
+  public StartListenTrigger(ActorRef receiveRef, ActorRef sendRef, ActorRef appRootRef,
       Object startParam, List<NodeStartListener> listenerList) {
     _receiveRef = receiveRef;
     _sendRef = sendRef;

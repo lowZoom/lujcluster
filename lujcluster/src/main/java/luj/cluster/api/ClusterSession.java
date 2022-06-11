@@ -1,7 +1,6 @@
 package luj.cluster.api;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 import luj.cluster.api.node.ClusterNode;
 

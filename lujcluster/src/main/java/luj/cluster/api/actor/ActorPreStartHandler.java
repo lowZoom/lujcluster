@@ -10,12 +10,19 @@ public interface ActorPreStartHandler<A> {
 
     Actor getActor();
 
+    System getSystem();
+
     Actor createActor(Object actorState);
   }
 
   interface Actor extends Tellable {
 
     ActorRef getAkkaRef();
+  }
+
+  interface System {
+
+    void shutdown();
   }
 
   void onHandle(Context ctx) throws Exception;

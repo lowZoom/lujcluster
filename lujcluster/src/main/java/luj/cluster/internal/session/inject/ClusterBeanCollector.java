@@ -4,6 +4,7 @@ import java.util.List;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
+import luj.cluster.api.node.NodeShutdownListener;
 import luj.cluster.api.node.member.NodeMemberHealthListener;
 import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.api.node.NodeStartListener;
@@ -23,6 +24,8 @@ public interface ClusterBeanCollector {
   interface Result {
 
     List<NodeStartListener> getNodeStartListeners();
+
+    List<NodeShutdownListener> getNodeShutdownListeners();
 
     NodeNewMemberListener getNodeJoinListener();
 

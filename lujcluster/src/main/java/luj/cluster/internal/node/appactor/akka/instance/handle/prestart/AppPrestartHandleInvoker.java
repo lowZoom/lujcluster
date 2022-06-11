@@ -15,7 +15,9 @@ public class AppPrestartHandleInvoker {
       return;
     }
 
-    HandleContextImpl ctx = new HandleContextImpl(_appAktor);
+    HandleContextImpl ctx = new HandleContextImpl();
+    ctx._appAktor = _appAktor;
+
     handler.onHandle(ctx);
   }
 

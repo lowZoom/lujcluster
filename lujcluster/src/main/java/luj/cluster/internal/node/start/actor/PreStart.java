@@ -18,8 +18,9 @@ import luj.cluster.internal.node.message.receive.actor.NodeReceiveAktor;
 import luj.cluster.internal.node.message.send.actor.NodeSendAktor;
 import luj.cluster.internal.node.message.serialize.AkkaSerializeInitializer;
 import luj.cluster.internal.node.message.serialize.MessageSerializerCollector;
+import luj.cluster.internal.node.shutdown.ShutdownListenRegister;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
-import luj.cluster.internal.node.start.actor.trigger.StartListenerTrigger;
+import luj.cluster.internal.node.start.actor.trigger.StartListenTrigger;
 import luj.cluster.internal.session.inject.ClusterBeanCollector;
 
 final class PreStart {
@@ -42,7 +43,8 @@ final class PreStart {
     Map<String, NodeMessageSerializer<?>> codecMap = new MessageSerializerCollector(
         _beanCollect.getNodeMessageSerializers()).collect();
 
-    new AkkaSerializeInitializer(_beanCollect, codecMap, _nodeConfig.startParam()).init();
+    Object startParam = _nodeConfig.startParam();
+    new AkkaSerializeInitializer(_beanCollect, codecMap, startParam).init();
 
     ActorRef memberRef = _aktorCtx.actorOf(
         NodeMemberAktor.props(codecMap, _beanCollect, _nodeConfig), "member");
@@ -53,9 +55,13 @@ final class PreStart {
     ActorRef receiveRef = createReceiveActor(sendRef, appRootRef, codecMap);
     _receiveRefHolder.accept(receiveRef);
 
+    // 注册关闭监听
+    new ShutdownListenRegister(_beanCollect.getNodeShutdownListeners(),
+        _aktor.context().system(), startParam).register();
+
     // 这里面可能也会包含初始化逻辑
-    new StartListenerTrigger(receiveRef, sendRef, appRootRef,
-        _nodeConfig.startParam(), _beanCollect.getNodeStartListeners()).trigger();
+    new StartListenTrigger(receiveRef, sendRef, appRootRef,
+        startParam, _beanCollect.getNodeStartListeners()).trigger();
 
     // 所以需要在最后（即初始化完全完成）再加入集群
     memberRef.tell(new StartMemberMsg(receiveRef, _clusterEnabled, _nodeConfig), _aktor.self());
