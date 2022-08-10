@@ -16,7 +16,18 @@
   <properties>
     <akka.scala>2.13</akka.scala>
     <akka.version>2.5.32</akka.version>
+
+    <grpc.version>1.42.1</grpc.version>
   </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencies>
     <dependency>
@@ -61,19 +72,19 @@
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-netty-shaded</artifactId>
-      <version>1.42.1</version>
+      <version>${grpc.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/io.grpc/grpc-protobuf -->
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-protobuf</artifactId>
-      <version>1.42.1</version>
+      <version>${grpc.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/io.grpc/grpc-stub -->
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-stub</artifactId>
-      <version>1.42.1</version>
+      <version>${grpc.version}</version>
     </dependency>
 
     <dependency>
