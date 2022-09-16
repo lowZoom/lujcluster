@@ -1,6 +1,7 @@
 package luj.cluster.api.actor;
 
 import akka.actor.ActorRef;
+import akka.actor.Cancellable;
 import java.time.Duration;
 import luj.cluster.api.logging.Log;
 
@@ -27,7 +28,13 @@ public interface ActorMessageHandler<A, M> {
 
   interface Ref extends Tellable {
 
+    /**
+     * @see #schedule
+     */
+    @Deprecated
     void tell(Object msg, Duration delay);
+
+    Cancellable schedule(Duration delay, Object msg);
   }
 
   interface NodeLocal {
