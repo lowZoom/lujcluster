@@ -1,6 +1,7 @@
 package luj.cluster.internal.node.consul.actor;
 
 import akka.japi.pf.FI;
+import com.ecwid.consul.transport.TransportException;
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.agent.model.NewService;
 import com.ecwid.consul.v1.catalog.CatalogServicesRequest;
@@ -19,7 +20,10 @@ import luj.cluster.internal.node.consul.grpc.gen.RpcNodeJoinMsg;
 import luj.cluster.internal.node.consul.health.ConsulHealthWatcher;
 import luj.cluster.internal.node.member.join.trigger2.JoinConsulTrigger;
 import luj.cluster.internal.node.member.join.trigger2.remote.JoinRemoteFirer;
+import luj.cluster.internal.node.shutdown.CoordShutdownRunner;
 import luj.cluster.internal.node.start.ClusterNodeStarter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 final class OnStartConsul implements FI.UnitApply<StartConsulMsg> {
 
@@ -43,9 +47,15 @@ final class OnStartConsul implements FI.UnitApply<StartConsulMsg> {
     _aktor.setGrpc(grpc);
     _aktor.setConsul(consul);
 
-    registerSelf(consul, nodeConfig);
-    handleOtherJoin(consul, nodeConfig);
-    watchHealth(consul, nodeConfig);
+    try {
+      registerSelf(consul, nodeConfig);
+      handleOtherJoin(consul, nodeConfig);
+      watchHealth(consul, nodeConfig);
+
+    } catch (TransportException e) {
+      LOG.error(e.getMessage(), e);
+      CoordShutdownRunner.get(_aktor).run();
+    }
   }
 
   private void registerSelf(ConsulClient consul, ClusterNodeStarter.Config config) {
@@ -121,6 +131,8 @@ final class OnStartConsul implements FI.UnitApply<StartConsulMsg> {
 
     channel.shutdownAndWait();
   }
+
+  private static final Logger LOG = LoggerFactory.getLogger(OnStartConsul.class);
 
   private final MemberConsulAktor _aktor;
 }

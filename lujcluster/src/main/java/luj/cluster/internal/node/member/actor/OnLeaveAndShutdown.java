@@ -1,9 +1,9 @@
 package luj.cluster.internal.node.member.actor;
 
-import akka.actor.CoordinatedShutdown;
 import akka.cluster.Cluster;
 import akka.japi.pf.FI;
 import luj.cluster.internal.node.member.actor.message.LeaveAndShutdownMsg;
+import luj.cluster.internal.node.shutdown.CoordShutdownRunner;
 
 final class OnLeaveAndShutdown implements FI.UnitApply<LeaveAndShutdownMsg> {
 
@@ -19,7 +19,7 @@ final class OnLeaveAndShutdown implements FI.UnitApply<LeaveAndShutdownMsg> {
       return;
     }
 
-    CoordinatedShutdown.get(_aktor.context().system()).runAll();
+    CoordShutdownRunner.get(_aktor).run();
   }
 
   private final NodeMemberAktor _aktor;

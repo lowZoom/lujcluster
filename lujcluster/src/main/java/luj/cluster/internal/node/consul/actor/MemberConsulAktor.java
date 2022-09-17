@@ -10,6 +10,7 @@ import luj.cluster.api.node.member.NodeMemberHealthListener;
 import luj.cluster.api.node.member.NodeNewMemberListener;
 import luj.cluster.internal.node.consul.actor.message.StartConsulMsg;
 import luj.cluster.internal.node.member.actor.NodeMemberAktor;
+import luj.cluster.internal.node.shutdown.Safe;
 
 public class MemberConsulAktor extends AbstractActor {
 
@@ -34,8 +35,8 @@ public class MemberConsulAktor extends AbstractActor {
 
   @Override
   public void postStop() {
-    _watchExec.shutdown();
-    _consul.agentServiceDeregister(_selfName);
+    Safe.obj(_watchExec).call(ExecutorService::shutdown);
+    Safe.obj(_consul).call(c -> c.agentServiceDeregister(_selfName));
 
     // 从consul移除后再关rpc
     _grpc.shutdown();
