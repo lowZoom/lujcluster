@@ -17,6 +17,10 @@ public class HealthConsulTrigger {
   }
 
   public void trigger() {
+    if (_healthListener == null) {
+      return;
+    }
+
     NodeLocalImpl selfNode = new NodeLocalImpl();
     selfNode._receiveRef = _receiveRef;
     selfNode._memberRef = _memberRef;

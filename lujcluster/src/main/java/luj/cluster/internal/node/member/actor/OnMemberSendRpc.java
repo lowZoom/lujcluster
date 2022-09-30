@@ -20,6 +20,9 @@ final class OnMemberSendRpc implements FI.UnitApply<MemberSendRpcMsg> {
     _aktor = aktor;
   }
 
+  /**
+   * @see luj.cluster.internal.node.consul.grpc.NodeGrpcImpl#receive
+   */
   @Override
   public void apply(MemberSendRpcMsg i) throws Exception {
     String targetHost = i.getTargetHost();

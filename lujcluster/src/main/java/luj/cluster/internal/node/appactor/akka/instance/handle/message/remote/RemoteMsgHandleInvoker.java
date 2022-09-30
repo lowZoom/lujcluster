@@ -1,24 +1,21 @@
 package luj.cluster.internal.node.appactor.akka.instance.handle.message.remote;
 
-import akka.actor.ActorContext;
 import akka.actor.ActorRef;
-import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.internal.node.appactor.akka.instance.AppAktor;
+import luj.cluster.internal.node.appactor.akka.instance.handle.handler.AppMsgHandleFinder;
 import luj.cluster.internal.node.appactor.akka.instance.handle.message.local.AppMessageHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.message.MessageFromRemote;
-import luj.cluster.internal.node.appactor.message.handle.ActorMessageHandleMap;
 
 public enum RemoteMsgHandleInvoker {
   GET;
 
   public void invoke(AppAktor actor, MessageFromRemote message) {
-    ActorMessageHandleMap handlerMap = actor.getMeta().getMessageHandleMap();
-    ActorMessageHandler<?, ?> handler = handlerMap.getHandler(message.getMsgKey());
-
-    ActorContext ctx = actor.context();
+    String msgKey = message.getMsgKey();
     Object appMsg = message.getMsg();
-    if (handler == null) {
-      ctx.self().tell(appMsg, ctx.sender());
+    AppMsgHandleFinder.Handler handler = new AppMsgHandleFinder(actor, msgKey, appMsg).find();
+
+    if (handler.isAbsent()) {
+      handler.handleAbsent();
       return;
     }
 
@@ -29,6 +26,6 @@ public enum RemoteMsgHandleInvoker {
     remoteNode._targetHost = message.getSenderHost();
     remoteNode._targetPort = message.getSenderPort();
 
-    AppMessageHandleInvoker.GET.invoke(actor, handler, appMsg, memberRef, remoteNode);
+    AppMessageHandleInvoker.GET.invoke(actor, handler.get(), appMsg, memberRef, remoteNode);
   }
 }

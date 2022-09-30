@@ -10,7 +10,9 @@ public class ClusterSessionFactory {
   }
 
   public ClusterSession create() {
-    return new ClusterSessionImpl(_appContext);
+    ClusterSessionImpl session = new ClusterSessionImpl();
+    session._appContext = _appContext;
+    return session;
   }
 
   private final ApplicationContext _appContext;

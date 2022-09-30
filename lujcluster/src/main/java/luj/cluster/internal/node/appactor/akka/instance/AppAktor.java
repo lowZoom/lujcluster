@@ -9,6 +9,7 @@ import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.internal.node.appactor.akka.instance.handle.message.local.AppMessageHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.handle.poststop.AppPoststopHandleInvoker;
 import luj.cluster.internal.node.appactor.akka.instance.handle.prestart.AppPrestartHandleInvoker;
+import luj.cluster.internal.node.appactor.akka.instance.message.MessageFromLocal;
 import luj.cluster.internal.node.appactor.akka.instance.message.MessageFromRemote;
 import luj.cluster.internal.node.appactor.meta.ActorMeta;
 import luj.cluster.internal.node.appactor.meta.ActorMetaMap;
@@ -44,6 +45,7 @@ public final class AppAktor extends AbstractActor {
   public Receive createReceive() {
     ReceiveBuilder builder = receiveBuilder();
     builder.match(MessageFromRemote.class, new OnMessageFromRemote(this));
+    builder.match(MessageFromLocal.class, new OnMessageFromLocal(this));
 
     for (Map.Entry<String, ActorMessageHandler<?, ?>> e : _meta.getMessageHandleMap()) {
       ActorMessageHandler<?, ?> handler = e.getValue();

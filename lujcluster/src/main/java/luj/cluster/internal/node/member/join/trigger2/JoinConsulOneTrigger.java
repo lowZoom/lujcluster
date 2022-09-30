@@ -19,9 +19,15 @@ public class JoinConsulOneTrigger {
   }
 
   public void trigger() {
+    NodeMemberImpl memberNode = makeRemoteNode(_service);
+    if (_joinListener == null) {
+      printMemberNode(memberNode);
+      return;
+    }
+
     MemberContextImpl ctx = new MemberContextImpl();
     ctx._selfNode = makeSelfNode();
-    ctx._memberNode = makeRemoteNode(_service);
+    ctx._memberNode = memberNode;
     ctx._applicationBean = _clusterStartParam;
 
     try {
@@ -29,6 +35,10 @@ public class JoinConsulOneTrigger {
     } catch (Exception e) {
       LOG.error(e.getMessage(), e);
     }
+  }
+
+  private void printMemberNode(NodeMemberImpl node) {
+    LOG.debug("[cluster]新节点加入，没有处理器，name：{}，tag：{}", node.getName(), node.getTags());
   }
 
   private NodeSelfImpl makeSelfNode() {

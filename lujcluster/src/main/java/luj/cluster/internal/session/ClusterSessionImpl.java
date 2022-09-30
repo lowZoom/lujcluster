@@ -11,10 +11,6 @@ import org.springframework.context.ApplicationContext;
 
 final class ClusterSessionImpl implements ClusterSession {
 
-  ClusterSessionImpl(ApplicationContext appContext) {
-    _appContext = appContext;
-  }
-
   @Override
   public void startNode(String host, int port, String seedAddr, Object startParam) {
     startNode(host, port, ImmutableList.of(seedAddr), startParam);
@@ -35,5 +31,5 @@ final class ClusterSessionImpl implements ClusterSession {
     return new ClusterNodeStarter(_appContext, config).start();
   }
 
-  private final ApplicationContext _appContext;
+  ApplicationContext _appContext;
 }

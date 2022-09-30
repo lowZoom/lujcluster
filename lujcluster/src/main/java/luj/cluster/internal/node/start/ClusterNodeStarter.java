@@ -47,6 +47,8 @@ public class ClusterNodeStarter {
         .withFallback(ConfigFactory.parseResources("akka.conf")));
 
     ClusterNodeImpl node = new ClusterNodeImpl();
+    node.setActorSystem(sys);
+
     sys.actorOf(NodeStartAktor.props(beanCollect,
         _config, clusterEnabled, node::setReceiveRef), "start");
 

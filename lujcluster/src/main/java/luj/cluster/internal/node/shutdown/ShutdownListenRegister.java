@@ -20,10 +20,6 @@ public class ShutdownListenRegister {
   }
 
   public void register() {
-    if (_shutdownList.isEmpty()) {
-      return;
-    }
-
     CoordinatedShutdown.get(_system).addTask(CoordinatedShutdown
         .PhaseBeforeActorSystemTerminate(), "lujcluster-listen", this::triggerListeners);
   }
