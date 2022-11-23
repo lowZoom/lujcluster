@@ -31,12 +31,6 @@ public interface ClusterSession {
    * @see #startNode(Function)
    */
   @Deprecated
-  void startNode(String host, int port, String seedAddr, Object startParam);
-
-  /**
-   * @see #startNode(Function)
-   */
-  @Deprecated
   ClusterNode startNode(String host, int port, List<String> seedList, Object startParam);
 
   ClusterNode startNode(Function<Start, Start> startConfig);
