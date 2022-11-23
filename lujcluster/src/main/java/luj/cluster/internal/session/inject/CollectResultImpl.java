@@ -3,16 +3,16 @@ package luj.cluster.internal.session.inject;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import luj.ava.spring.Internal;
 import luj.cluster.api.actor.ActorMessageHandler;
 import luj.cluster.api.actor.ActorPostStopHandler;
 import luj.cluster.api.actor.ActorPreStartHandler;
 import luj.cluster.api.node.NodeShutdownListener;
+import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.api.node.member.NodeMemberHealthListener;
 import luj.cluster.api.node.member.NodeNewMemberListener;
-import luj.cluster.api.node.NodeStartListener;
 import luj.cluster.api.node.message.MessageValueResolver;
 import luj.cluster.api.node.message.NodeMessageSerializer;
+import luj.spring.anno.Internal;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Internal
