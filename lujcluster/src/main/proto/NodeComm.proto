@@ -1,6 +1,12 @@
 syntax = "proto3";
 
-// .\protoc.exe --plugin=protoc-gen-grpc-java.exe --proto_path=D:\work\server\lujall\lujcluster\lujcluster\src\main\proto --proto_path=D:\work\server\servertrunk\Server\protocol2\build\protoc-3.17.3-win64\include --java_out=D:\work\server\lujall\lujcluster\lujcluster\src\main\java --grpc-java_out=D:\work\server\lujall\lujcluster\lujcluster\src\main\java D:\work\server\lujall\lujcluster\lujcluster\src\main\proto\*.proto
+// https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.45.2/
+/*
+$PROJ_SRC='D:\d_v2\work\server\lujall\lujcluster\lujcluster\src\main'; `
+$PROTOC='D:\d_v2\work\server\lujall\env\protoc-3.19.6-win64'; `
+$PROTO_IN="$PROJ_SRC\proto"; $JAVA_OUT="$PROJ_SRC\java"; `
+ .\protoc.exe --plugin=protoc-gen-grpc-java.exe --proto_path="$PROTO_IN" --proto_path="$PROTOC\include" --java_out="$JAVA_OUT" --grpc-java_out="$JAVA_OUT" "$PROTO_IN\*.proto"
+ */
 
 option java_multiple_files = true;
 option java_package = "luj.cluster.internal.node.consul.grpc.gen";
