@@ -16,7 +16,7 @@ public class StartListenTrigger {
   }
 
   public void trigger() throws Exception {
-    StartContextImpl context = new StartContextImpl(
+    var context = new StartContextImpl(
         _receiveRef, _sendRef, _appRootRef, _startParam, null);
 
     for (NodeStartListener listener : _listenerList) {

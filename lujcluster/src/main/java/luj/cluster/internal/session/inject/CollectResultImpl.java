@@ -68,29 +68,29 @@ final class CollectResultImpl implements ClusterBeanCollector.Result {
   }
 
   @Autowired(required = false)
-  private List<NodeStartListener> _nodeStartListeners;
+  List<NodeStartListener> _nodeStartListeners;
 
   @Autowired(required = false)
-  private List<NodeShutdownListener> _nodeShutdownListeners;
+  List<NodeShutdownListener> _nodeShutdownListeners;
 
   @Autowired(required = false)
-  private NodeNewMemberListener _nodeJoinListener;
+  NodeNewMemberListener _nodeJoinListener;
 
   @Autowired(required = false)
-  private NodeMemberHealthListener _nodeHealthListener;
+  NodeMemberHealthListener _nodeHealthListener;
 
   @Autowired(required = false)
-  private MessageValueResolver _messageTypeResolver;
+  MessageValueResolver _messageTypeResolver;
 
   @Autowired(required = false)
-  private List<NodeMessageSerializer<?>> _nodeMessageSerializers;
+  List<NodeMessageSerializer<?>> _nodeMessageSerializers;
 
   @Autowired(required = false)
-  private List<ActorPreStartHandler<?>> _actorPreStartHandlers;
+  List<ActorPreStartHandler<?>> _actorPreStartHandlers;
 
   @Autowired(required = false)
-  private List<ActorPostStopHandler<?>> _actorPostStopHandlers;
+  List<ActorPostStopHandler<?>> _actorPostStopHandlers;
 
   @Autowired(required = false)
-  private List<ActorMessageHandler<?, ?>> _actorMessageHandlers;
+  List<ActorMessageHandler<?, ?>> _actorMessageHandlers;
 }
