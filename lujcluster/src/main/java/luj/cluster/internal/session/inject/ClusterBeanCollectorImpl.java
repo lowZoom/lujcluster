@@ -11,7 +11,7 @@ final class ClusterBeanCollectorImpl implements ClusterBeanCollector {
 
   @Override
   public Result collect() {
-    try (AnnotationConfigApplicationContext resultCtx = new AnnotationConfigApplicationContext()) {
+    try (var resultCtx = new AnnotationConfigApplicationContext()) {
       resultCtx.setParent(_appContext);
 
       resultCtx.register(InjectConf.class);

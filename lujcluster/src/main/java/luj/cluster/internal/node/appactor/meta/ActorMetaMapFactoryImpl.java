@@ -51,7 +51,7 @@ enum ActorMetaMapFactoryImpl {
     handleMap._handlerMap = msgHandlerList.stream()
         .collect(toMap(h -> getMsgHandleParam(h, 1).getName(), Function.identity()));
 
-    ActorMetaImpl meta = new ActorMetaImpl();
+    var meta = new ActorMetaImpl();
     meta._preStartHandler = prestartHandler;
     meta._postStopHandler = postStopHandler;
     meta._actorMessageHandleMap = handleMap;
