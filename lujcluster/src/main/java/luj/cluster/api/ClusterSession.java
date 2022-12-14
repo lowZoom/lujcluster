@@ -18,20 +18,14 @@ public interface ClusterSession {
 
     Start selfTags(List<String> val);
 
-    Start discoveryAkkaSeed(List<String> val);
-
     Start discoveryConsulHost(String val);
 
     Start discoveryConsulPort(int val);
 
+    Start discoveryAkkaSeed(List<String> val);
+
     Start startParam(Object val);
   }
-
-  /**
-   * @see #startNode(Function)
-   */
-  @Deprecated
-  ClusterNode startNode(String host, int port, List<String> seedList, Object startParam);
 
   ClusterNode startNode(Function<Start, Start> startConfig);
 }
