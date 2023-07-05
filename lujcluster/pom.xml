@@ -17,7 +17,7 @@
     <luj.akka.version>2.6.20</luj.akka.version>
     <luj.akka.scala>2.13</luj.akka.scala>
 
-    <luj.grpc.version>1.45.2</luj.grpc.version>
+    <luj.grpc.version>1.53.0</luj.grpc.version>
   </properties>
 
   <build>
